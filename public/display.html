@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Main Display</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audio.js"></script>
+  <style>
+    body {
+      background: #080808;
+      font-family: var(--font-display);
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Passcode Protection Modal Overlay -->
+  <div id="passcode-modal" class="passcode-modal">
+    <div class="card card-glowing text-center" style="max-width: 360px; width: 90%; padding: 28px;">
+      <h2 style="font-size: 20px; margin-bottom: 16px;">Main Display Passcode</h2>
+      <form id="passcode-form">
+        <input type="password" id="passcode-input" class="input-text" placeholder="Passcode..." style="text-align: center; font-size: 18px; margin-bottom: 16px;" autofocus required>
+        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">ACCESS DISPLAY</button>
+      </form>
+      <div id="passcode-error" class="text-error" style="font-size: 13px; margin-top: 12px; display: none;">Passcode Salah!</div>
+    </div>
+  </div>
+
+  <!-- Stage Main Header -->
+  <header class="app-header" style="padding: 16px 36px; background-color: #050505;">
+    <div class="brand-container">
+      <img src="/assets/unxpadted-logotype.png" alt="Clash of Unxpadted" style="height: 34px;">
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <div style="text-align: right;">
+        <div id="disp-leg-name" class="station-badge">STANDBY</div>
+      </div>
+      <div style="text-align: right;">
+        <div class="text-secondary" style="font-size: 11px; letter-spacing: 1px;">CLOCK</div>
+        <div id="disp-match-timer" style="font-size: 26px; font-weight: 800; color: var(--primary);">00:00</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Live Scoreboard & Dynamic Match Tracker -->
+  <section style="padding: 20px 36px; background-color: #0A0A0A; border-bottom: 1px solid var(--border);">
+    <div class="flex-between" style="max-width: 1200px; margin: 0 auto;">
+      
+      <!-- Team X Score -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="text-align: left;">
+          <h2 id="disp-name-x" style="font-size: 26px; color: #fff;">TEAM X</h2>
+        </div>
+        <div id="disp-score-x" class="score-pill active" style="font-size: 40px;">0</div>
+      </div>
+
+      <!-- Center Dynamic Match Tracker -->
+      <div style="text-align: center; flex: 1; max-width: 440px; padding: 0 20px;">
+        <div class="text-secondary" style="font-size: 11px; margin-bottom: 8px; letter-spacing: 1.5px;">
+          MATCH TRACKER
+        </div>
+        <div style="display: flex; gap: 6px; justify-content: center;" id="point-tracker-dots">
+          <!-- 11 Dynamic Dots -->
+        </div>
+      </div>
+
+      <!-- Team Y Score -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div id="disp-score-y" class="score-pill active" style="font-size: 40px;">0</div>
+        <div style="text-align: right;">
+          <h2 id="disp-name-y" style="font-size: 26px; color: #fff;">TEAM Y</h2>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN STAGE DISPLAY CONTENT AREA -->
+  <main style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
+    
+    <!-- VIEW STANDBY (Full background image + Big Logo on middle screen left) -->
+    <div id="disp-view-idle" class="standby-hero-bg" style="display: none;">
+      <img src="/assets/unxpadted-logotype.png" alt="Clash of Unxpadted" class="standby-logo-overlay">
+    </div>
+
+    <!-- VIEW X1: Math Speedrun Single Unified Duel Progress Bar -->
+    <div id="disp-view-x1" style="display: none; width: 100%; max-width: 1400px; padding: 36px;">
+      <div class="card card-glowing text-center" style="padding: 36px; margin-bottom: 30px;">
+        <div style="margin-bottom: 12px;">
+          <span class="station-badge">STATION X1 • MATH SPEEDRUN</span>
+        </div>
+        <p class="text-secondary" style="font-size: 16px;">Target 30 Soal Benar</p>
+      </div>
+
+      <!-- Single Duel Progress Bar -->
+      <div class="card" style="padding: 28px;">
+        <div class="flex-between" style="margin-bottom: 16px;">
+          <h3 id="disp-x1-name-x" style="font-size: 24px; color: #FF5449;">TEAM X</h3>
+          <h3 id="disp-x1-name-y" style="font-size: 24px; color: #00E5FF;">TEAM Y</h3>
+        </div>
+
+        <div class="duel-progress-wrapper">
+          <div id="disp-x1-duel-bar-x" class="duel-progress-x" style="width: 0%;"></div>
+          <div id="disp-x1-duel-bar-y" class="duel-progress-y" style="width: 0%;"></div>
+
+          <div class="duel-progress-overlay-text">
+            <span id="disp-x1-val-x">0 / 30</span>
+            <span id="disp-x1-val-y">0 / 30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW X2: Cerdas Cermat Trivia & Buzzer -->
+    <div id="disp-view-x2" style="display: none; width: 100%; max-width: 1400px; padding: 36px;">
+      <div class="card card-glowing" style="padding: 36px; text-align: center; margin-bottom: 32px;">
+        <div style="margin-bottom: 16px;">
+          <span class="station-badge">STATION X2 • CERDAS CERMAT</span>
+        </div>
+        <h1 id="disp-x2-question" style="font-size: 34px; line-height: 1.4; color: #fff; margin-bottom: 24px;">
+          Proklamasi kemerdekaan Indonesia dibacakan tanggal?
+        </h1>
+
+        <div class="grid-2" id="disp-x2-choices-grid" style="gap: 16px; max-width: 900px; margin: 0 auto;">
+          <!-- Options -->
+        </div>
+      </div>
+
+      <div id="disp-buzz-banner" class="card text-center" style="padding: 24px; background-color: var(--muted); border-color: var(--border);">
+        <h2 id="disp-buzz-title" style="font-size: 28px; color: var(--secondary);">MENUNGGU GAMEMASTER MEMBUKA BUZZER...</h2>
+      </div>
+    </div>
+
+    <!-- VIEW X3: AI Unsolved Case Physical Presentation -->
+    <div id="disp-view-x3" style="display: none; width: 100%; max-width: 1400px; padding: 36px;">
+      <div class="card card-glowing text-center" style="padding: 40px; margin-bottom: 32px;">
+        <div style="margin-bottom: 16px;">
+          <span class="station-badge">STATION X3 • AI UNSOLVED CASE</span>
+        </div>
+        <h1 style="font-size: 38px; margin-bottom: 12px; color: #fff;">MISTERI PIALA YANG HILANG</h1>
+        <p class="text-secondary" style="font-size: 18px;">
+          Kedua tim sedang menganalisis dokumen bukti forensik fisik di papan petunjuk arena.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div id="disp-x3-card-x" class="card text-center" style="padding: 28px; transition: all 0.3s ease;">
+          <h3 id="disp-x3-name-x" style="font-size: 22px; margin-bottom: 14px;">TEAM X</h3>
+          <div id="disp-x3-status-x" class="badge badge-secondary" style="font-size: 16px; padding: 8px 16px;">BELUM SUBMIT</div>
+        </div>
+        <div id="disp-x3-card-y" class="card text-center" style="padding: 28px; transition: all 0.3s ease;">
+          <h3 id="disp-x3-name-y" style="font-size: 22px; margin-bottom: 14px;">TEAM Y</h3>
+          <div id="disp-x3-status-y" class="badge badge-secondary" style="font-size: 16px; padding: 8px 16px;">BELUM SUBMIT</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW X4: Flash Memory Presentation -->
+    <div id="disp-view-x4" style="display: none; width: 100%; max-width: 1400px; padding: 36px;">
+      <div id="disp-x4-flash-container" class="card card-glowing text-center" style="padding: 48px; display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="station-badge">STATION X4 • FLASH MEMORY</span>
+        </div>
+        <h1 id="disp-x4-media-title" style="font-size: 40px; color: #fff; margin-bottom: 24px;">Apel merah di atas meja kayu</h1>
+        <div style="font-size: 28px; font-weight: 800; color: var(--primary);" id="disp-x4-countdown">Tersisa: 6 detik</div>
+      </div>
+
+      <div id="disp-x4-recall-container" class="card text-center" style="padding: 48px; display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="station-badge">STATION X4 • FASE RECALL</span>
+        </div>
+        <h1 style="font-size: 34px; color: #fff; margin-bottom: 16px;">FASE RECALL INGATAN VISUAL</h1>
+        <p class="text-secondary" style="font-size: 20px;">
+          Kedua tim sedang mengisi jawaban soal ingatan visual 1-9 pada tablet XPAD masing-masing.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- WINNER CELEBRATION OVERLAY -->
+  <div id="winner-overlay" class="overlay-winner" style="display: none;">
+    <div style="text-align: center; max-width: 800px; padding: 40px;">
+      <h1 id="winner-team-name" style="font-size: 56px; color: var(--primary); margin-bottom: 16px;">TEAM X</h1>
+      <h2 style="font-size: 28px; color: #fff; margin-bottom: 24px;">MATCH VICTORY</h2>
+      <p class="text-secondary" style="font-size: 18px; letter-spacing: 1px;">BE UNXPADTED • EXCEL AT ACADEMICS & ESPORTS</p>
+    </div>
+  </div>
+
+  <!-- Overlapping Footer Logos (Bottom Center, Clean Transparent) -->
+  <div class="footer-overlay">
+    <img src="/assets/Infinix_logo.svg.webp" alt="Infinix" style="filter: brightness(0) invert(1);">
+    <span style="color: var(--border);">|</span>
+    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/OPTIMIZE/logo%20rg.svg" alt="Ruangguru">
+  </div>
+
+  <script src="/js/display.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

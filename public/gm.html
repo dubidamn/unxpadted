@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Gamemaster Panel</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audio.js"></script>
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Passcode Protection Modal Overlay -->
+  <div id="passcode-modal" class="passcode-modal">
+    <div class="card card-glowing text-center" style="max-width: 360px; width: 90%; padding: 28px;">
+      <h2 style="font-size: 20px; margin-bottom: 16px;">Gamemaster Passcode</h2>
+      <form id="passcode-form">
+        <input type="password" id="passcode-input" class="input-text" placeholder="Passcode..." style="text-align: center; font-size: 18px; margin-bottom: 16px;" autofocus required>
+        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">ACCESS CONTROL PANEL</button>
+      </form>
+      <div id="passcode-error" class="text-error" style="font-size: 13px; margin-top: 12px; display: none;">Passcode Salah!</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand-container">
+      <img src="/assets/unxpadted-logotype.png" alt="Unxpadted" class="brand-logo">
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button id="btn-header-standby" class="btn btn-secondary">STANDBY</button>
+      <button id="btn-reset-all" class="btn btn-danger">RESET MATCH</button>
+    </div>
+  </header>
+
+  <main style="padding: 24px; max-width: 1400px; margin: 0 auto; width: 100%;">
+    
+    <!-- Top Control Grid: Teams & Timers & Match Tracker Colors -->
+    <div class="grid-3" style="margin-bottom: 24px;">
+      
+      <!-- Team Setup & Scoreboard -->
+      <div class="card card-glowing">
+        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">SCOREBOARD</h3>
+        
+        <div style="margin-bottom: 10px;">
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="input-name-x" class="input-text" placeholder="Nama Tim X..." value="TEAM X">
+            <button id="btn-save-teams" class="btn btn-secondary">SAVE</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="input-name-y" class="input-text" placeholder="Nama Tim Y..." value="TEAM Y">
+          </div>
+        </div>
+
+        <div class="flex-between" style="background-color: var(--muted); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
+          <div class="text-center">
+            <div id="score-label-x" style="font-size: 11px; font-weight: 700;" class="text-secondary">TEAM X</div>
+            <div id="score-x" style="font-size: 28px; font-weight: 800; color: var(--primary);">0</div>
+            <div style="display: flex; gap: 4px; margin-top: 4px;">
+              <button onclick="changeScore('X', 1)" class="btn btn-primary" style="padding: 2px 8px; font-size: 11px;">+1</button>
+              <button onclick="changeScore('X', -1)" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;">-1</button>
+            </div>
+          </div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--border);">VS</div>
+          <div class="text-center">
+            <div id="score-label-y" style="font-size: 11px; font-weight: 700;" class="text-secondary">TEAM Y</div>
+            <div id="score-y" style="font-size: 28px; font-weight: 800; color: var(--primary);">0</div>
+            <div style="display: flex; gap: 4px; margin-top: 4px;">
+              <button onclick="changeScore('Y', 1)" class="btn btn-primary" style="padding: 2px 8px; font-size: 11px;">+1</button>
+              <button onclick="changeScore('Y', -1)" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;">-1</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adjustable Match Tracker Colors -->
+        <div style="border-top: 1px solid var(--border); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <span class="text-secondary" style="font-size: 11px; font-weight: 700;">TRACKER COLORS:</span>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <label style="font-size: 11px; display: flex; align-items: center; gap: 4px;">
+              X: <input type="color" id="color-picker-x" value="#FF5449" style="border: none; width: 24px; height: 24px; cursor: pointer; background: transparent;">
+            </label>
+            <label style="font-size: 11px; display: flex; align-items: center; gap: 4px;">
+              Y: <input type="color" id="color-picker-y" value="#00E5FF" style="border: none; width: 24px; height: 24px; cursor: pointer; background: transparent;">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Match Overall Timer -->
+      <div class="card">
+        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">MATCH TIMER</h3>
+        <div id="gm-match-timer" style="font-size: 40px; font-weight: 800; font-family: var(--font-display); text-align: center; margin: 12px 0;">
+          00:00
+        </div>
+        <div style="display: flex; justify-content: center; gap: 8px;">
+          <button id="btn-match-timer-start" class="btn btn-primary">START</button>
+          <button id="btn-match-timer-pause" class="btn btn-secondary">PAUSE</button>
+          <button id="btn-match-timer-reset" class="btn btn-secondary">RESET</button>
+        </div>
+      </div>
+
+      <!-- Leg / Station Timer -->
+      <div class="card">
+        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">STATION TIMER</h3>
+        <div id="gm-station-timer" style="font-size: 40px; font-weight: 800; font-family: var(--font-display); text-align: center; margin: 8px 0; color: var(--primary);">
+          05:00
+        </div>
+        <div style="display: flex; justify-content: center; gap: 6px; margin-bottom: 8px;">
+          <button id="btn-station-timer-sub30" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">-30S</button>
+          <button id="btn-station-timer-add30" class="btn btn-primary" style="padding: 4px 10px; font-size: 11px;">+30S</button>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 8px;">
+          <button id="btn-station-timer-start" class="btn btn-primary">START</button>
+          <button id="btn-station-timer-pause" class="btn btn-secondary">PAUSE</button>
+          <button id="btn-station-timer-reset" class="btn btn-secondary">RESET</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Station Selector Tabs -->
+    <div style="margin-bottom: 24px; display: flex; gap: 8px;">
+      <button class="btn btn-secondary btn-large station-tab" data-station="X1" style="flex: 1;">X1: Math Speedrun</button>
+      <button class="btn btn-secondary btn-large station-tab" data-station="X2" style="flex: 1;">X2: Cerdas Cermat</button>
+      <button class="btn btn-secondary btn-large station-tab" data-station="X3" style="flex: 1;">X3: AI Case</button>
+      <button class="btn btn-secondary btn-large station-tab" data-station="X4" style="flex: 1;">X4: Flash Memory</button>
+    </div>
+
+    <!-- STATION PANELS -->
+
+    <!-- PANEL STANDBY -->
+    <div id="gm-panel-idle" class="card text-center" style="display: none; padding: 32px;">
+      <h3 style="font-size: 20px; color: var(--primary);">STANDBY ACTIVE</h3>
+    </div>
+
+    <!-- PANEL X1 -->
+    <div id="gm-panel-x1" class="card" style="display: none; padding: 20px;">
+      <div class="flex-between" style="margin-bottom: 16px;">
+        <span class="station-badge">STATION X1 • MATH SPEEDRUN</span>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
+            <button id="btn-toggle-x1-vis" class="btn-vis-toggle inactive">OFF</button>
+          </div>
+          <button id="btn-reset-x1" class="btn btn-secondary" style="font-size: 12px;">RESET X1 PROGRESS</button>
+          <input type="file" id="csv-file-x1" accept=".csv" style="display: none;">
+          <button onclick="document.getElementById('csv-file-x1').click()" class="btn btn-primary" style="font-size: 12px;">
+            IMPORT CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="background-color: var(--muted);">
+          <h4 style="color: var(--primary); margin-bottom: 8px; font-size: 13px;" id="x1-label-x">TEAM X</h4>
+          <div style="font-size: 28px; font-weight: 800;" id="gm-x1-score-x">0 BENAR</div>
+          <div class="text-secondary" style="font-size: 12px; margin-top: 4px;" id="gm-x1-status-x">Dijawab: 0</div>
+        </div>
+        <div class="card" style="background-color: var(--muted);">
+          <h4 style="color: var(--primary); margin-bottom: 8px; font-size: 13px;" id="x1-label-y">TEAM Y</h4>
+          <div style="font-size: 28px; font-weight: 800;" id="gm-x1-score-y">0 BENAR</div>
+          <div class="text-secondary" style="font-size: 12px; margin-top: 4px;" id="gm-x1-status-y">Dijawab: 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL X2 -->
+    <div id="gm-panel-x2" class="card" style="display: none; padding: 20px;">
+      <div class="flex-between" style="margin-bottom: 16px;">
+        <span class="station-badge">STATION X2 • CERDAS CERMAT</span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
+            <button id="btn-toggle-x2-vis" class="btn-vis-toggle inactive">OFF</button>
+          </div>
+          <input type="file" id="csv-file-x2" accept=".csv" style="display: none;">
+          <button onclick="document.getElementById('csv-file-x2').click()" class="btn btn-primary" style="font-size: 12px;">
+            IMPORT CSV
+          </button>
+          <button id="btn-x2-prev" class="btn btn-secondary">PREV</button>
+          <span id="x2-q-index" class="text-secondary" style="padding: 8px 12px; font-size: 13px;">SOAL 1</span>
+          <button id="btn-x2-next" class="btn btn-secondary">NEXT</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 16px;">
+        <div class="card" style="background-color: var(--muted); padding: 12px; text-align: center;">
+          <div id="x2-leg-score-x-label" class="text-secondary" style="font-size: 12px;">TEAM X (X2 LEG SCORE)</div>
+          <div id="x2-leg-score-x-val" style="font-size: 24px; font-weight: 800; color: var(--primary);">0 PTS</div>
+        </div>
+        <div class="card" style="background-color: var(--muted); padding: 12px; text-align: center;">
+          <div id="x2-leg-score-y-label" class="text-secondary" style="font-size: 12px;">TEAM Y (X2 LEG SCORE)</div>
+          <div id="x2-leg-score-y-val" style="font-size: 24px; font-weight: 800; color: var(--primary);">0 PTS</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 16px;">
+        <div class="card card-glowing" style="padding: 16px;">
+          <h3 id="gm-x2-question" style="font-size: 16px; margin-bottom: 10px;">Question text...</h3>
+          <div id="gm-x2-choices" style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;" class="text-secondary"></div>
+          <div style="margin-top: 10px; font-weight: 700; color: var(--primary); font-size: 12px;" id="gm-x2-key">KEY: -</div>
+        </div>
+
+        <div class="card" style="padding: 16px; text-align: center;">
+          <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px;">
+            <button id="btn-gm-open-buzz" class="btn btn-primary btn-large" style="flex: 1; font-size: 15px;">
+              OPEN BUZZER
+            </button>
+            <button id="btn-gm-close-buzz" class="btn btn-secondary" style="font-size: 12px;">CLOSE</button>
+            <button id="btn-gm-reset-buzz" class="btn btn-secondary" style="font-size: 12px;">RESET</button>
+          </div>
+
+          <div style="background-color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 10px; text-align: left;">
+            <div id="gm-buzz-feed" style="font-size: 14px; font-weight: 700; color: var(--primary);">
+              Buzzer Belum Dibuka.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL X3 -->
+    <div id="gm-panel-x3" class="card" style="display: none; padding: 20px;">
+      <div class="flex-between" style="margin-bottom: 16px;">
+        <span class="station-badge">STATION X3 • AI UNSOLVED CASE</span>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
+            <button id="btn-toggle-x3-vis" class="btn-vis-toggle inactive">OFF</button>
+          </div>
+          <input type="file" id="csv-file-x3" accept=".csv" style="display: none;">
+          <button onclick="document.getElementById('csv-file-x3').click()" class="btn btn-primary" style="font-size: 12px;">
+            IMPORT CSV
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid-2">
+        <div class="card card-glowing" style="padding: 16px;">
+          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x3-title-x">TEAM X SUBMISSION</h4>
+          <div id="gm-x3-body-x">
+            <p class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</p>
+          </div>
+        </div>
+
+        <div class="card card-glowing" style="padding: 16px;">
+          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x3-title-y">TEAM Y SUBMISSION</h4>
+          <div id="gm-x3-body-y">
+            <p class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL X4 -->
+    <div id="gm-panel-x4" class="card" style="display: none; padding: 20px;">
+      <div class="flex-between" style="margin-bottom: 16px;">
+        <span class="station-badge">STATION X4 • FLASH MEMORY</span>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
+            <button id="btn-toggle-x4-vis" class="btn-vis-toggle inactive">OFF</button>
+          </div>
+          <input type="file" id="csv-file-x4" accept=".csv" style="display: none;">
+          <button onclick="document.getElementById('csv-file-x4').click()" class="btn btn-primary" style="font-size: 12px;">
+            IMPORT CSV
+          </button>
+          <button id="btn-x4-start-flash" class="btn btn-secondary btn-large">
+            1. START FLASH PHASE
+          </button>
+          <button id="btn-x4-start-recall" class="btn btn-secondary btn-large">
+            2. OPEN RECALL PHASE
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="card" style="padding: 16px;">
+          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x4-title-x">TEAM X RECALL</h4>
+          <div id="gm-x4-body-x" class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</div>
+        </div>
+
+        <div class="card" style="padding: 16px;">
+          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x4-title-y">TEAM Y RECALL</h4>
+          <div id="gm-x4-body-y" class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Overlapping Footer Logos -->
+  <div class="footer-overlay">
+    <img src="/assets/Infinix_logo.svg.webp" alt="Infinix" style="filter: brightness(0) invert(1);">
+    <span style="color: var(--border);">|</span>
+    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/OPTIMIZE/logo%20rg.svg" alt="Ruangguru">
+  </div>
+
+  <script src="/js/gm.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

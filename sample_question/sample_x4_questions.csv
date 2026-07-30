@@ -1,0 +1,10 @@
+station_id,question_text,choices,correct_answer
+X4,Buah apa yang muncul di Media 1?,A. Apel|B. Jeruk|C. Pisang|D. Mangga,A
+X4,Apa warna buah pada Media 1?,A. Hijau|B. Merah|C. Kuning|D. Oranye,B
+X4,Apa warna bola pada Media 2?,A. Hitam|B. Biru|C. Oranye|D. Merah,C
+X4,Berapa kali bola memantul pada Media 2?,A. 2 kali|B. 3 kali|C. 4 kali|D. 5 kali,B
+X4,Apa warna mobil pada Media 3?,A. Merah|B. Biru|C. Hitam|D. Putih,B
+X4,Jenis kendaraan apa yang tampil pada Media 3?,A. Mobil Sedan|B. Truk|C. Sepeda Motor|D. Bus,A
+X4,Apa warna kucing pada Media 4?,A. Putih|B. Abu-abu|C. Hitam|D. Oranye,C
+X4,Objek apa yang dilewati kucing pada Media 4?,A. Pagar Hitam|B. Pagar Putih|C. Pohon|D. Bangku Taman,B
+X4,Urutan Objek Utama Media 1 - 4?,A. Apel - Bola - Mobil - Kucing|B. Jeruk - Bola - Bus - Kucing|C. Apel - Kucing - Mobil - Bola|D. Pisang - Bola - Mobil - Anjing,A

@@ -1,0 +1,16 @@
+station_id,question_text,choices,correct_answer,points,time_limit_sec
+X2,Siapa nama CEO Ruangguru?,A. Belvi|B. Belva|C. Belvo|D. Agung,B,1,600
+X2,Presiden pertama Indonesia adalah?,A. Soeharto|B. Soekarno|C. Habibie|D. Megawati,B,1,600
+X2,Perang Diponegoro terjadi di pulau?,A. Sumatra|B. Kalimantan|C. Jawa|D. Sulawesi,C,1,600
+X2,Organisasi pergerakan nasional pertama di Indonesia?,A. Budi Utomo|B. Sarekat Islam|C. Indische Partij|D. PNI,A,1,600
+X2,Konferensi Meja Bundar diadakan di kota?,A. Jakarta|B. Den Haag|C. Yogyakarta|D. Bandung,B,1,600
+X2,Kongres Pemuda II (Sumpah Pemuda) diadakan tahun?,A. 1926|B. 1927|C. 1928|D. 1929,C,1,600
+X2,Tokoh proklamator kedua Indonesia?,A. Ahmad Soebardjo|B. Mohammad Hatta|C. Sutan Sjahrir|D. Sukarni,B,1,600
+X2,Negara yang menyerah mengakhiri PD II di Asia Pasifik?,A. Jerman|B. Italia|C. Jepang|D. Inggris,C,1,600
+X2,Satuan SI untuk gaya adalah?,A. Joule|B. Newton|C. Watt|D. Pascal,B,1,600
+X2,Organ yang berfungsi memompa darah?,A. Paru-paru|B. Hati|C. Jantung|D. Ginjal,C,1,600
+X2,Proses tumbuhan membuat makanan dari cahaya matahari?,A. Respirasi|B. Fotosintesis|C. Transpirasi|D. Fermentasi,B,1,600
+X2,Planet terdekat dengan matahari?,A. Venus|B. Bumi|C. Merkurius|D. Mars,C,1,600
+X2,Lambang unsur kimia Oksigen adalah?,A. O|B. Os|C. Ox|D. On,A,1,600
+X2,Gas yang dibutuhkan manusia untuk bernapas?,A. Karbon dioksida|B. Oksigen|C. Nitrogen|D. Hidrogen,B,1,600
+X2,Alat untuk mengukur suhu disebut?,A. Barometer|B. Termometer|C. Higrometer|D. Manometer,B,1,600

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Control Hub</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background-color: #080808;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <main style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 36px;">
+    <div style="text-align: center; max-width: 900px; width: 100%;">
+      
+      <div style="margin-bottom: 48px;">
+        <img src="/assets/unxpadted-logotype.png" alt="Unxpadted" style="max-width: 360px; width: 100%;">
+      </div>
+
+      <!-- Interface Launcher Cards Grid -->
+      <div class="grid-2" style="gap: 20px;">
+        
+        <!-- Stage Main Screen -->
+        <a href="/display.html" target="_blank" class="card card-glowing" style="text-decoration: none; padding: 28px; display: flex; align-items: center; justify-content: space-between;">
+          <h2 style="font-size: 20px; color: var(--primary);">MAIN DISPLAY</h2>
+          <span style="font-size: 18px;">➔</span>
+        </a>
+
+        <!-- Gamemaster Control Panel -->
+        <a href="/gm.html" target="_blank" class="card card-glowing" style="text-decoration: none; padding: 28px; display: flex; align-items: center; justify-content: space-between;">
+          <h2 style="font-size: 20px; color: var(--primary);">GAMEMASTER PANEL</h2>
+          <span style="font-size: 18px;">➔</span>
+        </a>
+
+        <!-- Team X Tablet -->
+        <a href="/team.html?team=X" target="_blank" class="card" style="text-decoration: none; padding: 24px; display: flex; align-items: center; justify-content: space-between;">
+          <h2 style="font-size: 18px; color: #fff;">TEAM X TABLET</h2>
+          <span style="font-size: 16px; color: var(--secondary);">➔</span>
+        </a>
+
+        <!-- Team Y Tablet -->
+        <a href="/team.html?team=Y" target="_blank" class="card" style="text-decoration: none; padding: 24px; display: flex; align-items: center; justify-content: space-between;">
+          <h2 style="font-size: 18px; color: #fff;">TEAM Y TABLET</h2>
+          <span style="font-size: 16px; color: var(--secondary);">➔</span>
+        </a>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Overlapping Footer Logos (Bottom Center, Clean Transparent) -->
+  <div class="footer-overlay">
+    <img src="/assets/Infinix_logo.svg.webp" alt="Infinix" style="filter: brightness(0) invert(1);">
+    <span style="color: var(--border);">|</span>
+    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/OPTIMIZE/logo%20rg.svg" alt="Ruangguru">
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
