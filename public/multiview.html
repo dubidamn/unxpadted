@@ -263,13 +263,17 @@
 </head>
 <body>
 
-  <!-- Pre-authenticate session storage for iframes on load -->
-  <script>
-    try {
-      sessionStorage.setItem('display_authed', 'true');
-      sessionStorage.setItem('gm_authed', 'true');
-    } catch(e){}
-  </script>
+  <!-- Passcode Protection Modal Overlay -->
+  <div id="passcode-modal" class="passcode-modal">
+    <div class="card card-glowing text-center" style="max-width: 360px; width: 90%; padding: 28px; background: #0D0D0D; border: 1px solid var(--primary); border-radius: 12px; box-shadow: 0 0 30px var(--primary-glow);">
+      <h2 style="font-size: 20px; margin-bottom: 16px; font-family: var(--font-display); color: #fff;">Multiview Passcode</h2>
+      <form id="passcode-form">
+        <input type="password" id="passcode-input" class="input-text" placeholder="Passcode..." style="text-align: center; font-size: 18px; margin-bottom: 16px; width: 100%; padding: 12px; background: #141414; border: 1px solid var(--border); color: #fff; border-radius: 6px;" autofocus required>
+        <button type="submit" class="sim-btn active" style="width: 100%; justify-content: center; padding: 12px; font-size: 14px;">ACCESS MULTIVIEW</button>
+      </form>
+      <div id="passcode-error" style="font-size: 13px; color: var(--error); margin-top: 12px; display: none;">Passcode Salah!</div>
+    </div>
+  </div>
 
   <!-- Top Multiview Navigation Bar -->
   <header class="sim-bar">
@@ -418,6 +422,37 @@
   </main>
 
   <script>
+    // Passcode Protection (xpad30pro)
+    const PASSCODE = 'xpad30pro';
+    const passcodeModal = document.getElementById('passcode-modal');
+    const passcodeForm = document.getElementById('passcode-form');
+    const passcodeInput = document.getElementById('passcode-input');
+    const passcodeError = document.getElementById('passcode-error');
+
+    function checkAuth() {
+      if (sessionStorage.getItem('multiview_authed') === 'true') {
+        if (passcodeModal) passcodeModal.style.display = 'none';
+        bypassPasscodes();
+      } else if (passcodeModal) {
+        passcodeModal.style.display = 'flex';
+      }
+    }
+
+    if (passcodeForm) {
+      passcodeForm.onsubmit = (e) => {
+        e.preventDefault();
+        if (passcodeInput.value === PASSCODE) {
+          sessionStorage.setItem('multiview_authed', 'true');
+          sessionStorage.setItem('display_authed', 'true');
+          sessionStorage.setItem('gm_authed', 'true');
+          if (passcodeModal) passcodeModal.style.display = 'none';
+          bypassPasscodes();
+        } else {
+          if (passcodeError) passcodeError.style.display = 'block';
+        }
+      };
+    }
+
     // Layout switcher state logic
     const grid = document.getElementById('viewport-grid');
     const wrapperGm = document.getElementById('wrapper-gm');
@@ -503,10 +538,9 @@
       });
     }
 
-    // Initial setup on load: automatically bypass passcode modals
+    // Initial setup on load
     window.addEventListener('load', () => {
-      setTimeout(bypassPasscodes, 500);
-      setTimeout(bypassPasscodes, 1500);
+      checkAuth();
     });
   </script>
 </body>
