@@ -1,7 +1,7 @@
 {
   "name": "unxpadted-game-system",
   "version": "1.0.0",
-  "description": "Clash of Unxpadted - Interactive Live Game System for Infinix XPAD 30 Pro x Ruangguru",
+  "description": "Clash of Unxpadted - Interactive Live Realtime Game System for Infinix XPAD 30 Pro",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

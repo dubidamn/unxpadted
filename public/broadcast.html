@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broadcast Overlay Screen — Clash of Unxpadted</title>
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/broadcast.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audio.js"></script>
+  <style>
+    .x2-buzzer-banner {
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .x2-buzzer-banner.open {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(217, 119, 6, 0.2) 100%);
+      border: 2px solid #fbbf24;
+      color: #fbbf24;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+      animation: pulseGlowAmber 1s infinite alternate;
+    }
+    .x2-buzzer-banner.buzzed.team-x {
+      background: linear-gradient(135deg, rgba(255, 71, 87, 0.35) 0%, rgba(255, 107, 129, 0.2) 100%);
+      border: 2px solid var(--team-x-accent);
+      color: #ffffff;
+      box-shadow: 0 0 25px var(--team-x-glow);
+    }
+    .x2-buzzer-banner.buzzed.team-y {
+      background: linear-gradient(135deg, rgba(0, 210, 211, 0.35) 0%, rgba(0, 229, 255, 0.2) 100%);
+      border: 2px solid var(--team-y-accent);
+      color: #ffffff;
+      box-shadow: 0 0 25px var(--team-y-glow);
+    }
+
+    @keyframes pulseGlowAmber {
+      0% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+      100% { box-shadow: 0 0 35px rgba(245, 158, 11, 0.9); }
+    }
+
+    .x2-choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .x2-choice-card {
+      background: var(--grad-dark-recessed);
+      border: 1.5px solid var(--border-metallic);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+    .x2-choice-card.correct {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.2) 100%) !important;
+      border-color: #34d399 !important;
+      color: #34d399 !important;
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.6);
+    }
+
+    /* X3 Recall Elements */
+    .x3-q-node {
+      background: #141724;
+      border: 1.5px solid #2e3448;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: var(--font-orbitron);
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-slate);
+      transition: all 0.2s ease;
+      min-width: 60px;
+      text-align: center;
+    }
+    .x3-q-node.locked {
+      background: var(--grad-purple-luminous);
+      color: #000000;
+      border-color: #ffffff;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.9);
+    }
+
+    /* X4 Digit Display Consoles (Matching Player Tablet Rounded Style) */
+    .x4-digit-unit {
+      background: #141724;
+      border: 1.5px solid #2e3448;
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 105px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
+    }
+    .x4-digit-unit.locked {
+      background: #1e1b2e;
+      border-color: var(--purple-neon-bright);
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+    }
+    .x4-digit-box {
+      font-family: var(--font-orbitron);
+      font-size: 46px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d0f17;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    .x4-digit-box.locked {
+      color: var(--purple-neon-bright);
+      border-color: var(--purple-neon-bright);
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.6);
+      background: rgba(168, 85, 247, 0.15);
+    }
+    .x4-digit-time {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-slate);
+    }
+    .x4-digit-time.locked {
+      color: #34d399;
+    }
+
+    /* X4 Large Submitted Card */
+    .x4-submitted-hero-card {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.2) 0%, rgba(20, 10, 32, 0.85) 100%);
+      border: 2px solid var(--purple-neon-bright);
+      border-radius: 14px;
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.6);
+      animation: fadeInState 0.3s ease forwards;
+    }
+    .x4-submitted-hero-time {
+      font-family: var(--font-orbitron);
+      font-size: 56px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body class="cyber-bg-grid cyber-scanlines standby-active">
+
+  <!-- Atmospheric Glow Spotlight -->
+  <div class="broadcast-glow-spotlight"></div>
+
+  <!-- Persistent Connection Status Dot (Bottom Right) -->
+  <div id="connection-dot" class="connection-status-dot"></div>
+
+  <div class="broadcast-container">
+    
+    <!-- ==========================================
+         1. STICKY TOP OVERLAY HEADER
+         ========================================== -->
+    <header class="broadcast-top-overlay">
+      
+      <!-- Left: Team X Score Card -->
+      <div class="broadcast-header-left">
+        <div class="team-score-card team-x">
+          <span id="disp-name-x" class="font-display" style="font-size: 15px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 1.5px;">TEAM X</span>
+          <span id="disp-score-x" class="team-score-val timer-tabular" style="min-width: 2ch;">0</span>
+        </div>
+      </div>
+
+      <!-- Center: Clean Large Tournament Logo & Match Tracker Dots -->
+      <div class="broadcast-header-center">
+        <img src="/assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="broadcast-header-logo">
+        <div id="match-tracker-dots" class="tracker-dots-group">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Right: Team Y Score Card -->
+      <div class="broadcast-header-right">
+        <div class="team-score-card team-y">
+          <span id="disp-score-y" class="team-score-val timer-tabular" style="min-width: 2ch;">0</span>
+          <span id="disp-name-y" class="font-display" style="font-size: 15px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 1.5px;">TEAM Y</span>
+        </div>
+      </div>
+
+      <!-- Dedicated Razor-Sharp Glowing Bottom Accent Line -->
+      <div class="broadcast-header-glow-line"></div>
+
+    </header>
+
+    <!-- ==========================================
+         2. SUB-HEADER BAR: STATUS BADGE & BIG ORBITRON TIMER
+         ========================================== -->
+    <div class="broadcast-sub-bar">
+      <!-- Status Badge -->
+      <div id="disp-header-status" class="broadcast-station-badge">
+        <span class="station-main-title" style="color: #ffffff;">STANDBY</span>
+      </div>
+
+      <!-- Big White Orbitron Match Timer -->
+      <div id="disp-clock-timer" class="broadcast-orbitron-timer font-orbitron-tabular">
+        <span id="disp-clock-min" class="clock-digit-group">00</span><span class="clock-colon">:</span><span id="disp-clock-sec" class="clock-digit-group">00</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         3. DYNAMIC MAIN STAGE VIEWPORT
+         ========================================== -->
+    <main class="broadcast-viewport">
+
+      <!-- ==========================================
+           STATE 0: STANDBY (FULL BACKGROUND FILL)
+           ========================================== -->
+      <div id="broadcast-state-standby" class="broadcast-state active"></div>
+
+      <!-- ==========================================
+           STATE 1: STATION X1 — MATH SPEEDRUN (FIRST TO N! ONLY)
+           ========================================== -->
+      <div id="broadcast-state-x1" class="broadcast-state">
+        <div class="bevel-card text-center" style="max-width: min(1040px, 94vw); width: 94%; padding: 48px 48px;">
+          
+          <h1 id="x1-target-headline" class="font-display text-glow-purple-intense" style="font-size: clamp(48px, 5.5vw, 68px); font-weight: 900; letter-spacing: 3px; color: #ffffff; margin: 0 auto 32px auto; text-transform: uppercase;">
+            FIRST TO 30!
+          </h1>
+
+          <!-- Single Unified Duel Progress Bar -->
+          <div style="margin-top: 10px; width: 100%;">
+            <div class="duel-bar-wrapper">
+              <div class="duel-bar-track">
+                <div id="duel-bar-fill-x" class="duel-bar-fill-x" style="width: 0%;"></div>
+                <div class="duel-bar-center-marker"></div>
+                <div id="duel-bar-fill-y" class="duel-bar-fill-y" style="width: 0%;"></div>
+
+                <div class="duel-bar-text-overlay">
+                  <span id="duel-val-x" class="timer-tabular" style="color: #ff9ff3;">TEAM X: 0 / 30</span>
+                  <span id="duel-val-y" class="timer-tabular" style="color: #c7ecee;">TEAM Y: 0 / 30</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Victory Banner -->
+          <div id="x1-victory-banner" class="text-center" style="margin-top: 24px; display: none;">
+            <h2 id="x1-winner-name" class="font-display" style="font-size: 32px; font-weight: 900; color: #ffffff;"></h2>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           STATE 2: STATION X2 — CERDAS CERMAT (CLEAN INSTRUCTION & CORRECT ANSWER ONLY)
+           ========================================== -->
+      <div id="broadcast-state-x2" class="broadcast-state">
+        
+        <!-- Buzzer Status Instruction Banner (Placed at Top of Section X2) -->
+        <div id="x2-buzzer-banner" class="x2-buzzer-banner open" style="display: none; max-width: min(1080px, 94vw); width: 94%;">
+          <span id="x2-banner-text">TEKAN TOMBOL SEKARANG UNTUK MENJAWAB</span>
+        </div>
+
+        <div class="bevel-card" style="max-width: min(1080px, 94vw); width: 94%; padding: 32px 44px;">
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 8px;">
+            <span id="x2-q-num" class="font-display" style="font-size: 15px; color: var(--purple-glow-light); letter-spacing: 2px;">
+              SOAL 1
+            </span>
+          </div>
+
+          <!-- Question Prompt -->
+          <h2 id="x2-q-title" class="font-display" style="font-size: 28px; font-weight: 800; line-height: 1.35; margin-bottom: 24px; color: #ffffff;">
+            Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?
+          </h2>
+
+          <!-- 4 Choices Grid (Only Highlights Correct Choice Upon Submission) -->
+          <div class="x2-choice-grid">
+            <div id="x2-choice-0" class="x2-choice-card">A. 16 Agustus 1945</div>
+            <div id="x2-choice-1" class="x2-choice-card">B. 17 Agustus 1945</div>
+            <div id="x2-choice-2" class="x2-choice-card">C. 18 Agustus 1945</div>
+            <div id="x2-choice-3" class="x2-choice-card">D. 19 Agustus 1945</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           STATE 3: STATION X3 — FLASH MEMORY (CLEAN Q1-Q5 NODES)
+           ========================================== -->
+      <div id="broadcast-state-x3" class="broadcast-state">
+        <div style="max-width: min(1040px, 94vw); width: 94%; display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Team X Tracking Deck -->
+          <div style="background: rgba(14, 16, 24, 0.95); border: 2px solid var(--team-x-accent); border-radius: 14px; padding: 24px 32px; box-shadow: 0 0 25px var(--team-x-glow); display: flex; justify-content: space-between; align-items: center;">
+            <span class="font-display" style="font-size: 26px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 2px;">TEAM X</span>
+            <div id="x3-tracker-row-x" style="display: flex; gap: 14px;"></div>
+          </div>
+
+          <!-- Team Y Tracking Deck -->
+          <div style="background: rgba(14, 16, 24, 0.95); border: 2px solid var(--team-y-accent); border-radius: 14px; padding: 24px 32px; box-shadow: 0 0 25px var(--team-y-glow); display: flex; justify-content: space-between; align-items: center;">
+            <span class="font-display" style="font-size: 26px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 2px;">TEAM Y</span>
+            <div id="x3-tracker-row-y" style="display: flex; gap: 14px;"></div>
+          </div>
+
+          <!-- Winner Outcome Card -->
+          <div id="x3-phase-result" style="display: none; text-align: center; padding: 20px 0; margin-top: 10px;">
+            <h2 id="x3-winner-name" class="font-display" style="font-size: 32px; font-weight: 900; color: #ffffff;"></h2>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           STATE 4: STATION X4 — AI UNSOLVED CASE (ROUNDED CONSOLES)
+           ========================================== -->
+      <div id="broadcast-state-x4" class="broadcast-state">
+        <div style="max-width: min(1180px, 95vw); width: 95%;">
+          
+          <!-- Dual Telemetry: Team X & Team Y Sections (Rounded Rectangles, Centered Duration) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+            
+            <!-- Team X Section -->
+            <div style="background: rgba(12, 14, 22, 0.95); border: 2px solid var(--team-x-accent); border-radius: 16px; padding: 28px; box-shadow: 0 0 30px var(--team-x-glow);">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
+                <span class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 2px;">TEAM X</span>
+              </div>
+
+              <!-- Unsubmitted View: 3 Big Digit Units -->
+              <div id="x4-unsubmitted-x" style="display: flex; gap: 16px; justify-content: center;">
+                <div id="x4-unit-x-1" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 1</span>
+                  <div id="x4-disp-box-x-1" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-x-1" class="x4-digit-time">--</span>
+                </div>
+                <div id="x4-unit-x-2" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 2</span>
+                  <div id="x4-disp-box-x-2" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-x-2" class="x4-digit-time">--</span>
+                </div>
+                <div id="x4-unit-x-3" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 3</span>
+                  <div id="x4-disp-box-x-3" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-x-3" class="x4-digit-time">--</span>
+                </div>
+              </div>
+
+              <!-- Submitted Hero Card: Large Centered Time Display -->
+              <div id="x4-submitted-hero-x" class="x4-submitted-hero-card">
+                <span class="font-display" style="font-size: 15px; font-weight: 800; color: var(--purple-glow-light); letter-spacing: 3px;">WAKTU MENJAWAB</span>
+                <div id="x4-submitted-time-x" class="x4-submitted-hero-time">--</div>
+              </div>
+            </div>
+
+            <!-- Team Y Section -->
+            <div style="background: rgba(12, 14, 22, 0.95); border: 2.5px solid var(--team-y-accent); border-radius: 16px; padding: 28px; box-shadow: 0 0 30px var(--team-y-glow);">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
+                <span class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 2px;">TEAM Y</span>
+              </div>
+
+              <!-- Unsubmitted View: 3 Big Digit Units -->
+              <div id="x4-unsubmitted-y" style="display: flex; gap: 16px; justify-content: center;">
+                <div id="x4-unit-y-1" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 1</span>
+                  <div id="x4-disp-box-y-1" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-y-1" class="x4-digit-time">--</span>
+                </div>
+                <div id="x4-unit-y-2" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 2</span>
+                  <div id="x4-disp-box-y-2" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-y-2" class="x4-digit-time">--</span>
+                </div>
+                <div id="x4-unit-y-3" class="x4-digit-unit">
+                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 3</span>
+                  <div id="x4-disp-box-y-3" class="x4-digit-box">?</div>
+                  <span id="x4-disp-time-y-3" class="x4-digit-time">--</span>
+                </div>
+              </div>
+
+              <!-- Submitted Hero Card: Large Centered Time Display -->
+              <div id="x4-submitted-hero-y" class="x4-submitted-hero-card">
+                <span class="font-display" style="font-size: 15px; font-weight: 800; color: var(--purple-glow-light); letter-spacing: 3px;">WAKTU MENJAWAB</span>
+                <div id="x4-submitted-time-y" class="x4-submitted-hero-time">--</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Winner Banner Result -->
+          <div id="x4-winner-banner" style="margin-top: 24px; background: rgba(168, 85, 247, 0.15); border: 2px solid var(--purple-neon-bright); border-radius: 10px; padding: 16px 24px; text-align: center; display: none;">
+            <h3 id="x4-winner-title" class="font-display" style="font-size: 26px; font-weight: 900; color: #ffffff;"></h3>
+            <p id="x4-winner-reason" class="font-ui" style="font-size: 15px; color: var(--purple-glow-light); margin-top: 4px;"></p>
+            <div id="x4-solution-text" class="font-mono" style="font-size: 18px; font-weight: 800; color: #fbbf24; margin-top: 6px;"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="/js/broadcast.js"></script>
+</body>
+</html>

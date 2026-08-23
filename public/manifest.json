@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0D0D0D",
-  "theme_color": "#39FF14",
+  "theme_color": "#9333EA",
   "icons": [
     {
       "src": "/favicon.ico",
@@ -14,13 +14,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/assets/unxpadted-logotype.png",
+      "src": "/assets/brand/unxpadted-logotype.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/unxpadted-logotype.png",
+      "src": "/assets/brand/unxpadted-logotype.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

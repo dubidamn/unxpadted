@@ -1,0 +1,157 @@
+/* ==========================================================================
+   CLASH OF UNXPADTED — DESIGN SYSTEM TOKENS
+   Neon Green to Radiant Luminous Purple Gradient Transformation
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@500;700&display=swap');
+
+:root {
+  /* --- 1. Radiant Purple Neon & Glow Palette --- */
+  --purple-neon-bright: #d8b4fe;      /* Intense glow highlight */
+  --purple-neon-primary: #c084fc;     /* Primary neon border & active UI */
+  --purple-glow-mid: #a855f7;         /* Core vivid purple */
+  --purple-glow-dark: #7e22ce;        /* Deep shade for 3D gradients */
+  --purple-glow-deep: #581c87;        /* Background card base */
+  --purple-glow-light: #f3e8ff;       /* Text luminescence */
+
+  /* --- 2. Functional & Status Accents --- */
+  --action-amber: #f59e0b;            /* High-contrast secondary action */
+  --action-amber-glow: rgba(245, 158, 11, 0.6);
+  --error-crimson: #ff4757;           /* Wrong answer & penalty */
+  --team-x-accent: #ff4757;           /* Team X Red / Crimson */
+  --team-x-glow: rgba(255, 71, 87, 0.6);
+  --team-y-accent: #00d2d3;           /* Team Y Cyan / Aqua */
+  --team-y-glow: rgba(0, 210, 211, 0.6);
+
+  /* --- 3. Tactical Cyberpunk Chassis & Recessed Gradients --- */
+  --bg-primary: #0a0c12;
+  --bg-chassis-dark: #0f111a;
+  --bg-chassis-surface: #181a24;
+  --border-metallic: #2a2d3d;
+  --text-white: #ffffff;
+  --text-slate: #94a3b8;
+
+  /* Gradient Presets */
+  --grad-purple-luminous: linear-gradient(135deg, #d8b4fe 0%, #a855f7 50%, #7e22ce 100%);
+  --grad-purple-card: linear-gradient(180deg, #1e1338 0%, #110d24 60%, #0a0817 100%);
+  --grad-purple-card-bright: linear-gradient(180deg, #3b1266 0%, #1e093d 70%, #120524 100%);
+  --grad-purple-success: linear-gradient(135deg, #a855f7 0%, #7e22ce 50%, #3b0764 100%);
+  --grad-purple-bar: linear-gradient(90deg, #c084fc 0%, #a855f7 50%, #d8b4fe 100%);
+  --grad-chassis-metallic: linear-gradient(180deg, #2b2e3c 0%, #1a1c25 50%, #12141c 100%);
+  --grad-dark-recessed: linear-gradient(180deg, #090a0f 0%, #12141f 100%);
+
+  /* Glowing Shadows */
+  --glow-purple-sm: 0 0 12px rgba(168, 85, 247, 0.5);
+  --glow-purple-md: 0 0 24px rgba(168, 85, 247, 0.7);
+  --glow-purple-lg: 0 0 45px rgba(192, 132, 252, 0.85);
+  --glow-purple-intense: 0 0 70px rgba(216, 180, 254, 0.95), 0 0 100px rgba(168, 85, 247, 0.6);
+
+  /* Typography */
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-orbitron: 'Orbitron', 'Chakra Petch', monospace;
+  --font-sub: 'Rajdhani', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Grotesk', 'Chakra Petch', monospace;
+  --font-ui: system-ui, -apple-system, sans-serif;
+}
+
+/* Base Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* Background Cyber Grid */
+.cyber-bg-grid {
+  background-color: #06070a;
+  background-image: 
+    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center center;
+}
+
+/* Scanline Effect */
+.cyber-scanlines {
+  position: relative;
+}
+
+.cyber-scanlines::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 99;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Typography Utility Classes */
+.font-display { font-family: var(--font-display); }
+.font-sub { font-family: var(--font-sub); }
+.font-mono { font-family: var(--font-mono); }
+.font-orbitron { font-family: var(--font-orbitron); }
+.font-ui { font-family: var(--font-ui); }
+
+/* TABULAR NUMBERS: Non-shifting, fixed-width number rendering */
+.timer-tabular, .digit-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  -webkit-font-feature-settings: "tnum" 1, "lnum" 1;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: 0;
+  display: inline-block;
+  text-align: center;
+}
+
+.font-orbitron-tabular {
+  font-family: var(--font-orbitron);
+  font-variant-numeric: tabular-nums lining-nums;
+  -webkit-font-feature-settings: "tnum" 1, "lnum" 1;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* Segmented Fixed-Width Digital Clock Elements (Prevents Any Jitter/Width Shift) */
+.clock-digit-group {
+  display: inline-block;
+  min-width: 2ch;
+  width: 2ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums lining-nums;
+  -webkit-font-feature-settings: "tnum" 1, "lnum" 1;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.clock-colon {
+  display: inline-block;
+  min-width: 0.8ch;
+  width: 0.8ch;
+  text-align: center;
+  user-select: none;
+  opacity: 0.9;
+}
+
+/* Glowing Text Helpers (Clean flat rendering) */
+.text-glow-purple {
+  text-shadow: none;
+}
+
+.text-glow-purple-intense {
+  text-shadow: none;
+}
+
+.text-glow-amber {
+  text-shadow: none;
+}

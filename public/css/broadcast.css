@@ -1,0 +1,512 @@
+/* ==========================================================================
+   BROADCAST OVERLAY SCREEN STYLING (16:9 SPECTATOR DISPLAY)
+   Refactored for Large Displays (1080p, 1440p, 4K Stage Screens & LED Walls)
+   Scalable High-Fidelity Logo, Responsive Dots Tracker, and Big Duel Progress Bar
+   ========================================================================== */
+
+/* 16:9 Aspect Ratio Master Container */
+.broadcast-container {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: 16 / 9;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 50% 40%, #161926 0%, #08090e 100%);
+  text-shadow: none !important;
+}
+
+/* Atmospheric Glow Elements */
+.broadcast-watermark-x {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: 80vh;
+  font-weight: 900;
+  color: rgba(168, 85, 247, 0.025);
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+.broadcast-glow-spotlight {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.14) 0%, rgba(126, 34, 206, 0.05) 50%, transparent 80%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================
+   1. PERSISTENT STICKY TOP OVERLAY HEADER
+   (Taller Header for Majestic Big Screen Visibility with Clean Glow Line Clearance)
+   ========================================== */
+.broadcast-top-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: clamp(108px, 12.5vh, 138px);
+  min-height: clamp(108px, 12.5vh, 138px);
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: clamp(8px, 1vh, 12px) clamp(24px, 3.5vw, 64px) clamp(10px, 1.2vh, 16px) clamp(24px, 3.5vw, 64px);
+  background: linear-gradient(180deg, #32384a 0%, #222634 30%, #151822 70%, #0d0f15 100%);
+  border-top: 2.5px solid #4e5879;
+  border-bottom: 2px solid #08090e;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 0 #202636;
+  box-sizing: border-box;
+}
+
+/* Dedicated Razor-Sharp Glowing Bottom Accent Line */
+.broadcast-header-glow-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.25) 0%, #a855f7 20%, #d8b4fe 40%, #ffffff 50%, #d8b4fe 60%, #a855f7 80%, rgba(168, 85, 247, 0.25) 100%);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.95), 0 0 30px rgba(192, 132, 252, 0.6), 0 2px 6px rgba(216, 180, 254, 0.8);
+  z-index: 110;
+  pointer-events: none;
+}
+
+.broadcast-header-left {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.3vw, 20px);
+}
+
+.broadcast-header-center {
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 0.6vh, 8px);
+  padding-bottom: 2px;
+}
+
+.broadcast-header-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.3vw, 20px);
+}
+
+/* Scalable Main Tournament Logo (Proportional, Majestic, Clean) */
+.broadcast-header-logo {
+  height: clamp(48px, 5.5vh, 68px);
+  max-width: min(440px, 35vw);
+  object-fit: contain;
+  filter: none !important;
+  display: block;
+}
+
+/* Header Match Tracker Dots - Scaled with Ample Clearance from Glow Line */
+.broadcast-header-center .tracker-dots-group {
+  gap: clamp(6px, 0.7vw, 12px);
+}
+
+.broadcast-header-center .tracker-dot {
+  width: clamp(13px, 1.1vw, 17px);
+  height: clamp(13px, 1.1vw, 17px);
+}
+
+.broadcast-header-center .tracker-dot.match-point {
+  transform: scale(1.22);
+}
+
+/* Scalable Team Scoreboard Displays */
+.team-score-card {
+  background: var(--grad-chassis-metallic);
+  border: 1.5px solid var(--border-metallic);
+  border-radius: 10px;
+  padding: clamp(6px, 0.8vh, 10px) clamp(16px, 1.8vw, 26px);
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1vw, 16px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.team-score-card.team-x {
+  border-left: 4px solid var(--team-x-accent);
+}
+
+.team-score-card.team-y {
+  border-right: 4px solid var(--team-y-accent);
+}
+
+.team-score-val {
+  font-family: var(--font-orbitron);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/* ==========================================
+   2. SUB-HEADER BAR: STATUS BADGE & BIG ORBITRON TIMER
+   (Shifted Further Down with Clear Spacing from Taller Header)
+   ========================================== */
+.broadcast-sub-bar {
+  position: fixed;
+  top: clamp(144px, 16vh, 178px);
+  left: clamp(24px, 3vw, 56px);
+  right: clamp(24px, 3vw, 56px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 95;
+  pointer-events: none;
+}
+
+/* Left/Center Status Badge */
+.broadcast-station-badge {
+  pointer-events: auto;
+  position: relative;
+  background: linear-gradient(135deg, rgba(216, 180, 254, 0.95) 0%, rgba(168, 85, 247, 0.9) 50%, rgba(126, 34, 206, 0.95) 100%);
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+  padding: clamp(6px, 0.8vh, 10px) clamp(28px, 2.4vw, 44px);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.1vw, 17px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 25px rgba(168, 85, 247, 0.65);
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+.broadcast-station-badge::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: linear-gradient(180deg, #2c164d 0%, #150927 100%);
+  clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 13px 100%, 0 50%);
+  z-index: -1;
+}
+
+.station-dot-sep {
+  color: var(--purple-neon-bright);
+  font-weight: 900;
+}
+
+/* BIG WHITE ORBITRON MATCH TIMER (RIGHT UNDER HEADER - SCALABLE FOR BIG SCREENS) */
+.broadcast-orbitron-timer {
+  font-family: var(--font-orbitron);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: clamp(34px, 2.8vw, 48px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2.5px;
+  line-height: 1;
+  text-shadow: none;
+  pointer-events: auto;
+  background: rgba(14, 17, 26, 0.88);
+  border: 1.5px solid #363e54;
+  padding: clamp(6px, 0.7vh, 10px) clamp(16px, 1.6vw, 26px);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================
+   3. DYNAMIC MAIN STAGE VIEWPORT
+   ========================================== */
+.broadcast-viewport {
+  flex: 1;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px clamp(24px, 3vw, 64px) 24px clamp(24px, 3vw, 64px);
+  margin-top: clamp(216px, 23.5vh, 256px);
+  height: calc(100vh - clamp(216px, 23.5vh, 256px));
+  max-height: calc(100vh - clamp(216px, 23.5vh, 256px));
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Dynamic State Containers */
+.broadcast-state {
+  display: none;
+  width: 100%;
+  max-width: min(1140px, 94vw);
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInState 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.broadcast-state.active {
+  display: flex;
+}
+
+/* Standby State Full Background Image Fill & No Scanlines */
+body.standby-active.cyber-scanlines::after {
+  display: none !important;
+}
+
+body.standby-active {
+  background-image: url('/assets/Global%20Assets/Main%20Screen.jpeg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.standby-active .broadcast-container {
+  background: transparent !important;
+}
+
+body.standby-active .broadcast-glow-spotlight {
+  display: none !important;
+}
+
+#broadcast-state-standby {
+  display: none !important;
+}
+
+@keyframes fadeInState {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Floating Math Icons on Intro Screen */
+.floating-math-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.math-symbol {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: rgba(168, 85, 247, 0.2);
+  animation: floatMath 4s infinite alternate ease-in-out;
+}
+
+@keyframes floatMath {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+  100% { transform: translateY(-20px) rotate(8deg); opacity: 0.4; }
+}
+
+/* ==========================================
+   4. DRAWER SIDEBAR & FLOATING ACTION BUTTON
+   ========================================== */
+.fab-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+
+.fab-button {
+  background: var(--grad-chassis-metallic);
+  border: 1.5px solid var(--purple-neon-primary);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), var(--glow-purple-sm);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.fab-button:hover {
+  transform: scale(1.1);
+  border-color: #ffffff;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.9), var(--glow-purple-md);
+}
+
+/* Off-Canvas Right Sidebar Drawer */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar-drawer {
+  position: fixed;
+  top: 0;
+  right: -380px;
+  bottom: 0;
+  width: 360px;
+  background: rgba(15, 17, 26, 0.98);
+  border-left: 2px solid var(--purple-neon-primary);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8), var(--glow-purple-md);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+.sidebar-drawer.open {
+  right: 0;
+}
+
+.sidebar-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-metallic);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--grad-chassis-metallic);
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+}
+
+.sidebar-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-slate);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.sidebar-close-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-section-label {
+  font-family: var(--font-sub);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--purple-glow-light);
+  text-transform: uppercase;
+}
+
+.sidebar-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.sidebar-action-btn {
+  background: var(--grad-dark-recessed);
+  border: 1px solid var(--border-metallic);
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #ffffff;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+}
+
+.sidebar-action-btn:hover {
+  background: var(--grad-chassis-metallic);
+  border-color: var(--purple-neon-bright);
+}
+
+.sidebar-action-btn.active {
+  background: var(--grad-purple-luminous);
+  border-color: #ffffff;
+  color: #000000;
+  font-weight: 900;
+  box-shadow: var(--glow-purple-sm);
+}
+
+.sidebar-action-btn.team-x-btn:hover {
+  border-color: var(--team-x-accent);
+  color: var(--team-x-accent);
+}
+
+.sidebar-action-btn.team-y-btn:hover {
+  border-color: var(--team-y-accent);
+  color: var(--team-y-accent);
+}
+
+.sidebar-shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-slate);
+}
+
+.sidebar-shortcut-list kbd {
+  background: #252b3d;
+  border: 1px solid #3e4760;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #ffffff;
+  margin-right: 6px;
+}

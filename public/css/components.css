@@ -1,0 +1,364 @@
+/* ==========================================================================
+   UNXPADTED SHARED GEOMETRIC COMPONENTS & HUD PRIMITIVES
+   Streamlined Chamfers, Bevels, Large Duel Progress Bar, and Dynamic Trackers
+   ========================================================================== */
+
+/* --- 1. Top HUD Chamfered Trapezoid Pills --- */
+.chamfer-pill-left {
+  position: relative;
+  background: linear-gradient(135deg, rgba(216, 180, 254, 0.85) 0%, rgba(168, 85, 247, 0.75) 45%, rgba(126, 34, 206, 0.5) 100%);
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+  padding: 8px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px rgba(168, 85, 247, 0.35);
+  isolation: isolate;
+}
+
+.chamfer-pill-left::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: var(--grad-chassis-metallic);
+  clip-path: polygon(13px 0, 100% 0, 100% 100%, 0 100%, 0 13px);
+  z-index: -1;
+}
+
+.chamfer-pill-right {
+  position: relative;
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.5) 0%, rgba(168, 85, 247, 0.75) 55%, rgba(216, 180, 254, 0.85) 100%);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  padding: 8px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px rgba(168, 85, 247, 0.35);
+  isolation: isolate;
+}
+
+.chamfer-pill-right::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: var(--grad-chassis-metallic);
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%);
+  z-index: -1;
+}
+
+/* --- 2. Bevel Octagon / Angular Cards --- */
+.bevel-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(216, 180, 254, 0.75) 0%, rgba(168, 85, 247, 0.6) 35%, rgba(59, 7, 100, 0.8) 100%);
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+  padding: 24px 32px;
+  box-shadow: var(--glow-purple-md), 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  isolation: isolate;
+}
+
+.bevel-card::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: var(--grad-purple-card);
+  clip-path: polygon(0 0, calc(100% - 23px) 0, 100% 23px, 100% 100%, 23px 100%, 0 calc(100% - 23px));
+  z-index: -1;
+}
+
+.bevel-card-bright {
+  background: linear-gradient(135deg, rgba(243, 232, 255, 0.9) 0%, rgba(192, 132, 252, 0.8) 40%, rgba(147, 51, 234, 0.7) 100%);
+  box-shadow: var(--glow-purple-lg), inset 0 0 35px rgba(147, 51, 234, 0.4);
+}
+
+.bevel-card-bright::before {
+  background: var(--grad-purple-card-bright);
+}
+
+/* Correct Answer Notification Card */
+.bevel-card-success-purple {
+  background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 30%, #a855f7 65%, #7e22ce 100%) !important;
+  box-shadow: var(--glow-purple-intense) !important;
+  animation: pulseGlow 1.2s infinite alternate ease-in-out;
+}
+
+.bevel-card-success-purple::before {
+  background: var(--grad-purple-success) !important;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 30px rgba(192, 132, 252, 0.8), 0 0 60px rgba(168, 85, 247, 0.5);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 50px rgba(216, 180, 254, 1), 0 0 90px rgba(168, 85, 247, 0.8), 0 0 120px rgba(147, 51, 234, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+/* --- 3. Soal Objective Badge Pill --- */
+.soal-badge-pill {
+  position: relative;
+  background: linear-gradient(135deg, rgba(216, 180, 254, 0.95) 0%, rgba(168, 85, 247, 0.9) 50%, rgba(126, 34, 206, 0.95) 100%);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
+  padding: 8px 32px;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.7);
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.soal-badge-pill::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: linear-gradient(180deg, #2c164d 0%, #150927 100%);
+  clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0 50%);
+  z-index: -1;
+}
+
+/* --- 4. Glowing Purple Action Buttons --- */
+.btn-luminous-purple {
+  background: var(--grad-purple-luminous);
+  color: #000000;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 14px 38px;
+  cursor: pointer;
+  box-shadow: var(--glow-purple-md), 0 4px 15px rgba(0, 0, 0, 0.8);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: none;
+}
+
+.btn-luminous-purple:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: var(--glow-purple-lg), 0 8px 25px rgba(0, 0, 0, 0.9);
+}
+
+.btn-luminous-purple:active {
+  transform: translateY(2px) scale(0.97);
+}
+
+/* --- 5. Progress Bar with Glowing Purple Fill --- */
+.cyber-progress-container {
+  width: 100%;
+  background: #11141e;
+  border: 1px solid var(--border-metallic);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.cyber-progress-track {
+  width: 100%;
+  height: 18px;
+  background: #1a1e2d;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cyber-progress-fill-purple {
+  height: 100%;
+  background: var(--grad-purple-bar);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.8);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.cyber-progress-fill-purple::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 4px;
+  background: #ffffff;
+  box-shadow: 0 0 10px #ffffff, 0 0 20px var(--purple-neon-bright);
+}
+
+/* --- 6. ENLARGED SINGLE UNIFIED DUEL PROGRESS BAR (FOR BIG SCREENS) --- */
+.duel-bar-wrapper {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.duel-bar-track {
+  width: 100%;
+  height: 56px;
+  background: #0d0f17;
+  border: 2.5px solid #2e3448;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.95), 0 0 25px rgba(168, 85, 247, 0.25);
+}
+
+.duel-bar-fill-x {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4757 0%, #ff6b81 100%);
+  box-shadow: 0 0 22px rgba(255, 71, 87, 0.85);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.duel-bar-fill-x::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 5px;
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffffff, 0 0 20px #ff6b81;
+}
+
+.duel-bar-fill-y {
+  height: 100%;
+  background: linear-gradient(90deg, #00d2d3 0%, #00e5ff 100%);
+  box-shadow: 0 0 22px rgba(0, 229, 255, 0.85);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-left: auto;
+  position: relative;
+}
+
+.duel-bar-fill-y::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 5px;
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffffff, 0 0 20px #00e5ff;
+}
+
+.duel-bar-center-marker {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 3px;
+  background: #ffffff;
+  transform: translateX(-50%);
+  z-index: 5;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
+
+.duel-bar-text-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  font-family: var(--font-orbitron);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  z-index: 10;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* --- 7. ENLARGED MATCH TRACKER DOTS (OPTIMIZED FOR BIG STAGE SCREENS) --- */
+.tracker-dots-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 0.8vw, 14px);
+}
+
+.tracker-dot {
+  width: clamp(16px, 1.4vw, 22px);
+  height: clamp(16px, 1.4vw, 22px);
+  border-radius: 50%;
+  background: #151824;
+  border: 2px solid #333a4e;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tracker-dot.match-point {
+  border-color: #fbbf24;
+  transform: scale(1.25);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.85);
+}
+
+.tracker-dot.win-x {
+  background: var(--team-x-accent);
+  border-color: #ffffff;
+  box-shadow: 0 0 16px var(--team-x-glow);
+}
+
+.tracker-dot.win-y {
+  background: var(--team-y-accent);
+  border-color: #ffffff;
+  box-shadow: 0 0 16px var(--team-y-glow);
+}
+
+/* --- 8. Reaction Modal Overlay --- */
+.cyber-reaction-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(9, 10, 15, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.cyber-reaction-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cyber-reaction-card {
+  transform: scale(0.7) translateY(30px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cyber-reaction-modal.show .cyber-reaction-card {
+  transform: scale(1) translateY(0);
+}
+
+/* --- 9. Persistent Connection Status Dot (Bottom Right on All Screens) --- */
+.connection-status-dot {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  z-index: 99999;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.connection-status-dot.offline {
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+  animation: blinkRedStatus 1s infinite alternate;
+}
+
+@keyframes blinkRedStatus {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>XPAD Player Interface - Clash of Unxpadted</title>
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/player.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audio.js"></script>
+</head>
+<body class="player-container cyber-bg-grid">
+
+  <!-- Persistent Connection Status Dot (Bottom Right) -->
+  <div id="connection-dot" class="connection-status-dot"></div>
+
+  <!-- ==========================================
+       1. TACTICAL METALLIC CHASSIS HEADER
+       ========================================== -->
+  <header class="player-header">
+    
+    <!-- Left: Team Name Pill (Dictated by URL ?team=X or ?team=Y) -->
+    <div class="player-header-left">
+      <div id="player-team-pill" class="player-team-pill">
+        TEAM X
+      </div>
+    </div>
+
+    <!-- Center: Official Tournament Logo Badge (100% Dead-Center) -->
+    <div class="player-header-center">
+      <img src="/assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="player-header-logo">
+    </div>
+
+    <!-- Right: Station Timer & Points Pill (Segmented Orbitron Fixed-Width Digits) -->
+    <div class="player-header-right">
+      <div class="player-timer-item">
+        <div class="player-timer-label">STATION TIME</div>
+        <div id="player-station-timer" class="player-timer-val font-orbitron-tabular" style="color: var(--purple-neon-bright);">
+          <span id="player-timer-min" class="clock-digit-group">05</span><span class="clock-colon">:</span><span id="player-timer-sec" class="clock-digit-group">00</span>
+        </div>
+      </div>
+      <div style="height: 28px; width: 1.5px; background: rgba(255, 255, 255, 0.15);"></div>
+      <div id="team-score-pts" class="player-score-badge font-orbitron-tabular" style="min-width: 5ch;">0 PTS</div>
+    </div>
+
+    <!-- Dedicated Razor-Sharp Glowing Bottom Accent Line -->
+    <div class="player-header-glow-line"></div>
+
+  </header>
+
+  <!-- ==========================================
+       2. CLEAN SUB-HEADER BAR (STATION STATUS ONLY - TABS MOVED TO FAB)
+       ========================================== -->
+  <div class="player-sub-header">
+    <div id="player-sub-title" class="player-station-tag">STATION X1 • MATH SPEEDRUN</div>
+  </div>
+
+  <!-- ==========================================
+       3. EXPANDED MAIN GAME CANVAS (STATIONS X1 - X4)
+       ========================================== -->
+  <main class="player-workspace">
+
+    <!-- ==========================================
+         STATE 0: STANDBY (FULL BACKGROUND FILL)
+         ========================================== -->
+    <div id="station-view-standby" class="player-station-view player-standby-view" style="display: none;"></div>
+
+    <!-- ==========================================
+         STATION X1: MATH SPEEDRUN (WIDE FIELD & ROUNDED NUMPAD)
+         ========================================== -->
+    <div id="station-view-x1" class="player-station-view player-q-card">
+      
+      <!-- Topbar: Soal N Badge -->
+      <div class="player-q-topbar" style="justify-content: center;">
+        <span id="soal-badge" class="soal-badge-pill">SOAL 1</span>
+      </div>
+
+      <!-- Math Equation Formula -->
+      <div id="question-formula" class="question-formula-display">
+        47 + 58 = ?
+      </div>
+
+      <!-- Wide Orbitron Answer Display Field (No Text Glow) -->
+      <div id="x1-wide-box" class="wide-answer-display-box">
+        <span id="x1-display-value" class="wide-answer-text font-orbitron-tabular"></span>
+      </div>
+
+      <!-- 4x4 Virtual On-Screen Rounded Rectangle Numpad -->
+      <div class="tablet-numpad-grid">
+        <!-- Row 1 -->
+        <button type="button" class="numpad-key-rounded" data-key="7">7</button>
+        <button type="button" class="numpad-key-rounded" data-key="8">8</button>
+        <button type="button" class="numpad-key-rounded" data-key="9">9</button>
+        <button type="button" class="numpad-key-rounded numpad-key-icon" data-key="clear" title="Clear All">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+
+        <!-- Row 2 -->
+        <button type="button" class="numpad-key-rounded" data-key="4">4</button>
+        <button type="button" class="numpad-key-rounded" data-key="5">5</button>
+        <button type="button" class="numpad-key-rounded" data-key="6">6</button>
+        <button type="button" class="numpad-key-rounded numpad-key-icon" data-key="back" title="Backspace">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Row 3 -->
+        <button type="button" class="numpad-key-rounded" data-key="1">1</button>
+        <button type="button" class="numpad-key-rounded" data-key="2">2</button>
+        <button type="button" class="numpad-key-rounded" data-key="3">3</button>
+
+        <!-- Tall Radiant Purple Submit Key (Row 3 & 4) -->
+        <button type="button" class="numpad-key-rounded numpad-key-submit-purple" data-key="submit">
+          KIRIM
+        </button>
+
+        <!-- Row 4 -->
+        <button type="button" class="numpad-key-rounded" data-key="0" style="grid-column: 1 / span 3;">0</button>
+        <!-- Row 5: Orange Skip Soal Button -->
+        <button type="button" class="numpad-key-rounded numpad-key-skip-orange" data-key="skip">
+          LEWATI SOAL
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         STATION X2: CERDAS CERMAT (BIGGER BUZZER, NO BOTTOM LABEL)
+         ========================================== -->
+    <div id="station-view-x2" class="player-station-view player-q-card" style="display: none;">
+      
+      <!-- Topbar: Soal N Badge -->
+      <div class="player-q-topbar" style="justify-content: center;">
+        <span id="soal-badge-x2" class="soal-badge-pill">SOAL 1</span>
+      </div>
+
+      <!-- State A: Glowing Purple Buzzer Touch Target (Bigger Area, No Bottom Label) -->
+      <div id="x2-buzz-view" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: auto 0;">
+        <button id="btn-player-buzz" type="button" class="cyber-buzzer-btn" onclick="window.playerApp.pressBuzzer()" disabled>
+          BUZZ!
+        </button>
+      </div>
+
+      <!-- State B: Centered Radiant Purple Multiple Choice Trivia Options -->
+      <div id="x2-trivia-area" style="display: none; width: 100%; margin: auto 0;">
+        <div id="trivia-q-text" class="font-display" style="font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 24px; line-height: 1.4;">
+          Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?
+        </div>
+
+        <div class="trivia-options-grid">
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX2Option(0)">
+            <span class="opt-badge">A</span>
+            <span id="x2-opt-0">16 Agustus 1945</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX2Option(1)">
+            <span class="opt-badge">B</span>
+            <span id="x2-opt-1">17 Agustus 1945</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX2Option(2)">
+            <span class="opt-badge">C</span>
+            <span id="x2-opt-2">18 Agustus 1945</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX2Option(3)">
+            <span class="opt-badge">D</span>
+            <span id="x2-opt-3">19 Agustus 1945</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         STATION X3: FLASH MEMORY (DEAD-CENTERED RECALL QUESTION)
+         ========================================== -->
+    <div id="station-view-x3" class="player-station-view player-q-card" style="display: none;">
+      
+      <!-- Topbar: Centered Objective Badge -->
+      <div class="player-q-topbar" style="justify-content: center;">
+        <span id="x3-soal-badge" class="soal-badge-pill">SOAL 1</span>
+      </div>
+
+      <!-- Dead-Centered Question & Options Container -->
+      <div id="x3-recall-wrapper" style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; margin: auto 0;">
+        <div id="x3-q-text" class="font-display" style="font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 28px; line-height: 1.4; max-width: 780px;">
+          Buah apa yang muncul di Media 1 dan warnanya apa?
+        </div>
+
+        <div id="x3-options-container" class="trivia-options-grid">
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(0)">
+            <span class="opt-badge">A</span>
+            <span id="x3-opt-0">Apel Merah</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(1)">
+            <span class="opt-badge">B</span>
+            <span id="x3-opt-1">Jeruk Oranye</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(2)">
+            <span class="opt-badge">C</span>
+            <span id="x3-opt-2">Pisang Kuning</span>
+          </button>
+          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(3)">
+            <span class="opt-badge">D</span>
+            <span id="x3-opt-3">Mangga Hijau</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Locked State Card -->
+      <div id="x3-locked-wrapper" style="display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin: auto 0;">
+        <h2 class="font-display text-glow-purple-intense" style="font-size: 36px; font-weight: 900; color: #ffffff;">
+          JAWABAN TERKIRIM
+        </h2>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         STATION X4: AI UNSOLVED CASE (DEAD-CENTERED)
+         ========================================== -->
+    <div id="station-view-x4" class="player-station-view player-q-card" style="display: none;">
+      
+      <!-- Topbar: Objective Badge & Sub-Tabs SOAL / JAWAB -->
+      <div class="player-q-topbar">
+        <span class="soal-badge-pill">PECAHKAN 3 DIGIT</span>
+        
+        <!-- Clean Sub-Tabs SOAL / JAWAB -->
+        <div class="x4-inner-tabs-container">
+          <button id="tab-btn-x4-info" type="button" class="x4-inner-tab-btn active" onclick="window.playerApp.switchX4SubTab('info')">
+            SOAL
+          </button>
+          <button id="tab-btn-x4-submit" type="button" class="x4-inner-tab-btn" onclick="window.playerApp.switchX4SubTab('submit')">
+            JAWAB
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Dead-Centered Container for X4 Content -->
+      <div style="flex: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: stretch; align-items: stretch; margin: 0; min-height: 0;">
+        
+        <!-- Sub-Tab 1: SOAL (Command Prompt / Terminal Interface with Blinking Cursor) -->
+        <div id="x4-panel-info" class="x4-tab-panel">
+          <div class="command-prompt-window">
+            <div class="terminal-topbar">
+              <div class="terminal-dots">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+              </div>
+              <div class="terminal-title">C:\XPAD\SYSTEM\AI_UNSOLVED_CASE.LOG — COMMAND PROMPT</div>
+              <div style="width: 40px;"></div>
+            </div>
+            <div id="x4-terminal-logs" class="terminal-body"></div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 2: JAWAB (100% Dead-Centered Digit Boxes & Submit Button) -->
+        <div id="x4-panel-submit" class="x4-tab-panel" style="display: none;">
+          <div class="x4-submit-interactive-grid">
+            <!-- Digit 1 -->
+            <div id="x4-unit-1" class="x4-interactive-unit">
+              <div class="x4-interactive-unit-label">DIGIT 1</div>
+              <div id="x4-box-1" class="x4-interactive-box" onclick="window.playerApp.incrementX4Digit(0)">0</div>
+              <button id="x4-lock-btn-1" type="button" class="x4-direct-lock-btn" onclick="window.playerApp.lockX4Digit(0)" title="Kunci Digit 1"></button>
+            </div>
+
+            <!-- Digit 2 -->
+            <div id="x4-unit-2" class="x4-interactive-unit">
+              <div class="x4-interactive-unit-label">DIGIT 2</div>
+              <div id="x4-box-2" class="x4-interactive-box" onclick="window.playerApp.incrementX4Digit(1)">0</div>
+              <button id="x4-lock-btn-2" type="button" class="x4-direct-lock-btn" onclick="window.playerApp.lockX4Digit(1)" title="Kunci Digit 2"></button>
+            </div>
+
+            <!-- Digit 3 -->
+            <div id="x4-unit-3" class="x4-interactive-unit">
+              <div class="x4-interactive-unit-label">DIGIT 3</div>
+              <div id="x4-box-3" class="x4-interactive-box" onclick="window.playerApp.incrementX4Digit(2)">0</div>
+              <button id="x4-lock-btn-3" type="button" class="x4-direct-lock-btn" onclick="window.playerApp.lockX4Digit(2)" title="Kunci Digit 3"></button>
+            </div>
+          </div>
+
+          <button id="x4-submit-btn" type="button" class="btn-luminous-purple" style="font-size: 16px; padding: 12px 36px;" onclick="window.playerApp.sendX4Answers()">
+            KIRIM JAWABAN
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       4. MODAL FEEDBACK REACTION OVERLAY
+       ========================================== -->
+  <div id="player-reaction-modal" class="cyber-reaction-modal">
+    <div id="reaction-modal-card" class="bevel-card cyber-reaction-card text-center" style="max-width: 420px; width: 85%; padding: 32px 24px;">
+      <h2 id="reaction-modal-title" class="font-display" style="font-size: 38px; font-weight: 900; letter-spacing: 3px; margin: 0;">
+        BENAR
+      </h2>
+    </div>
+  </div>
+
+  <script src="/js/player.js"></script>
+</body>
+</html>

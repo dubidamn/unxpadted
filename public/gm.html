@@ -3,313 +3,429 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <title>Gamemaster Panel</title>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Gamemaster Panel — Clash of Unxpadted</title>
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/gm.css">
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/audio.js"></script>
+  <style>
+    .gm-dots-preview {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .gm-dot-node {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #252a3a;
+      border: 1px solid #3c445c;
+    }
+    .gm-dot-node.win-x {
+      background: var(--team-x-accent);
+      border-color: #ffffff;
+      box-shadow: 0 0 8px var(--team-x-accent);
+    }
+    .gm-dot-node.win-y {
+      background: var(--team-y-accent);
+      border-color: #ffffff;
+      box-shadow: 0 0 8px var(--team-y-accent);
+    }
+    .gm-dot-node.match-point {
+      border: 1.5px solid #fbbf24;
+    }
+  </style>
 </head>
-<body>
-  <!-- Toast Notification Container -->
-  <div id="toast-container" class="toast-container"></div>
+<body class="cyber-bg-grid gm-body">
 
-  <!-- Passcode Protection Modal Overlay -->
-  <div id="passcode-modal" class="passcode-modal">
-    <div class="card card-glowing text-center" style="max-width: 360px; width: 90%; padding: 28px;">
-      <h2 style="font-size: 20px; margin-bottom: 16px;">Gamemaster Passcode</h2>
-      <form id="passcode-form">
-        <input type="password" id="passcode-input" class="input-text" placeholder="Passcode..." style="text-align: center; font-size: 18px; margin-bottom: 16px;" autofocus required>
-        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">ACCESS CONTROL PANEL</button>
-      </form>
-      <div id="passcode-error" class="text-error" style="font-size: 13px; margin-top: 12px; display: none;">Passcode Salah!</div>
-    </div>
-  </div>
+  <!-- Persistent Connection Status Dot (Bottom Right) -->
+  <div id="connection-dot" class="connection-status-dot"></div>
 
-  <!-- Header -->
-  <header class="app-header">
-    <div class="brand-container">
-      <img src="/assets/unxpadted-logotype.png" alt="Unxpadted" class="brand-logo">
+  <!-- Top Sticky HUD -->
+  <header class="gm-header">
+    <div class="gm-brand-group">
+      <img src="/assets/Global Assets/Logotype_Overlay@2x.png" alt="Unxpadted" class="gm-logo">
     </div>
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <button id="btn-header-standby" class="btn btn-secondary">STANDBY</button>
-      <button id="btn-reset-all" class="btn btn-danger">RESET MATCH</button>
+
+    <!-- Station Navigation Tabs: Clean Top Bar (STANDBY, X1, X2, X3, X4) -->
+    <div class="gm-nav-tabs">
+      <button type="button" class="gm-tab-btn standby active" data-station="STANDBY" onclick="window.gmApp.setStation('STANDBY')">
+        STANDBY
+      </button>
+      <button type="button" class="gm-tab-btn" data-station="X1" onclick="window.gmApp.setStation('X1')">
+        X1
+      </button>
+      <button type="button" class="gm-tab-btn" data-station="X2" onclick="window.gmApp.setStation('X2')">
+        X2
+      </button>
+      <button type="button" class="gm-tab-btn" data-station="X3" onclick="window.gmApp.setStation('X3')">
+        X3
+      </button>
+      <button type="button" class="gm-tab-btn" data-station="X4" onclick="window.gmApp.setStation('X4')">
+        X4
+      </button>
     </div>
+
+    <div>
+      <button type="button" class="gm-btn gm-btn-danger" onclick="window.gmApp.resetAll()">
+        RESET MATCH
+      </button>
+    </div>
+
+    <div class="gm-header-line"></div>
   </header>
 
-  <main style="padding: 24px; max-width: 1400px; margin: 0 auto; width: 100%;">
+  <!-- Main GM Workspace -->
+  <main class="gm-workspace">
     
-    <!-- Top Control Grid: Teams & Timers & Match Tracker Colors -->
-    <div class="grid-3" style="margin-bottom: 24px;">
+    <!-- Top 3-Column Grid: Scoreboard & Dots Config, Match Clock, Station Clock -->
+    <div class="gm-top-grid" style="grid-template-columns: 1.5fr 1fr 1fr;">
       
-      <!-- Team Setup & Scoreboard -->
-      <div class="card card-glowing">
-        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">SCOREBOARD</h3>
-        
-        <div style="margin-bottom: 10px;">
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="input-name-x" class="input-text" placeholder="Nama Tim X..." value="TEAM X">
-            <button id="btn-save-teams" class="btn btn-secondary">SAVE</button>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="input-name-y" class="input-text" placeholder="Nama Tim Y..." value="TEAM Y">
-          </div>
-        </div>
-
-        <div class="flex-between" style="background-color: var(--muted); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
-          <div class="text-center">
-            <div id="score-label-x" style="font-size: 11px; font-weight: 700;" class="text-secondary">TEAM X</div>
-            <div id="score-x" style="font-size: 28px; font-weight: 800; color: var(--primary);">0</div>
-            <div style="display: flex; gap: 4px; margin-top: 4px;">
-              <button onclick="changeScore('X', 1)" class="btn btn-primary" style="padding: 2px 8px; font-size: 11px;">+1</button>
-              <button onclick="changeScore('X', -1)" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;">-1</button>
-            </div>
-          </div>
-          <div style="font-size: 18px; font-weight: 800; color: var(--border);">VS</div>
-          <div class="text-center">
-            <div id="score-label-y" style="font-size: 11px; font-weight: 700;" class="text-secondary">TEAM Y</div>
-            <div id="score-y" style="font-size: 28px; font-weight: 800; color: var(--primary);">0</div>
-            <div style="display: flex; gap: 4px; margin-top: 4px;">
-              <button onclick="changeScore('Y', 1)" class="btn btn-primary" style="padding: 2px 8px; font-size: 11px;">+1</button>
-              <button onclick="changeScore('Y', -1)" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;">-1</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Adjustable Match Tracker Colors -->
-        <div style="border-top: 1px solid var(--border); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
-          <span class="text-secondary" style="font-size: 11px; font-weight: 700;">TRACKER COLORS:</span>
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <label style="font-size: 11px; display: flex; align-items: center; gap: 4px;">
-              X: <input type="color" id="color-picker-x" value="#FF5449" style="border: none; width: 24px; height: 24px; cursor: pointer; background: transparent;">
-            </label>
-            <label style="font-size: 11px; display: flex; align-items: center; gap: 4px;">
-              Y: <input type="color" id="color-picker-y" value="#00E5FF" style="border: none; width: 24px; height: 24px; cursor: pointer; background: transparent;">
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Match Overall Timer -->
-      <div class="card">
-        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">MATCH TIMER</h3>
-        <div id="gm-match-timer" style="font-size: 40px; font-weight: 800; font-family: var(--font-display); text-align: center; margin: 12px 0;">
-          00:00
-        </div>
-        <div style="display: flex; justify-content: center; gap: 8px;">
-          <button id="btn-match-timer-start" class="btn btn-primary">START</button>
-          <button id="btn-match-timer-pause" class="btn btn-secondary">PAUSE</button>
-          <button id="btn-match-timer-reset" class="btn btn-secondary">RESET</button>
-        </div>
-      </div>
-
-      <!-- Leg / Station Timer -->
-      <div class="card">
-        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--primary); letter-spacing: 1px;">STATION TIMER</h3>
-        <div id="gm-station-timer" style="font-size: 40px; font-weight: 800; font-family: var(--font-display); text-align: center; margin: 8px 0; color: var(--primary);">
-          05:00
-        </div>
-        <div style="display: flex; justify-content: center; gap: 6px; margin-bottom: 8px;">
-          <button id="btn-station-timer-sub30" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">-30S</button>
-          <button id="btn-station-timer-add30" class="btn btn-primary" style="padding: 4px 10px; font-size: 11px;">+30S</button>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 8px;">
-          <button id="btn-station-timer-start" class="btn btn-primary">START</button>
-          <button id="btn-station-timer-pause" class="btn btn-secondary">PAUSE</button>
-          <button id="btn-station-timer-reset" class="btn btn-secondary">RESET</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Station Selector Tabs -->
-    <div style="margin-bottom: 24px; display: flex; gap: 8px;">
-      <button class="btn btn-secondary btn-large station-tab" data-station="X1" style="flex: 1;">X1: Math Speedrun</button>
-      <button class="btn btn-secondary btn-large station-tab" data-station="X2" style="flex: 1;">X2: Cerdas Cermat</button>
-      <button class="btn btn-secondary btn-large station-tab" data-station="X3" style="flex: 1;">X3: AI Case</button>
-      <button class="btn btn-secondary btn-large station-tab" data-station="X4" style="flex: 1;">X4: Flash Memory</button>
-    </div>
-
-    <!-- STATION PANELS -->
-
-    <!-- PANEL STANDBY -->
-    <div id="gm-panel-idle" class="card text-center" style="display: none; padding: 32px;">
-      <h3 style="font-size: 20px; color: var(--primary);">STANDBY ACTIVE</h3>
-    </div>
-
-    <!-- PANEL X1 -->
-    <div id="gm-panel-x1" class="card" style="display: none; padding: 20px;">
-      <div class="flex-between" style="margin-bottom: 16px;">
-        <span class="station-badge">STATION X1 • MATH SPEEDRUN</span>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
-            <button id="btn-toggle-x1-vis" class="btn-vis-toggle inactive">OFF</button>
-          </div>
-          <button id="btn-reset-x1" class="btn btn-secondary" style="font-size: 12px;">RESET X1 PROGRESS</button>
-          <input type="file" id="csv-file-x1" accept=".csv" style="display: none;">
-          <button onclick="document.getElementById('csv-file-x1').click()" class="btn btn-primary" style="font-size: 12px;">
-            IMPORT CSV
-          </button>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card" style="background-color: var(--muted);">
-          <h4 style="color: var(--primary); margin-bottom: 8px; font-size: 13px;" id="x1-label-x">TEAM X</h4>
-          <div style="font-size: 28px; font-weight: 800;" id="gm-x1-score-x">0 BENAR</div>
-          <div class="text-secondary" style="font-size: 12px; margin-top: 4px;" id="gm-x1-status-x">Dijawab: 0</div>
-        </div>
-        <div class="card" style="background-color: var(--muted);">
-          <h4 style="color: var(--primary); margin-bottom: 8px; font-size: 13px;" id="x1-label-y">TEAM Y</h4>
-          <div style="font-size: 28px; font-weight: 800;" id="gm-x1-score-y">0 BENAR</div>
-          <div class="text-secondary" style="font-size: 12px; margin-top: 4px;" id="gm-x1-status-y">Dijawab: 0</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL X2 -->
-    <div id="gm-panel-x2" class="card" style="display: none; padding: 20px;">
-      <div class="flex-between" style="margin-bottom: 16px;">
-        <span class="station-badge">STATION X2 • CERDAS CERMAT</span>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
-            <button id="btn-toggle-x2-vis" class="btn-vis-toggle inactive">OFF</button>
-          </div>
-          <input type="file" id="csv-file-x2" accept=".csv" style="display: none;">
-          <button onclick="document.getElementById('csv-file-x2').click()" class="btn btn-primary" style="font-size: 12px;">
-            IMPORT CSV
-          </button>
-          <button id="btn-x2-prev" class="btn btn-secondary">PREV</button>
-          <span id="x2-q-index" class="text-secondary" style="padding: 8px 12px; font-size: 13px;">SOAL 1</span>
-          <button id="btn-x2-next" class="btn btn-secondary">NEXT</button>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-bottom: 16px;">
-        <div class="card" style="background-color: var(--muted); padding: 12px; text-align: center;">
-          <div id="x2-leg-score-x-label" class="text-secondary" style="font-size: 12px;">TEAM X (X2 LEG SCORE)</div>
-          <div id="x2-leg-score-x-val" style="font-size: 24px; font-weight: 800; color: var(--primary);">0 PTS</div>
-        </div>
-        <div class="card" style="background-color: var(--muted); padding: 12px; text-align: center;">
-          <div id="x2-leg-score-y-label" class="text-secondary" style="font-size: 12px;">TEAM Y (X2 LEG SCORE)</div>
-          <div id="x2-leg-score-y-val" style="font-size: 24px; font-weight: 800; color: var(--primary);">0 PTS</div>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-bottom: 16px;">
-        <div class="card card-glowing" style="padding: 16px;">
-          <h3 id="gm-x2-question" style="font-size: 16px; margin-bottom: 10px;">Question text...</h3>
-          <div id="gm-x2-choices" style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;" class="text-secondary"></div>
-          <div style="margin-top: 10px; font-weight: 700; color: var(--primary); font-size: 12px;" id="gm-x2-key">KEY: -</div>
-        </div>
-
-        <div class="card" style="padding: 16px; text-align: center;">
-          <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px;">
-            <button id="btn-gm-open-buzz" class="btn btn-primary btn-large" style="flex: 1; font-size: 15px;">
-              OPEN BUZZER
+      <!-- Card 1: Overall Match Scoreboard & Dots Config -->
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">SCOREBOARD</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="font-mono" style="font-size: 11px; color: var(--text-slate);">TARGET:</span>
+            <button type="button" class="gm-step-btn" onclick="window.gmApp.adjustTotalDots(-2)">-</button>
+            <span id="gm-dots-total-badge" class="badge-status ready">11</span>
+            <button type="button" class="gm-step-btn" onclick="window.gmApp.adjustTotalDots(2)">+</button>
+            <button type="button" class="gm-btn" style="padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center;" onclick="window.gmApp.saveTeams()" title="Simpan Nama Tim">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
             </button>
-            <button id="btn-gm-close-buzz" class="btn btn-secondary" style="font-size: 12px;">CLOSE</button>
-            <button id="btn-gm-reset-buzz" class="btn btn-secondary" style="font-size: 12px;">RESET</button>
+          </div>
+        </div>
+
+        <div class="gm-score-duel">
+          <!-- Team X -->
+          <div class="gm-team-col">
+            <input type="text" id="gm-name-x" class="gm-team-name-input" value="TEAM X">
+            <div class="gm-team-score-row">
+              <span id="gm-score-x" class="gm-score-big" style="color: var(--team-x-accent);">0</span>
+              <div class="gm-score-arrow-col">
+                <button type="button" class="gm-arrow-btn" onclick="window.gmApp.adjustScore('X', 1)" title="Tambah 1 Skor">▲</button>
+                <button type="button" class="gm-arrow-btn" onclick="window.gmApp.adjustScore('X', -1)" title="Kurang 1 Skor">▼</button>
+              </div>
+            </div>
           </div>
 
-          <div style="background-color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 10px; text-align: left;">
-            <div id="gm-buzz-feed" style="font-size: 14px; font-weight: 700; color: var(--primary);">
-              Buzzer Belum Dibuka.
+          <span class="font-orbitron" style="font-size: 16px; font-weight: 900; color: var(--border-metallic);">VS</span>
+
+          <!-- Team Y -->
+          <div class="gm-team-col">
+            <input type="text" id="gm-name-y" class="gm-team-name-input" value="TEAM Y">
+            <div class="gm-team-score-row">
+              <span id="gm-score-y" class="gm-score-big" style="color: var(--team-y-accent);">0</span>
+              <div class="gm-score-arrow-col">
+                <button type="button" class="gm-arrow-btn" onclick="window.gmApp.adjustScore('Y', 1)" title="Tambah 1 Skor">▲</button>
+                <button type="button" class="gm-arrow-btn" onclick="window.gmApp.adjustScore('Y', -1)" title="Kurang 1 Skor">▼</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Match Dots Indicator -->
+        <div id="gm-dots-preview-container" class="gm-dots-preview" style="margin-top: 10px;"></div>
+      </div>
+
+      <!-- Card 2: Match Overall Timer (Compact Controls) -->
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">MATCH CLOCK</span>
+          <span id="gm-match-timer-status" class="badge-status wrong">PAUSED</span>
+        </div>
+
+        <div id="gm-match-timer-val" class="gm-timer-display" style="font-size: 32px; margin: 8px 0;">00:00</div>
+
+        <div class="gm-btn-row" style="justify-content: center; gap: 8px;">
+          <button id="btn-toggle-match-timer" type="button" class="gm-btn gm-btn-primary" style="flex: 1; padding: 8px;" onclick="window.gmApp.toggleMatchTimer()">
+            START
+          </button>
+          <button type="button" class="gm-btn" style="flex: 1; padding: 8px;" onclick="window.gmApp.controlTimer('match', 'reset')">
+            RESET
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: Station Timer (Compact Controls + 30s Buttons) -->
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STATION TIMER</span>
+          <span id="gm-station-timer-status" class="badge-status wrong">PAUSED</span>
+        </div>
+
+        <div id="gm-station-timer-val" class="gm-timer-display" style="font-size: 32px; color: var(--purple-neon-bright); margin: 8px 0;">05:00</div>
+
+        <div class="gm-btn-row" style="justify-content: center; gap: 8px;">
+          <button id="btn-toggle-station-timer" type="button" class="gm-btn gm-btn-primary" style="flex: 1; padding: 8px;" onclick="window.gmApp.toggleStationTimer()">
+            START
+          </button>
+          <button type="button" class="gm-btn" style="flex: 1; padding: 8px;" onclick="window.gmApp.controlTimer('station', 'reset')">
+            RESET
+          </button>
+        </div>
+
+        <div class="gm-btn-row" style="justify-content: center; gap: 8px; margin-top: 4px;">
+          <button type="button" class="gm-btn" style="flex: 1; padding: 6px; font-size: 11px;" onclick="window.gmApp.controlTimer('station', 'adjust', 30)">
+            +30s
+          </button>
+          <button type="button" class="gm-btn" style="flex: 1; padding: 6px; font-size: 11px;" onclick="window.gmApp.controlTimer('station', 'adjust', -30)">
+            -30s
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         STATION 0: STANDBY & READY PANEL
+         ========================================== -->
+    <div id="gm-panel-standby" class="gm-station-panel active">
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STANDBY</span>
+          <span class="badge-status ready">READY</span>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; flex-wrap: wrap;">
+          <!-- Left: Single Clean Upload Button -->
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button type="button" class="gm-btn gm-btn-warning" style="font-weight: 800; padding: 10px 20px; display: inline-flex; align-items: center; gap: 8px;" onclick="document.getElementById('gm-import-file').click()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              UPLOAD JSON MATCH SET
+            </button>
+            <input type="file" id="gm-import-file" accept=".json" style="display:none;" onchange="window.gmApp.handleFileImport(event)">
+          </div>
+
+          <!-- Right: Compact Question Counts (X1: nnn, X2: nnn, X3: nnn, X4: nnn) -->
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div style="background: rgba(14, 16, 24, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 6px; padding: 7px 14px; font-family: var(--font-mono); font-size: 13px; font-weight: 800;">
+              <span style="color: var(--text-slate);">X1:</span> <span id="gm-set-count-x1" style="color: #38bdf8;">100</span>
+            </div>
+            <div style="background: rgba(14, 16, 24, 0.9); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 6px; padding: 7px 14px; font-family: var(--font-mono); font-size: 13px; font-weight: 800;">
+              <span style="color: var(--text-slate);">X2:</span> <span id="gm-set-count-x2" style="color: #fbbf24;">15</span>
+            </div>
+            <div style="background: rgba(14, 16, 24, 0.9); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 6px; padding: 7px 14px; font-family: var(--font-mono); font-size: 13px; font-weight: 800;">
+              <span style="color: var(--text-slate);">X3:</span> <span id="gm-set-count-x3" style="color: #c084fc;">10</span>
+            </div>
+            <div style="background: rgba(14, 16, 24, 0.9); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 6px; padding: 7px 14px; font-family: var(--font-mono); font-size: 13px; font-weight: 800;">
+              <span style="color: var(--text-slate);">X4:</span> <span id="gm-set-count-x4" style="color: #34d399;">438</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PANEL X3 -->
-    <div id="gm-panel-x3" class="card" style="display: none; padding: 20px;">
-      <div class="flex-between" style="margin-bottom: 16px;">
-        <span class="station-badge">STATION X3 • AI UNSOLVED CASE</span>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
-            <button id="btn-toggle-x3-vis" class="btn-vis-toggle inactive">OFF</button>
-          </div>
-          <input type="file" id="csv-file-x3" accept=".csv" style="display: none;">
-          <button onclick="document.getElementById('csv-file-x3').click()" class="btn btn-primary" style="font-size: 12px;">
-            IMPORT CSV
-          </button>
-        </div>
-      </div>
-      
-      <div class="grid-2">
-        <div class="card card-glowing" style="padding: 16px;">
-          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x3-title-x">TEAM X SUBMISSION</h4>
-          <div id="gm-x3-body-x">
-            <p class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</p>
-          </div>
+    <!-- ==========================================
+         STATION 1: X1 MATH SPEEDRUN PANEL
+         ========================================== -->
+    <div id="gm-panel-x1" class="gm-station-panel">
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STATION X1</span>
+          <span id="gm-x1-target-display" class="badge-status ready">TARGET: 30 PTS</span>
         </div>
 
-        <div class="card card-glowing" style="padding: 16px;">
-          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x3-title-y">TEAM Y SUBMISSION</h4>
-          <div id="gm-x3-body-y">
-            <p class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</p>
+        <div class="gm-btn-row">
+          <button id="btn-x1-target-15" type="button" class="gm-btn" onclick="window.gmApp.setX1Target(15)">TARGET 15 PTS</button>
+          <button id="btn-x1-target-30" type="button" class="gm-btn gm-btn-primary" onclick="window.gmApp.setX1Target(30)">TARGET 30 PTS</button>
+          <button id="btn-x1-target-50" type="button" class="gm-btn" onclick="window.gmApp.setX1Target(50)">TARGET 50 PTS</button>
+          <button type="button" class="gm-btn gm-btn-danger" onclick="window.gmApp.resetX1()">RESET PROGRES DUEL</button>
+        </div>
+
+        <!-- Realtime Progress Telemetry -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;">
+          <div style="background: rgba(14, 16, 24, 0.8); border: 1px solid var(--border-metallic); border-radius: 6px; padding: 12px;">
+            <span class="font-display" style="color: var(--team-x-accent); font-size: 14px; font-weight: 800;">PROGRES TEAM X</span>
+            <div id="gm-x1-score-x" class="font-orbitron" style="font-size: 24px; font-weight: 900; color: #fff; margin: 4px 0;">0 / 30</div>
+            <div id="gm-x1-formula-x" class="font-mono" style="font-size: 12px; color: var(--text-slate);"></div>
+          </div>
+
+          <div style="background: rgba(14, 16, 24, 0.8); border: 1px solid var(--border-metallic); border-radius: 6px; padding: 12px;">
+            <span class="font-display" style="color: var(--team-y-accent); font-size: 14px; font-weight: 800;">PROGRES TEAM Y</span>
+            <div id="gm-x1-score-y" class="font-orbitron" style="font-size: 24px; font-weight: 900; color: #fff; margin: 4px 0;">0 / 30</div>
+            <div id="gm-x1-formula-y" class="font-mono" style="font-size: 12px; color: var(--text-slate);"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PANEL X4 -->
-    <div id="gm-panel-x4" class="card" style="display: none; padding: 20px;">
-      <div class="flex-between" style="margin-bottom: 16px;">
-        <span class="station-badge">STATION X4 • FLASH MEMORY</span>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="text-secondary" style="font-size: 12px;">VISIBILITY:</span>
-            <button id="btn-toggle-x4-vis" class="btn-vis-toggle inactive">OFF</button>
+    <!-- ==========================================
+         STATION 2: X2 CERDAS CERMAT PANEL
+         ========================================== -->
+    <div id="gm-panel-x2" class="gm-station-panel">
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STATION X2</span>
+          <span id="gm-x2-buzz-status" class="badge-status wrong">BUZZER TERTUTUP</span>
+        </div>
+
+        <!-- Buzzer Control Action Buttons (Single Toggle Button + Prev/Next on Right) -->
+        <div class="gm-btn-row" style="justify-content: space-between; align-items: center;">
+          <button id="btn-gm-toggle-buzzer" type="button" class="gm-btn gm-btn-warning" style="font-weight: 900; min-width: 180px;" onclick="window.gmApp.x2ToggleBuzzer()">
+            BUKA BUZZER
+          </button>
+          
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="gm-btn" onclick="window.gmApp.x2PrevQ()" title="Soal Sebelumnya">
+              ◀ SEBELUMNYA
+            </button>
+            <button type="button" class="gm-btn gm-btn-primary" onclick="window.gmApp.x2NextQ()" title="Soal Berikutnya">
+              BERIKUTNYA ▶
+            </button>
           </div>
-          <input type="file" id="csv-file-x4" accept=".csv" style="display: none;">
-          <button onclick="document.getElementById('csv-file-x4').click()" class="btn btn-primary" style="font-size: 12px;">
-            IMPORT CSV
-          </button>
-          <button id="btn-x4-start-flash" class="btn btn-secondary btn-large">
-            1. START FLASH PHASE
-          </button>
-          <button id="btn-x4-start-recall" class="btn btn-secondary btn-large">
-            2. OPEN RECALL PHASE
-          </button>
+        </div>
+
+        <!-- Question Preview -->
+        <div style="background: rgba(12, 14, 22, 0.8); border: 1px solid var(--border-metallic); border-radius: 8px; padding: 14px; margin-top: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span id="gm-x2-q-num" class="font-mono" style="font-size: 12px; color: var(--purple-neon-bright); font-weight: 800;">SOAL 1</span>
+          </div>
+          <h3 id="gm-x2-q-title" class="font-display" style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 10px;"></h3>
+          <div id="gm-x2-choices" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"></div>
         </div>
       </div>
+    </div>
 
-      <div class="grid-2" style="margin-top: 16px;">
-        <div class="card" style="padding: 16px;">
-          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x4-title-x">TEAM X RECALL</h4>
-          <div id="gm-x4-body-x" class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</div>
+    <!-- ==========================================
+         STATION 3: X3 FLASH MEMORY PANEL
+         ========================================== -->
+    <div id="gm-panel-x3" class="gm-station-panel">
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STATION X3</span>
+          <span id="gm-x3-phase-badge" class="badge-status ready">PHASE: RECALL</span>
         </div>
 
-        <div class="card" style="padding: 16px;">
-          <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 14px;" id="gm-x4-title-y">TEAM Y RECALL</h4>
-          <div id="gm-x4-body-y" class="text-secondary" style="font-size: 13px;">Belum ada jawaban dikirim.</div>
+        <div class="gm-btn-row">
+          <button type="button" class="gm-btn gm-btn-warning" onclick="window.gmApp.x3StartRecall()">
+            RESET / RESTART RECALL (TABLET)
+          </button>
         </div>
+
+        <!-- Live Team Progress Cards on Correct Answers -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
+          <div style="background: rgba(14, 16, 24, 0.85); border: 1.5px solid var(--team-x-accent); border-radius: 8px; padding: 12px 16px; box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="font-display" style="color: var(--team-x-accent); font-size: 15px; font-weight: 900;">TEAM X</span>
+              <span id="gm-x3-card-status-x" class="badge-status ready" style="font-size: 11px;">0/10 DIJAWAB</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 10px; margin: 6px 0;">
+              <div id="gm-x3-card-correct-x" class="font-orbitron" style="font-size: 28px; font-weight: 900; color: #34d399;">0 / 10</div>
+              <span class="font-ui" style="font-size: 12px; color: var(--text-slate); font-weight: 700;">BENAR</span>
+            </div>
+            <div id="gm-x3-card-breakdown-x" class="font-mono" style="font-size: 12px; color: #cbd5e1; word-break: break-word;">-</div>
+          </div>
+
+          <div style="background: rgba(14, 16, 24, 0.85); border: 1.5px solid var(--team-y-accent); border-radius: 8px; padding: 12px 16px; box-shadow: 0 0 15px rgba(0, 210, 211, 0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="font-display" style="color: var(--team-y-accent); font-size: 15px; font-weight: 900;">TEAM Y</span>
+              <span id="gm-x3-card-status-y" class="badge-status ready" style="font-size: 11px;">0/10 DIJAWAB</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 10px; margin: 6px 0;">
+              <div id="gm-x3-card-correct-y" class="font-orbitron" style="font-size: 28px; font-weight: 900; color: #34d399;">0 / 10</div>
+              <span class="font-ui" style="font-size: 12px; color: var(--text-slate); font-weight: 700;">BENAR</span>
+            </div>
+            <div id="gm-x3-card-breakdown-y" class="font-mono" style="font-size: 12px; color: #cbd5e1; word-break: break-word;">-</div>
+          </div>
+        </div>
+
+        <!-- Correct Answers Reference List -->
+        <div style="background: rgba(12, 14, 22, 0.8); border: 1px solid var(--border-metallic); border-radius: 8px; padding: 14px; margin-top: 10px;">
+          <div class="font-display" style="font-size: 13px; font-weight: 800; color: var(--purple-glow-light); margin-bottom: 8px; letter-spacing: 1px;">
+            KUNCI JAWABAN BENAR SOAL FLASH MEMORY:
+          </div>
+          <div id="gm-x3-q-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+        </div>
+
+        <!-- Realtime Answering & Lock Time Telemetry Table -->
+        <table class="gm-telemetry-table" style="margin-top: 10px;">
+          <thead>
+            <tr>
+              <th>TIM</th>
+              <th>DETAIL JAWABAN PER SOAL</th>
+              <th>BENAR</th>
+              <th>TOTAL WAKTU</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--team-x-accent); font-weight: 800;">TEAM X</td>
+              <td id="gm-x3-answers-x" class="font-mono">[ - - - - - ]</td>
+              <td id="gm-x3-correct-x" class="font-mono" style="color: #34d399; font-weight: 800;">0 / 10</td>
+              <td id="gm-x3-time-x" class="font-mono">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--team-y-accent); font-weight: 800;">TEAM Y</td>
+              <td id="gm-x3-answers-y" class="font-mono">[ - - - - - ]</td>
+              <td id="gm-x3-correct-y" class="font-mono" style="color: #34d399; font-weight: 800;">0 / 10</td>
+              <td id="gm-x3-time-y" class="font-mono">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         STATION 4: X4 AI UNSOLVED CASE PANEL
+         ========================================== -->
+    <div id="gm-panel-x4" class="gm-station-panel">
+      <div class="gm-card">
+        <div class="gm-card-header">
+          <span class="gm-card-title">STATION X4</span>
+          <span id="gm-x4-secret-code" class="badge-status ready">KODE RAHASIA: 4 - 3 - 8</span>
+        </div>
+
+        <div class="gm-btn-row">
+          <button type="button" class="gm-btn gm-btn-primary" onclick="window.gmApp.x4StartCase()">
+            RESET / MULAI KASUS AI
+          </button>
+        </div>
+
+        <!-- Live 3-Digit Lock Monitoring Table -->
+        <table class="gm-telemetry-table" style="margin-top: 10px;">
+          <thead>
+            <tr>
+              <th>TIM</th>
+              <th>INPUT DIGIT [1 - 2 - 3]</th>
+              <th>TOTAL WAKTU LOCK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--team-x-accent); font-weight: 800;">TEAM X</td>
+              <td id="gm-x4-digits-x" class="font-mono">[0 - 0 - 0] 🔓 🔓 🔓</td>
+              <td id="gm-x4-time-x" class="font-mono">--</td>
+            </tr>
+            <tr>
+              <td style="color: var(--team-y-accent); font-weight: 800;">TEAM Y</td>
+              <td id="gm-x4-digits-y" class="font-mono">[0 - 0 - 0] 🔓 🔓 🔓</td>
+              <td id="gm-x4-time-y" class="font-mono">--</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
   </main>
 
-  <!-- Overlapping Footer Logos -->
-  <div class="footer-overlay">
-    <img src="/assets/Infinix_logo.svg.webp" alt="Infinix" style="filter: brightness(0) invert(1);">
-    <span style="color: var(--border);">|</span>
-    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/OPTIMIZE/logo%20rg.svg" alt="Ruangguru">
+  <!-- Fixed Match Set File Status (Bottom Left) -->
+  <div id="gm-bottom-file-status" class="gm-bottom-file-badge">
+    <span style="color: var(--text-slate); font-weight: 700;">MATCH SET FILE:</span>
+    <span id="gm-bottom-filename" style="color: #c084fc; font-weight: 800;">[default]</span>
   </div>
 
   <script src="/js/gm.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
-    }
-  </script>
 </body>
 </html>

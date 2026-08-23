@@ -1,0 +1,78 @@
+{
+  "matchSetId": "MATCH-SET-TEMPLATE",
+  "title": "TEMPLATE PAKET SOAL PERTANDINGAN",
+  "description": "Template Resmi Format Soal Turnamen Clash of Unxpadted (X1 100 Soal, X2 15 Soal, X3 10 Soal, X4 Command Prompt Log & 3 Digit Answer)",
+  "X1": [
+    {
+      "id": 1,
+      "q": "47 + 58 = ?",
+      "a": 105
+    },
+    {
+      "id": 2,
+      "q": "6 × 9 = ?",
+      "a": 54
+    },
+    {
+      "id": 3,
+      "q": "12 × 8 = ?",
+      "a": 96
+    }
+  ],
+  "X2": [
+    {
+      "id": 1,
+      "question": "Tuliskan soal pilihan ganda di sini?",
+      "choices": [
+        "A. Pilihan 1",
+        "B. Pilihan 2",
+        "C. Pilihan 3",
+        "D. Pilihan 4"
+      ],
+      "correct": 1,
+      "points": 2
+    }
+  ],
+  "X3": {
+    "questions": [
+      {
+        "id": 1,
+        "question": "Pertanyaan observasi memori visual di sini?",
+        "choices": [
+          "A. Pilihan A",
+          "B. Pilihan B",
+          "C. Pilihan C",
+          "D. Pilihan D"
+        ],
+        "correct": 0
+      }
+    ]
+  },
+  "X4": {
+    "terminalLogs": [
+      "[SYS_INIT] PROTOKOL: CLASH OF UNXPADTED DIJALANKAN",
+      "[WARN] AKSES XPAD TERKUNCI.",
+      "[INFO] BATAS WAKTU DEKRIPSI: 10 MENIT.",
+      "[HINT] GUNAKAN FOLAX AI UNTUK BANTUAN ANALISIS.",
+      "",
+      "[LOG_01] SINKRONISASI DATA >> MENCARI DIGIT PERTAMA",
+      "[TRACE] Tuliskan petunjuk logika digit pertama di sini.",
+      "[EXEC] Instruksi untuk mendapatkan DIGIT PERTAMA.",
+      "",
+      "[LOG_02] IDENTIFIKASI ANOMALI >> MENCARI DIGIT KEDUA",
+      "[TRACE] Tuliskan petunjuk logika digit kedua di sini.",
+      "[EXEC] Instruksi untuk mendapatkan DIGIT KEDUA.",
+      "",
+      "[LOG_03] PARAMETER AKHIR >> MENCARI DIGIT KETIGA",
+      "[TRACE] Tuliskan petunjuk logika digit ketiga di sini.",
+      "[EXEC] Instruksi untuk mendapatkan DIGIT KETIGA.",
+      "",
+      "[SYS_REQ] Rangkai 3 digit angka untuk memulihkan akses."
+    ],
+    "solutionCode": [
+      4,
+      3,
+      8
+    ]
+  }
+}
