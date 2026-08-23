@@ -17,30 +17,36 @@ Server akan otomatis mendeteksi IP lokal Anda (misal `http://192.168.1.10:3000`)
 
 ## 🌐 Alamat URL & Antarmuka
 
-| Antarmuka | URL Akses | Fungsi & Penggunaan |
-| :--- | :--- | :--- |
-| **📺 Layar Broadcast (16:9)** | `http://localhost:3000/` atau `/broadcast` | Layar panggung utama / OBS projector (*Clean HUD, non-shifting digital clocks, target headline & dual telemetry*) |
-| **⚙️ Gamemaster Panel** | `http://localhost:3000/gm` | Panel kendali juri & operator (*Scoreboard, Match Clock, Station Timer, JSON Match Set Importer, Telemetri Live*) |
-| **📱 Tablet Peserta Team X** | `http://localhost:3000/player?team=X` | Tampilan tablet tim X (*Locked PWA layout, tactile keypad, responsive buzzer, terminal logs*) |
-| **📱 Tablet Peserta Team Y** | `http://localhost:3000/player?team=Y` | Tampilan tablet tim Y |
+| Antarmuka | URL Akses Lokal | URL Publik Domain Resmi | Fungsi & Penggunaan |
+| :--- | :--- | :--- | :--- |
+| **📺 Layar Broadcast (16:9)** | `http://localhost:3000/` | `https://event.unxpadted.web.id/` | Layar panggung utama / OBS projector (*Clean HUD, non-shifting digital clocks, target headline & dual telemetry*) |
+| **⚙️ Gamemaster Panel** | `http://localhost:3000/gm` | `https://event.unxpadted.web.id/gm` | Panel kendali juri & operator (*Scoreboard, Match Clock, Station Timer, JSON Match Set Importer, Telemetri Live*) |
+| **📱 Tablet Peserta Team X** | `http://localhost:3000/player?team=X` | `https://event.unxpadted.web.id/player?team=X` | Tampilan tablet tim X (*Locked PWA layout, tactile keypad, responsive buzzer, terminal logs*) |
+| **📱 Tablet Peserta Team Y** | `http://localhost:3000/player?team=Y` | `https://event.unxpadted.web.id/player?team=Y` | Tampilan tablet tim Y |
 
 ---
 
-## ☁️ Panduan Deploy ke Render.com
+## ☁️ Panduan Deploy & Custom Domain di Render.com (`event.unxpadted.web.id`)
 
-Aplikasi ini sudah dilengkapi dengan blueprint **`render.yaml`** sehingga dapat dideploy secara instan ke **Render.com**:
+Aplikasi ini sudah dilengkapi dengan blueprint **`render.yaml`** yang otomatis mengikat domain **`event.unxpadted.web.id`**:
 
-### Langkah Deploy:
-1. Push repositori ini ke GitHub (`https://github.com/dubidamn/unxpadted.git`).
-2. Masuk ke [Render.com](https://render.com) dan buat **New Web Service**.
-3. Hubungkan repositori GitHub **`unxpadted`**.
-4. Konfigurasi Service:
+### 1. Langkah Deploy ke Render:
+1. Repositori GitHub: **`https://github.com/dubidamn/unxpadted.git`**
+2. Masuk ke [Render.com Dashboard](https://dashboard.render.com/) ➔ Klik **New +** ➔ **Web Service**.
+3. Hubungkan repositori **`dubidamn/unxpadted`**.
+4. Konfigurasi:
    - **Environment**: `Node`
    - **Build Command**: `npm install`
    - **Start Command**: `npm start`
-   - **Plan**: `Free`
 5. Klik **Deploy Web Service**.
-6. Render akan memberikan URL publik HTTPS (contoh: `https://unxpadted.onrender.com`).
+
+### 2. Konfigurasi DNS Custom Domain di Registrar / Cloudflare:
+Pada DNS Management domain `unxpadted.web.id` (misal di Cloudflare, Niagahoster, Domainesia, dsb.), tambahkan **CNAME Record**:
+* **Type**: `CNAME`
+* **Name / Host**: `event` *(atau `event.unxpadted.web.id`)*
+* **Target / Value**: `<service-name>.onrender.com` *(misal `unxpadted.onrender.com`)*
+* **Proxy Status (Cloudflare)**: *DNS Only / Bypass* saat verifikasi SSL pertama kali.
+* **SSL Certificate**: Diterbitkan dan diperbarui otomatis (HTTPS) secara gratis oleh Render (Let's Encrypt).
 
 ---
 
