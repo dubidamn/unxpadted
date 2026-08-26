@@ -556,6 +556,104 @@ class GMControlApp {
   setupListeners() {}
 }
 
+// --- GM Access Control & Cookie Management ---
+const GM_COOKIE_NAME = 'gm_session';
+const GM_AUTH_TOKEN = 'authenticated_unxpadted2026';
+const GM_PASSWORD = 'unxpadted2026';
+
+function getGmCookie() {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${GM_COOKIE_NAME}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
+function setGmCookie() {
+  document.cookie = `${GM_COOKIE_NAME}=${GM_AUTH_TOKEN}; path=/; max-age=86400; SameSite=Lax`;
+}
+
+function clearGmCookie() {
+  document.cookie = `${GM_COOKIE_NAME}=; path=/; max-age=0; SameSite=Lax`;
+}
+
+function isGmAuthenticated() {
+  return getGmCookie() === GM_AUTH_TOKEN;
+}
+
+window.handleGmAuthSubmit = function (e) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('gm-password-input');
+  const errorMsg = document.getElementById('gm-auth-error');
+  const val = (input ? input.value : '').trim();
+
+  if (val === GM_PASSWORD) {
+    if (errorMsg) errorMsg.style.display = 'none';
+    setGmCookie();
+
+    // Also notify server endpoint if online
+    try {
+      fetch('/api/gm-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: val })
+      }).catch(() => {});
+    } catch (err) {}
+
+    const shield = document.getElementById('gm-auth-shield');
+    if (shield) shield.style.display = 'none';
+
+    if (!window.gmApp) {
+      window.gmApp = new GMControlApp();
+    } else if (!window.gmApp.socket || !window.gmApp.socket.connected) {
+      window.gmApp.connectSocket();
+    }
+  } else {
+    if (errorMsg) {
+      errorMsg.style.display = 'block';
+      errorMsg.textContent = 'ACCESS DENIED: KATA SANDI SALAH';
+    }
+    if (input) {
+      input.value = '';
+      input.focus();
+      input.style.borderColor = '#ff4757';
+      setTimeout(() => {
+        if (input) input.style.borderColor = '';
+      }, 1500);
+    }
+  }
+};
+
+window.gmLogout = function () {
+  if (confirm('Konfirmasi: Kunci dan keluar dari Gamemaster Panel?')) {
+    clearGmCookie();
+    try {
+      fetch('/api/gm-logout', { method: 'POST' }).catch(() => {});
+    } catch (err) {}
+
+    const shield = document.getElementById('gm-auth-shield');
+    if (shield) {
+      shield.style.display = 'flex';
+      const input = document.getElementById('gm-password-input');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+    }
+    if (window.gmApp && window.gmApp.socket) {
+      window.gmApp.socket.disconnect();
+    }
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-  window.gmApp = new GMControlApp();
+  const shield = document.getElementById('gm-auth-shield');
+  const input = document.getElementById('gm-password-input');
+
+  if (isGmAuthenticated()) {
+    if (shield) shield.style.display = 'none';
+    window.gmApp = new GMControlApp();
+  } else {
+    if (shield) shield.style.display = 'flex';
+    if (input) setTimeout(() => input.focus(), 100);
+  }
 });

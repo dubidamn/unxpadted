@@ -58,6 +58,31 @@
 </head>
 <body class="cyber-bg-grid gm-body">
 
+  <!-- GM Security Authentication Shield Modal -->
+  <div id="gm-auth-shield" class="gm-auth-overlay">
+    <div class="gm-auth-box">
+      <img src="assets/Global Assets/Logotype_Overlay@2x.png" alt="Unxpadted" class="gm-auth-logo">
+      <div class="gm-auth-badge">SECURITY CLEARANCE REQUIRED</div>
+      <h2 class="gm-auth-title">GAMEMASTER ACCESS</h2>
+      <p class="gm-auth-desc">Masukkan kode sandi otorisasi operator turnamen untuk membuka konsol kendali.</p>
+      
+      <form id="gm-auth-form" onsubmit="window.handleGmAuthSubmit(event)">
+        <div class="gm-auth-input-group">
+          <span class="gm-auth-input-icon">🔒</span>
+          <input type="password" id="gm-password-input" class="gm-auth-input font-mono" placeholder="Password GM..." autocomplete="current-password" autofocus required />
+        </div>
+        
+        <div id="gm-auth-error" class="gm-auth-error-msg" style="display: none;">
+          ACCESS DENIED: KATA SANDI SALAH
+        </div>
+
+        <button type="submit" id="gm-unlock-btn" class="gm-auth-btn">
+          <span>UNLOCK CONSOLE</span> ➔
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Persistent Connection Status Dot (Bottom Right) -->
   <div id="connection-dot" class="connection-status-dot"></div>
 
@@ -86,7 +111,10 @@
       </button>
     </div>
 
-    <div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button type="button" class="gm-logout-btn" onclick="window.gmLogout()" title="Kunci & Keluar GM Panel">
+        🔒 KUNCI GM
+      </button>
       <button type="button" class="gm-btn gm-btn-danger" onclick="window.gmApp.resetAll()">
         RESET MATCH
       </button>

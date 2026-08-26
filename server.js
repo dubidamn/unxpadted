@@ -25,6 +25,49 @@ function getLocalIp() {
 
 const localIpAddress = getLocalIp();
 
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Cookie helper
+function parseCookies(req) {
+  const list = {};
+  const rc = req.headers.cookie;
+  if (rc) {
+    rc.split(';').forEach(cookie => {
+      const parts = cookie.split('=');
+      if (parts.length >= 2) {
+        list[parts.shift().trim()] = decodeURIComponent(parts.join('='));
+      }
+    });
+  }
+  return list;
+}
+
+// GM Authentication Endpoints
+const GM_PASSWORD = process.env.GM_PASSWORD || 'unxpadted2026';
+const GM_AUTH_COOKIE = 'gm_session=authenticated_unxpadted2026; Path=/; Max-Age=86400; SameSite=Lax';
+
+app.post('/api/gm-login', (req, res) => {
+  const { password } = req.body || {};
+  if (password === GM_PASSWORD) {
+    res.setHeader('Set-Cookie', GM_AUTH_COOKIE);
+    return res.json({ success: true, message: 'Authenticated successfully' });
+  }
+  return res.status(401).json({ success: false, message: 'Password salah' });
+});
+
+app.post('/api/gm-logout', (req, res) => {
+  res.setHeader('Set-Cookie', 'gm_session=; Path=/; Max-Age=0; SameSite=Lax');
+  return res.json({ success: true, message: 'Logged out successfully' });
+});
+
+app.get('/api/gm-status', (req, res) => {
+  const cookies = parseCookies(req);
+  const isAuthenticated = cookies.gm_session === 'authenticated_unxpadted2026';
+  return res.json({ authenticated: isAuthenticated });
+});
+
 // Static file routes
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, 'Skinned-Asset')));
