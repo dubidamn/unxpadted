@@ -400,13 +400,13 @@ body.gm-body {
   pointer-events: none;
 }
 
-/* GM Security Authentication Shield Overlay */
+/* GM Security Authentication Shield Overlay (Minimal No Branding) */
 .gm-auth-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(8, 9, 14, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #07080c;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -414,140 +414,55 @@ body.gm-body {
   padding: 20px;
 }
 
-.gm-auth-box {
+.gm-auth-minimal {
   width: 100%;
-  max-width: 440px;
-  background: linear-gradient(135deg, rgba(30, 19, 56, 0.95) 0%, rgba(17, 13, 36, 0.98) 100%);
-  border: 2px solid var(--purple-neon-bright);
-  border-radius: 16px;
-  padding: 36px 28px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gm-minimal-input {
+  width: 100%;
+  height: 50px;
+  background: rgba(18, 20, 32, 0.9);
+  border: 1.5px solid rgba(168, 85, 247, 0.35);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 6px;
   text-align: center;
-  box-shadow: 0 0 50px rgba(168, 85, 247, 0.4), 0 20px 40px rgba(0, 0, 0, 0.9);
-  position: relative;
-  overflow: hidden;
-}
-
-.gm-auth-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #ff4757, #a855f7, #00d2d3);
-}
-
-.gm-auth-logo {
-  height: 48px;
-  object-fit: contain;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.7));
-}
-
-.gm-auth-badge {
-  font-family: var(--font-orbitron);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #fbbf24;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  padding: 4px 12px;
-  border-radius: 4px;
-  display: inline-block;
-  margin-bottom: 12px;
-}
-
-.gm-auth-title {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #ffffff;
-  margin-bottom: 6px;
-}
-
-.gm-auth-desc {
-  font-family: var(--font-ui);
-  font-size: 13px;
-  color: var(--text-slate);
-  margin-bottom: 24px;
-  line-height: 1.4;
-}
-
-.gm-auth-input-group {
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.gm-auth-input {
-  width: 100%;
-  padding: 14px 16px 14px 44px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1.5px solid rgba(168, 85, 247, 0.5);
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 16px;
   outline: none;
-  transition: all 0.2s ease;
-  letter-spacing: 3px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
 }
 
-.gm-auth-input:focus {
+.gm-minimal-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 4px;
+}
+
+.gm-minimal-input:focus {
   border-color: var(--purple-neon-bright);
-  box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.gm-auth-input-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  opacity: 0.7;
+  background: rgba(26, 28, 44, 0.98);
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.6), 0 8px 30px rgba(0, 0, 0, 0.9);
 }
 
 .gm-auth-error-msg {
   color: #ff4757;
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
-  text-shadow: 0 0 10px rgba(255, 71, 87, 0.6);
+  letter-spacing: 2px;
+  margin-top: 14px;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.8);
   animation: pulseError 0.8s infinite alternate;
 }
 
 @keyframes pulseError {
-  0% { opacity: 0.7; }
+  0% { opacity: 0.6; }
   100% { opacity: 1; }
-}
-
-.gm-auth-btn {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-  border: none;
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
-  transition: all 0.2s ease;
-}
-
-.gm-auth-btn:hover {
-  background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.9);
-  transform: translateY(-1px);
-}
-
-.gm-auth-btn:active {
-  transform: translateY(1px);
 }
 
 .gm-logout-btn {

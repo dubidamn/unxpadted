@@ -58,29 +58,12 @@
 </head>
 <body class="cyber-bg-grid gm-body">
 
-  <!-- GM Security Authentication Shield Modal -->
+  <!-- GM Minimal Password Shield (No Branding, Input Only) -->
   <div id="gm-auth-shield" class="gm-auth-overlay">
-    <div class="gm-auth-box">
-      <img src="assets/Global Assets/Logotype_Overlay@2x.png" alt="Unxpadted" class="gm-auth-logo">
-      <div class="gm-auth-badge">SECURITY CLEARANCE REQUIRED</div>
-      <h2 class="gm-auth-title">GAMEMASTER ACCESS</h2>
-      <p class="gm-auth-desc">Masukkan kode sandi otorisasi operator turnamen untuk membuka konsol kendali.</p>
-      
-      <form id="gm-auth-form" onsubmit="window.handleGmAuthSubmit(event)">
-        <div class="gm-auth-input-group">
-          <span class="gm-auth-input-icon">🔒</span>
-          <input type="password" id="gm-password-input" class="gm-auth-input font-mono" placeholder="Password GM..." autocomplete="current-password" autofocus required />
-        </div>
-        
-        <div id="gm-auth-error" class="gm-auth-error-msg" style="display: none;">
-          ACCESS DENIED: KATA SANDI SALAH
-        </div>
-
-        <button type="submit" id="gm-unlock-btn" class="gm-auth-btn">
-          <span>UNLOCK CONSOLE</span> ➔
-        </button>
-      </form>
-    </div>
+    <form id="gm-auth-form" class="gm-auth-minimal" onsubmit="window.handleGmAuthSubmit(event)">
+      <input type="password" id="gm-password-input" class="gm-minimal-input font-mono" placeholder="••••••••" autocomplete="current-password" autofocus required />
+      <div id="gm-auth-error" class="gm-auth-error-msg" style="display: none;">ACCESS DENIED</div>
+    </form>
   </div>
 
   <!-- Persistent Connection Status Dot (Bottom Right) -->
