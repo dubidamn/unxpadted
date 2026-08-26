@@ -2,13 +2,30 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Broadcast Overlay Screen — Clash of Unxpadted</title>
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/broadcast.css">
+
+  <!-- PWA & Chrome App Fullscreen Meta -->
+  <meta name="theme-color" content="#9333EA">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Unxpadted Broadcast">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/broadcast.css">
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/audio.js"></script>
+  <script>
+    if (typeof io === 'undefined') {
+      document.write('<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"><\/script>');
+    }
+  </script>
+  <script src="js/audio.js"></script>
+  <script src="js/pwa-fullscreen.js"></script>
   <style>
     .x2-buzzer-banner {
       width: 100%;
@@ -352,7 +369,7 @@
 
       <!-- Center: Clean Large Tournament Logo & Match Tracker Dots -->
       <div class="broadcast-header-center">
-        <img src="/assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="broadcast-header-logo">
+        <img src="assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="broadcast-header-logo">
         <div id="match-tracker-dots" class="tracker-dots-group">
           <!-- Rendered dynamically -->
         </div>
@@ -612,6 +629,19 @@
 
   </div>
 
-  <script src="/js/broadcast.js"></script>
+  <!-- Floating HUD Controls for PWA Install & Fullscreen Toggle -->
+  <div class="pwa-hud-controls">
+    <button type="button" class="fullscreen-toggle-btn" onclick="window.toggleFullscreen()" title="Layar Penuh (F)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+      </svg>
+      <span>FULLSCREEN</span>
+    </button>
+    <button type="button" id="pwa-install-btn" class="pwa-install-trigger" onclick="window.promptPwaInstall()" style="display: none;" title="Pasang Aplikasi di Chrome">
+      <span>📥 INSTALL APP</span>
+    </button>
+  </div>
+
+  <script src="js/broadcast.js"></script>
 </body>
 </html>

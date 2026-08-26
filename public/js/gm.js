@@ -17,7 +17,8 @@ class GMControlApp {
   }
 
   connectSocket() {
-    this.socket = io();
+    const targetUrl = (typeof window.getSocketServerUrl === 'function') ? window.getSocketServerUrl() : window.location.origin;
+    this.socket = (targetUrl === window.location.origin) ? io() : io(targetUrl);
 
     this.socket.on('connect', () => {
       console.log('GM Control Suite connected to server');

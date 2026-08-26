@@ -36,7 +36,15 @@ app.use('/match-sets', express.static(path.join(__dirname, 'match_sets')));
 
 // Friendly routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'broadcast.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/hub', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/portal', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/broadcast', (req, res) => {
@@ -61,6 +69,15 @@ app.get('/gm', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'gm.html'));
+});
+
+app.get('/manifest.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'manifest.json'));
+});
+
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.sendFile(path.join(__dirname, 'public', 'sw.js'));
 });
 
 app.get('/favicon.ico', (req, res) => {

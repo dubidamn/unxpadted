@@ -2,28 +2,103 @@
   "name": "Clash of Unxpadted",
   "short_name": "Unxpadted",
   "description": "Live Competition System - Infinix XPAD 30 Pro",
-  "start_url": "/",
-  "display": "standalone",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "window-controls-overlay",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#0D0D0D",
   "theme_color": "#9333EA",
+  "categories": [
+    "games",
+    "entertainment",
+    "utilities"
+  ],
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "/assets/brand/unxpadted-logotype.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/assets/brand/unxpadted-logotype.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Layar Broadcast (16:9)",
+      "short_name": "Broadcast",
+      "description": "Layar panggung & visual penonton 16:9",
+      "url": "./broadcast.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Tablet Peserta Team X",
+      "short_name": "Team X",
+      "description": "Antarmuka tablet peserta Team X",
+      "url": "./player.html?team=X",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Tablet Peserta Team Y",
+      "short_name": "Team Y",
+      "description": "Antarmuka tablet peserta Team Y",
+      "url": "./player.html?team=Y",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Gamemaster Panel",
+      "short_name": "GM Panel",
+      "description": "Panel kendali juri & operator pertandingan",
+      "url": "./gm.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

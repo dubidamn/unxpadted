@@ -1,35 +1,46 @@
-const CACHE_NAME = 'unxpadted-cache-v4';
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/display.html',
-  '/gm.html',
-  '/team.html',
-  '/team-skinned.html',
-  '/team-skinned-matrix.html',
-  '/css/style.css',
-  '/css/team-skinned.css',
-  '/css/team-skinned-matrix.css',
-  '/js/team.js',
-  '/js/team-skinned.js',
-  '/js/team-skinned-matrix.js',
-  '/js/display.js',
-  '/js/gm.js',
-  '/js/audio.js',
-  '/manifest.json',
-  '/favicon.ico',
-  '/assets/brand/unxpadted-logotype.png',
-  '/assets/brand/Infinix_logo.svg.webp'
+const CACHE_NAME = 'unxpadted-pwa-v5';
+const ASSETS_TO_CACHE = [
+  './',
+  './index.html',
+  './broadcast.html',
+  './player.html',
+  './gm.html',
+  './css/design-system.css',
+  './css/components.css',
+  './css/broadcast.css',
+  './css/player.css',
+  './css/gm.css',
+  './js/audio.js',
+  './js/broadcast.js',
+  './js/player.js',
+  './js/gm.js',
+  './manifest.json',
+  './favicon.ico',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-192-maskable.png',
+  './icons/icon-512-maskable.png',
+  './assets/Global Assets/Logotype_Overlay@2x.png',
+  './assets/Global Assets/Main Screen.jpeg'
 ];
 
-self.addEventListener('install', (evt) => {
-  evt.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // Use individually resolved promises so failure of one optional asset doesn't break worker
+      await Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn(`[SW] Warning: Optional asset cache failed: ${url}`, err);
+          })
+        )
+      );
+    }).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('activate', (evt) => {
-  evt.waitUntil(
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
@@ -38,18 +49,34 @@ self.addEventListener('activate', (evt) => {
   );
 });
 
-self.addEventListener('fetch', (evt) => {
-  if (evt.request.url.includes('/socket.io/') || evt.request.method !== 'GET') {
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  
+  // Skip non-GET and websocket/socket.io polling requests
+  if (req.method !== 'GET' || req.url.includes('/socket.io/')) {
     return;
   }
-  evt.respondWith(
-    caches.match(evt.request).then((cachedRes) => {
-      return cachedRes || fetch(evt.request).then((networkRes) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(evt.request, networkRes.clone());
-          return networkRes;
+
+  event.respondWith(
+    caches.match(req).then((cachedResponse) => {
+      const fetchPromise = fetch(req)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(req, responseToCache);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // If offline and request is navigation, serve index or broadcast
+          if (req.mode === 'navigate') {
+            return caches.match('./broadcast.html') || caches.match('./index.html') || caches.match('/');
+          }
         });
-      });
-    }).catch(() => caches.match('/index.html'))
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });

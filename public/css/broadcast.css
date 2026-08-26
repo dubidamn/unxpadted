@@ -270,7 +270,7 @@ body.standby-active.cyber-scanlines::after {
 }
 
 body.standby-active {
-  background-image: url('/assets/Global%20Assets/Main%20Screen.jpeg') !important;
+  background-image: url('../assets/Global%20Assets/Main%20Screen.jpeg') !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;

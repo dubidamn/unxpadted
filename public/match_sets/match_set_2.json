@@ -1,0 +1,813 @@
+{
+  "matchSetId": "MATCH-SET-2",
+  "title": "MATCH SET 2 — GRAND FINAL",
+  "description": "Set Soal Resmi Match 2 Grand Final (100 Soal Math Speedrun, 15 Trivia Cerdas Cermat, 10 Flash Memory, Kasus AI 2)",
+  "X1": [
+    {
+      "id": 1,
+      "q": "44 × 15 = ?",
+      "a": 660
+    },
+    {
+      "id": 2,
+      "q": "566 - 368 = ?",
+      "a": 198
+    },
+    {
+      "id": 3,
+      "q": "(30 × 7) + 63 = ?",
+      "a": 273
+    },
+    {
+      "id": 4,
+      "q": "306 + 248 - 107 = ?",
+      "a": 447
+    },
+    {
+      "id": 5,
+      "q": "405 + 390 = ?",
+      "a": 795
+    },
+    {
+      "id": 6,
+      "q": "44 × 10 = ?",
+      "a": 440
+    },
+    {
+      "id": 7,
+      "q": "731 - 143 = ?",
+      "a": 588
+    },
+    {
+      "id": 8,
+      "q": "(30 × 6) + 38 = ?",
+      "a": 218
+    },
+    {
+      "id": 9,
+      "q": "376 + 108 - 47 = ?",
+      "a": 437
+    },
+    {
+      "id": 10,
+      "q": "490 + 125 = ?",
+      "a": 615
+    },
+    {
+      "id": 11,
+      "q": "44 × 30 = ?",
+      "a": 1320
+    },
+    {
+      "id": 12,
+      "q": "896 - 238 = ?",
+      "a": 658
+    },
+    {
+      "id": 13,
+      "q": "(30 × 5) + 93 = ?",
+      "a": 243
+    },
+    {
+      "id": 14,
+      "q": "146 + 168 - 87 = ?",
+      "a": 227
+    },
+    {
+      "id": 15,
+      "q": "125 + 240 = ?",
+      "a": 365
+    },
+    {
+      "id": 16,
+      "q": "44 × 25 = ?",
+      "a": 1100
+    },
+    {
+      "id": 17,
+      "q": "611 - 333 = ?",
+      "a": 278
+    },
+    {
+      "id": 18,
+      "q": "(30 × 4) + 68 = ?",
+      "a": 188
+    },
+    {
+      "id": 19,
+      "q": "216 + 228 - 27 = ?",
+      "a": 417
+    },
+    {
+      "id": 20,
+      "q": "210 + 355 = ?",
+      "a": 565
+    },
+    {
+      "id": 21,
+      "q": "44 × 20 = ?",
+      "a": 880
+    },
+    {
+      "id": 22,
+      "q": "776 - 428 = ?",
+      "a": 348
+    },
+    {
+      "id": 23,
+      "q": "(30 × 11) + 43 = ?",
+      "a": 373
+    },
+    {
+      "id": 24,
+      "q": "286 + 88 - 67 = ?",
+      "a": 307
+    },
+    {
+      "id": 25,
+      "q": "295 + 90 = ?",
+      "a": 385
+    },
+    {
+      "id": 26,
+      "q": "44 × 15 = ?",
+      "a": 660
+    },
+    {
+      "id": 27,
+      "q": "941 - 203 = ?",
+      "a": 738
+    },
+    {
+      "id": 28,
+      "q": "(30 × 10) + 98 = ?",
+      "a": 398
+    },
+    {
+      "id": 29,
+      "q": "356 + 148 - 107 = ?",
+      "a": 397
+    },
+    {
+      "id": 30,
+      "q": "380 + 205 = ?",
+      "a": 585
+    },
+    {
+      "id": 31,
+      "q": "44 × 10 = ?",
+      "a": 440
+    },
+    {
+      "id": 32,
+      "q": "656 - 298 = ?",
+      "a": 358
+    },
+    {
+      "id": 33,
+      "q": "(30 × 9) + 73 = ?",
+      "a": 343
+    },
+    {
+      "id": 34,
+      "q": "126 + 208 - 47 = ?",
+      "a": 287
+    },
+    {
+      "id": 35,
+      "q": "465 + 320 = ?",
+      "a": 785
+    },
+    {
+      "id": 36,
+      "q": "44 × 30 = ?",
+      "a": 1320
+    },
+    {
+      "id": 37,
+      "q": "821 - 393 = ?",
+      "a": 428
+    },
+    {
+      "id": 38,
+      "q": "(30 × 8) + 48 = ?",
+      "a": 288
+    },
+    {
+      "id": 39,
+      "q": "196 + 68 - 87 = ?",
+      "a": 177
+    },
+    {
+      "id": 40,
+      "q": "550 + 435 = ?",
+      "a": 985
+    },
+    {
+      "id": 41,
+      "q": "44 × 25 = ?",
+      "a": 1100
+    },
+    {
+      "id": 42,
+      "q": "536 - 168 = ?",
+      "a": 368
+    },
+    {
+      "id": 43,
+      "q": "(30 × 7) + 23 = ?",
+      "a": 233
+    },
+    {
+      "id": 44,
+      "q": "266 + 128 - 27 = ?",
+      "a": 367
+    },
+    {
+      "id": 45,
+      "q": "185 + 170 = ?",
+      "a": 355
+    },
+    {
+      "id": 46,
+      "q": "44 × 20 = ?",
+      "a": 880
+    },
+    {
+      "id": 47,
+      "q": "701 - 263 = ?",
+      "a": 438
+    },
+    {
+      "id": 48,
+      "q": "(30 × 6) + 78 = ?",
+      "a": 258
+    },
+    {
+      "id": 49,
+      "q": "336 + 188 - 67 = ?",
+      "a": 457
+    },
+    {
+      "id": 50,
+      "q": "270 + 285 = ?",
+      "a": 555
+    },
+    {
+      "id": 51,
+      "q": "44 × 15 = ?",
+      "a": 660
+    },
+    {
+      "id": 52,
+      "q": "866 - 358 = ?",
+      "a": 508
+    },
+    {
+      "id": 53,
+      "q": "(30 × 5) + 53 = ?",
+      "a": 203
+    },
+    {
+      "id": 54,
+      "q": "106 + 248 - 107 = ?",
+      "a": 247
+    },
+    {
+      "id": 55,
+      "q": "355 + 400 = ?",
+      "a": 755
+    },
+    {
+      "id": 56,
+      "q": "44 × 10 = ?",
+      "a": 440
+    },
+    {
+      "id": 57,
+      "q": "581 - 133 = ?",
+      "a": 448
+    },
+    {
+      "id": 58,
+      "q": "(30 × 4) + 28 = ?",
+      "a": 148
+    },
+    {
+      "id": 59,
+      "q": "176 + 108 - 47 = ?",
+      "a": 237
+    },
+    {
+      "id": 60,
+      "q": "440 + 135 = ?",
+      "a": 575
+    },
+    {
+      "id": 61,
+      "q": "44 × 30 = ?",
+      "a": 1320
+    },
+    {
+      "id": 62,
+      "q": "746 - 228 = ?",
+      "a": 518
+    },
+    {
+      "id": 63,
+      "q": "(30 × 11) + 83 = ?",
+      "a": 413
+    },
+    {
+      "id": 64,
+      "q": "246 + 168 - 87 = ?",
+      "a": 327
+    },
+    {
+      "id": 65,
+      "q": "525 + 250 = ?",
+      "a": 775
+    },
+    {
+      "id": 66,
+      "q": "44 × 25 = ?",
+      "a": 1100
+    },
+    {
+      "id": 67,
+      "q": "911 - 323 = ?",
+      "a": 588
+    },
+    {
+      "id": 68,
+      "q": "(30 × 10) + 58 = ?",
+      "a": 358
+    },
+    {
+      "id": 69,
+      "q": "316 + 228 - 27 = ?",
+      "a": 517
+    },
+    {
+      "id": 70,
+      "q": "160 + 365 = ?",
+      "a": 525
+    },
+    {
+      "id": 71,
+      "q": "44 × 20 = ?",
+      "a": 880
+    },
+    {
+      "id": 72,
+      "q": "626 - 418 = ?",
+      "a": 208
+    },
+    {
+      "id": 73,
+      "q": "(30 × 9) + 33 = ?",
+      "a": 303
+    },
+    {
+      "id": 74,
+      "q": "386 + 88 - 67 = ?",
+      "a": 407
+    },
+    {
+      "id": 75,
+      "q": "245 + 100 = ?",
+      "a": 345
+    },
+    {
+      "id": 76,
+      "q": "44 × 15 = ?",
+      "a": 660
+    },
+    {
+      "id": 77,
+      "q": "791 - 193 = ?",
+      "a": 598
+    },
+    {
+      "id": 78,
+      "q": "(30 × 8) + 88 = ?",
+      "a": 328
+    },
+    {
+      "id": 79,
+      "q": "156 + 148 - 107 = ?",
+      "a": 197
+    },
+    {
+      "id": 80,
+      "q": "330 + 215 = ?",
+      "a": 545
+    },
+    {
+      "id": 81,
+      "q": "44 × 10 = ?",
+      "a": 440
+    },
+    {
+      "id": 82,
+      "q": "506 - 288 = ?",
+      "a": 218
+    },
+    {
+      "id": 83,
+      "q": "(30 × 7) + 63 = ?",
+      "a": 273
+    },
+    {
+      "id": 84,
+      "q": "226 + 208 - 47 = ?",
+      "a": 387
+    },
+    {
+      "id": 85,
+      "q": "415 + 330 = ?",
+      "a": 745
+    },
+    {
+      "id": 86,
+      "q": "44 × 30 = ?",
+      "a": 1320
+    },
+    {
+      "id": 87,
+      "q": "671 - 383 = ?",
+      "a": 288
+    },
+    {
+      "id": 88,
+      "q": "(30 × 6) + 38 = ?",
+      "a": 218
+    },
+    {
+      "id": 89,
+      "q": "296 + 68 - 87 = ?",
+      "a": 277
+    },
+    {
+      "id": 90,
+      "q": "500 + 445 = ?",
+      "a": 945
+    },
+    {
+      "id": 91,
+      "q": "44 × 25 = ?",
+      "a": 1100
+    },
+    {
+      "id": 92,
+      "q": "836 - 158 = ?",
+      "a": 678
+    },
+    {
+      "id": 93,
+      "q": "(30 × 5) + 93 = ?",
+      "a": 243
+    },
+    {
+      "id": 94,
+      "q": "366 + 128 - 27 = ?",
+      "a": 467
+    },
+    {
+      "id": 95,
+      "q": "135 + 180 = ?",
+      "a": 315
+    },
+    {
+      "id": 96,
+      "q": "44 × 20 = ?",
+      "a": 880
+    },
+    {
+      "id": 97,
+      "q": "551 - 253 = ?",
+      "a": 298
+    },
+    {
+      "id": 98,
+      "q": "(30 × 4) + 68 = ?",
+      "a": 188
+    },
+    {
+      "id": 99,
+      "q": "136 + 188 - 67 = ?",
+      "a": 257
+    },
+    {
+      "id": 100,
+      "q": "220 + 295 = ?",
+      "a": 515
+    }
+  ],
+  "X2": [
+    {
+      "id": 1,
+      "question": "Candi Borobudur terletak di provinsi?",
+      "choices": [
+        "A. D.I. Yogyakarta",
+        "B. Jawa Tengah",
+        "C. Jawa Timur",
+        "D. Jawa Barat"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 2,
+      "question": "Hewan mamalia terbesar yang hidup di bumi adalah?",
+      "choices": [
+        "A. Gajah Afrika",
+        "B. Hiu Paus",
+        "C. Paus Biru",
+        "D. Jerapah"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 3,
+      "question": "Penemu lampu pijar listrik yang terkenal adalah?",
+      "choices": [
+        "A. Alexander Graham Bell",
+        "B. Thomas Alva Edison",
+        "C. Nikola Tesla",
+        "D. Albert Einstein"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 4,
+      "question": "Rumus kimia air murni adalah?",
+      "choices": [
+        "A. CO2",
+        "B. H2O",
+        "C. O2",
+        "D. NaCl"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 5,
+      "question": "Lembaga tinggi negara yang berwenang mengubah dan menetapkan UUD 1945 adalah?",
+      "choices": [
+        "A. DPR",
+        "B. Presiden",
+        "C. MPR",
+        "D. Mahkamah Konstitusi"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 6,
+      "question": "Garis khatulistiwa di Indonesia melintasi salah satu kota utama di Kalimantan Barat, yaitu?",
+      "choices": [
+        "A. Banjarmasin",
+        "B. Samarinda",
+        "C. Pontianak",
+        "D. Palangkaraya"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 7,
+      "question": "Mata uang resmi negara Jepang adalah?",
+      "choices": [
+        "A. Yuan",
+        "B. Won",
+        "C. Yen",
+        "D. Ringgit"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 8,
+      "question": "Lapisan atmosfer bumi tempat terjadinya fenomena cuaca seperti hujan dan awan adalah?",
+      "choices": [
+        "A. Stratosfer",
+        "B. Troposfer",
+        "C. Mesosfer",
+        "D. Termosfer"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 9,
+      "question": "Senjata tradisional khas suku Dayak di Kalimantan adalah?",
+      "choices": [
+        "A. Keris",
+        "B. Mandau",
+        "C. Rencong",
+        "D. Kujang"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 10,
+      "question": "Hasil kali dari 15 × 15 adalah?",
+      "choices": [
+        "A. 215",
+        "B. 225",
+        "C. 235",
+        "D. 245"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 11,
+      "question": "Partikel atom yang bermuatan listrik negatif adalah?",
+      "choices": [
+        "A. Proton",
+        "B. Neutron",
+        "C. Elektron",
+        "D. Positron"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 12,
+      "question": "Pahlawan nasional yang dijuluki 'Ayam Jantan dari Timur' adalah?",
+      "choices": [
+        "A. Sultan Hasanuddin",
+        "B. Pattimura",
+        "C. Pangeran Diponegoro",
+        "D. Tuanku Imam Bonjol"
+      ],
+      "correct": 0,
+      "points": 1
+    },
+    {
+      "id": 13,
+      "question": "Samudra terluas di permukaan bumi adalah?",
+      "choices": [
+        "A. Samudra Atlantik",
+        "B. Samudra Pasifik",
+        "C. Samudra Hindia",
+        "D. Samudra Arktik"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 14,
+      "question": "Bilangan prima terkecil yang lebih besar dari 20 adalah?",
+      "choices": [
+        "A. 21",
+        "B. 23",
+        "C. 27",
+        "D. 29"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 15,
+      "question": "Hari Pahlawan Nasional Indonesia diperingati setiap tanggal?",
+      "choices": [
+        "A. 1 Oktober",
+        "B. 28 Oktober",
+        "C. 10 November",
+        "D. 20 Mei"
+      ],
+      "correct": 2,
+      "points": 1
+    }
+  ],
+  "X3": {
+    "questions": [
+      {
+        "id": 1,
+        "question": "Terdapat tepat 8 node sirkuit mikroprosesor yang menyala aktif pada Media 1.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 2,
+        "question": "Tablet XPAD yang ditampilkan pada Media 2 adalah edisi Titanium Grey.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 3,
+        "question": "Jumlah unit drone pengintai yang mengelilingi tablet di Media 2 ada 4 drone.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 4,
+        "question": "Logo Xpad pada Media 3 terletak di pojok kanan atas layar.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 5,
+        "question": "Nilai frekuensi audio resolusi tinggi yang berkedip pada Media 4 adalah 96 kHz.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 6,
+        "question": "Pendaran cahaya sirkuit microchip pada Media 1 memancarkan warna Biru Neon.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 7,
+        "question": "Setiap drone pada Media 2 memiliki 6 baling-baling aktif.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 8,
+        "question": "Spektrum warna layar yang tertera pada spesifikasi Media 3 adalah 100% sRGB.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 9,
+        "question": "Indikator kedalaman bit audio pada Media 4 menunjukkan angka 24-Bit.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 10,
+        "question": "Microchip prosesor utama pada Media 1 berbentuk lingkaran sempurna.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  "X4": {
+    "terminalLogs": [
+      "[SYS_INIT] PROTOKOL: CLASH OF UNXPADTED DIJALANKAN",
+      "[WARN] AKSES SISTEM SATELIT ORBITAL XPAD TERISOLASI.",
+      "[INFO] BATAS WAKTU DEKRIPSI: 10 MENIT.",
+      "[HINT] GUNAKAN FOLAX AI UNTUK BANTUAN ANALISIS.",
+      "",
+      "[LOG_01] SINKRONISASI SINYAL >> MENCARI DIGIT PERTAMA",
+      "[TRACE] Mengukur jumlah antena transceiver orbital (4 unit).",
+      "[TRACE] Sinyal transmisi mengalami penguatan frekuensi 2 kali lipat.",
+      "[EXEC] Kalikan nilai antena dengan faktor penguatan frekuensi sebagai DIGIT PERTAMA.",
+      "",
+      "[LOG_02] TELEMETRI AUDIO >> MENCARI DIGIT KEDUA",
+      "[TRACE] Memindai konfigurasi hardware audio sistem XPAD 30 Pro.",
+      "[TRACE] Terdeteksi quad-speaker stereo system berkekuatan tinggi.",
+      "[EXEC] Masukkan jumlah kanal speaker quad-stereo sebagai DIGIT KEDUA.",
+      "",
+      "[LOG_03] KUNCI FREKUENSI >> MENCARI DIGIT KETIGA",
+      "[INFO] Menguji nilai modulasi nomor stasiun Cerdas Cermat.",
+      "[TRACE] Angka bulat positif genap terkecil dalam sistem enkripsi.",
+      "[EXEC] Tetapkan angka genap terkecil tersebut sebagai DIGIT KETIGA.",
+      "",
+      "[SYS_REQ] Rangkai 3 digit angka untuk memulihkan akses satelit."
+    ],
+    "solutionCode": [
+      8,
+      4,
+      2
+    ]
+  }
+}

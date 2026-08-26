@@ -1,0 +1,819 @@
+{
+  "matchSetId": "MATCH-SET-1",
+  "title": "MATCH SET 1 — PENYISIHAN (PRELIMINARY)",
+  "description": "Set Soal Resmi Match 1 (100 Soal Math Speedrun, 15 Trivia Cerdas Cermat, 10 Flash Memory, Kasus AI 1)",
+  "X1": [
+    {
+      "id": 1,
+      "q": "47 + 58 = ?",
+      "a": 105
+    },
+    {
+      "id": 2,
+      "q": "6 × 9 = ?",
+      "a": 54
+    },
+    {
+      "id": 3,
+      "q": "12 × 8 = ?",
+      "a": 96
+    },
+    {
+      "id": 4,
+      "q": "34 × 12 = ?",
+      "a": 408
+    },
+    {
+      "id": 5,
+      "q": "256 + 489 = ?",
+      "a": 745
+    },
+    {
+      "id": 6,
+      "q": "45 × 23 = ?",
+      "a": 1035
+    },
+    {
+      "id": 7,
+      "q": "(15 × 8) + 40 = ?",
+      "a": 160
+    },
+    {
+      "id": 8,
+      "q": "234 × 12 = ?",
+      "a": 2808
+    },
+    {
+      "id": 9,
+      "q": "(250 + 150) × 2 = ?",
+      "a": 800
+    },
+    {
+      "id": 10,
+      "q": "123 + 87 = ?",
+      "a": 210
+    },
+    {
+      "id": 11,
+      "q": "35 + 49 = ?",
+      "a": 84
+    },
+    {
+      "id": 12,
+      "q": "15 × 7 = ?",
+      "a": 105
+    },
+    {
+      "id": 13,
+      "q": "189 + 64 = ?",
+      "a": 253
+    },
+    {
+      "id": 14,
+      "q": "14 × 6 = ?",
+      "a": 84
+    },
+    {
+      "id": 15,
+      "q": "312 + 198 = ?",
+      "a": 510
+    },
+    {
+      "id": 16,
+      "q": "678 + 345 = ?",
+      "a": 1023
+    },
+    {
+      "id": 17,
+      "q": "27 × 34 = ?",
+      "a": 918
+    },
+    {
+      "id": 18,
+      "q": "56 × 15 = ?",
+      "a": 840
+    },
+    {
+      "id": 19,
+      "q": "892 + 567 = ?",
+      "a": 1459
+    },
+    {
+      "id": 20,
+      "q": "42 × 18 = ?",
+      "a": 756
+    },
+    {
+      "id": 21,
+      "q": "743 + 289 = ?",
+      "a": 1032
+    },
+    {
+      "id": 22,
+      "q": "38 × 25 = ?",
+      "a": 950
+    },
+    {
+      "id": 23,
+      "q": "456 + 789 + 123 = ?",
+      "a": 1368
+    },
+    {
+      "id": 24,
+      "q": "67 × 45 = ?",
+      "a": 3015
+    },
+    {
+      "id": 25,
+      "q": "(18 × 15) - 70 = ?",
+      "a": 200
+    },
+    {
+      "id": 26,
+      "q": "345 × 16 = ?",
+      "a": 5520
+    },
+    {
+      "id": 27,
+      "q": "888 + 999 + 111 = ?",
+      "a": 1998
+    },
+    {
+      "id": 28,
+      "q": "72 × 35 = ?",
+      "a": 2520
+    },
+    {
+      "id": 29,
+      "q": "(400 - 175) × 4 = ?",
+      "a": 900
+    },
+    {
+      "id": 30,
+      "q": "125 × 8 = ?",
+      "a": 1000
+    },
+    {
+      "id": 31,
+      "q": "19 × 10 = ?",
+      "a": 190
+    },
+    {
+      "id": 32,
+      "q": "656 - 408 = ?",
+      "a": 248
+    },
+    {
+      "id": 33,
+      "q": "(30 × 7) + 63 = ?",
+      "a": 273
+    },
+    {
+      "id": 34,
+      "q": "276 + 58 - 97 = ?",
+      "a": 237
+    },
+    {
+      "id": 35,
+      "q": "265 + 130 = ?",
+      "a": 395
+    },
+    {
+      "id": 36,
+      "q": "19 × 30 = ?",
+      "a": 570
+    },
+    {
+      "id": 37,
+      "q": "821 - 183 = ?",
+      "a": 638
+    },
+    {
+      "id": 38,
+      "q": "(30 × 6) + 38 = ?",
+      "a": 218
+    },
+    {
+      "id": 39,
+      "q": "346 + 118 - 37 = ?",
+      "a": 427
+    },
+    {
+      "id": 40,
+      "q": "350 + 245 = ?",
+      "a": 595
+    },
+    {
+      "id": 41,
+      "q": "19 × 25 = ?",
+      "a": 475
+    },
+    {
+      "id": 42,
+      "q": "536 - 278 = ?",
+      "a": 258
+    },
+    {
+      "id": 43,
+      "q": "(30 × 5) + 93 = ?",
+      "a": 243
+    },
+    {
+      "id": 44,
+      "q": "116 + 178 - 77 = ?",
+      "a": 217
+    },
+    {
+      "id": 45,
+      "q": "435 + 360 = ?",
+      "a": 795
+    },
+    {
+      "id": 46,
+      "q": "19 × 20 = ?",
+      "a": 380
+    },
+    {
+      "id": 47,
+      "q": "701 - 373 = ?",
+      "a": 328
+    },
+    {
+      "id": 48,
+      "q": "(30 × 4) + 68 = ?",
+      "a": 188
+    },
+    {
+      "id": 49,
+      "q": "186 + 238 - 117 = ?",
+      "a": 307
+    },
+    {
+      "id": 50,
+      "q": "520 + 95 = ?",
+      "a": 615
+    },
+    {
+      "id": 51,
+      "q": "19 × 15 = ?",
+      "a": 285
+    },
+    {
+      "id": 52,
+      "q": "866 - 148 = ?",
+      "a": 718
+    },
+    {
+      "id": 53,
+      "q": "(30 × 11) + 43 = ?",
+      "a": 373
+    },
+    {
+      "id": 54,
+      "q": "256 + 98 - 57 = ?",
+      "a": 297
+    },
+    {
+      "id": 55,
+      "q": "155 + 210 = ?",
+      "a": 365
+    },
+    {
+      "id": 56,
+      "q": "19 × 10 = ?",
+      "a": 190
+    },
+    {
+      "id": 57,
+      "q": "581 - 243 = ?",
+      "a": 338
+    },
+    {
+      "id": 58,
+      "q": "(30 × 10) + 98 = ?",
+      "a": 398
+    },
+    {
+      "id": 59,
+      "q": "326 + 158 - 97 = ?",
+      "a": 387
+    },
+    {
+      "id": 60,
+      "q": "240 + 325 = ?",
+      "a": 565
+    },
+    {
+      "id": 61,
+      "q": "19 × 30 = ?",
+      "a": 570
+    },
+    {
+      "id": 62,
+      "q": "746 - 338 = ?",
+      "a": 408
+    },
+    {
+      "id": 63,
+      "q": "(30 × 9) + 73 = ?",
+      "a": 343
+    },
+    {
+      "id": 64,
+      "q": "396 + 218 - 37 = ?",
+      "a": 577
+    },
+    {
+      "id": 65,
+      "q": "325 + 440 = ?",
+      "a": 765
+    },
+    {
+      "id": 66,
+      "q": "19 × 25 = ?",
+      "a": 475
+    },
+    {
+      "id": 67,
+      "q": "911 - 433 = ?",
+      "a": 478
+    },
+    {
+      "id": 68,
+      "q": "(30 × 8) + 48 = ?",
+      "a": 288
+    },
+    {
+      "id": 69,
+      "q": "166 + 78 - 77 = ?",
+      "a": 167
+    },
+    {
+      "id": 70,
+      "q": "410 + 175 = ?",
+      "a": 585
+    },
+    {
+      "id": 71,
+      "q": "19 × 20 = ?",
+      "a": 380
+    },
+    {
+      "id": 72,
+      "q": "626 - 208 = ?",
+      "a": 418
+    },
+    {
+      "id": 73,
+      "q": "(30 × 7) + 23 = ?",
+      "a": 233
+    },
+    {
+      "id": 74,
+      "q": "236 + 138 - 117 = ?",
+      "a": 257
+    },
+    {
+      "id": 75,
+      "q": "495 + 290 = ?",
+      "a": 785
+    },
+    {
+      "id": 76,
+      "q": "19 × 15 = ?",
+      "a": 285
+    },
+    {
+      "id": 77,
+      "q": "791 - 303 = ?",
+      "a": 488
+    },
+    {
+      "id": 78,
+      "q": "(30 × 6) + 78 = ?",
+      "a": 258
+    },
+    {
+      "id": 79,
+      "q": "306 + 198 - 57 = ?",
+      "a": 447
+    },
+    {
+      "id": 80,
+      "q": "130 + 405 = ?",
+      "a": 535
+    },
+    {
+      "id": 81,
+      "q": "19 × 10 = ?",
+      "a": 190
+    },
+    {
+      "id": 82,
+      "q": "506 - 398 = ?",
+      "a": 108
+    },
+    {
+      "id": 83,
+      "q": "(30 × 5) + 53 = ?",
+      "a": 203
+    },
+    {
+      "id": 84,
+      "q": "376 + 58 - 97 = ?",
+      "a": 337
+    },
+    {
+      "id": 85,
+      "q": "215 + 140 = ?",
+      "a": 355
+    },
+    {
+      "id": 86,
+      "q": "19 × 30 = ?",
+      "a": 570
+    },
+    {
+      "id": 87,
+      "q": "671 - 173 = ?",
+      "a": 498
+    },
+    {
+      "id": 88,
+      "q": "(30 × 4) + 28 = ?",
+      "a": 148
+    },
+    {
+      "id": 89,
+      "q": "146 + 118 - 37 = ?",
+      "a": 227
+    },
+    {
+      "id": 90,
+      "q": "300 + 255 = ?",
+      "a": 555
+    },
+    {
+      "id": 91,
+      "q": "19 × 25 = ?",
+      "a": 475
+    },
+    {
+      "id": 92,
+      "q": "836 - 268 = ?",
+      "a": 568
+    },
+    {
+      "id": 93,
+      "q": "(30 × 11) + 83 = ?",
+      "a": 413
+    },
+    {
+      "id": 94,
+      "q": "216 + 178 - 77 = ?",
+      "a": 317
+    },
+    {
+      "id": 95,
+      "q": "385 + 370 = ?",
+      "a": 755
+    },
+    {
+      "id": 96,
+      "q": "19 × 20 = ?",
+      "a": 380
+    },
+    {
+      "id": 97,
+      "q": "551 - 363 = ?",
+      "a": 188
+    },
+    {
+      "id": 98,
+      "q": "(30 × 10) + 58 = ?",
+      "a": 358
+    },
+    {
+      "id": 99,
+      "q": "286 + 238 - 117 = ?",
+      "a": 407
+    },
+    {
+      "id": 100,
+      "q": "470 + 105 = ?",
+      "a": 575
+    }
+  ],
+  "X2": [
+    {
+      "id": 1,
+      "question": "Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?",
+      "choices": [
+        "A. 16 Agustus 1945",
+        "B. 17 Agustus 1945",
+        "C. 18 Agustus 1945",
+        "D. 19 Agustus 1945"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 2,
+      "question": "Presiden pertama Republik Indonesia adalah?",
+      "choices": [
+        "A. Ir. Soekarno",
+        "B. Moh. Hatta",
+        "C. B.J. Habibie",
+        "D. Soeharto"
+      ],
+      "correct": 0,
+      "points": 1
+    },
+    {
+      "id": 3,
+      "question": "Satuan Standar Internasional (SI) untuk besaran gaya adalah?",
+      "choices": [
+        "A. Joule",
+        "B. Watt",
+        "C. Newton",
+        "D. Pascal"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 4,
+      "question": "Organ tubuh manusia yang berfungsi utama memompa darah ke seluruh tubuh adalah?",
+      "choices": [
+        "A. Paru-paru",
+        "B. Jantung",
+        "C. Hati",
+        "D. Ginjal"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 5,
+      "question": "Proses tumbuhan mengubah energi cahaya matahari menjadi makanan disebut?",
+      "choices": [
+        "A. Respirasi",
+        "B. Transpirasi",
+        "C. Fotosintesis",
+        "D. Fermentasi"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 6,
+      "question": "Organisasi pergerakan nasional pertama di Indonesia yang didirikan tahun 1908 adalah?",
+      "choices": [
+        "A. Budi Utomo",
+        "B. Sarekat Islam",
+        "C. Indische Partij",
+        "D. PNI"
+      ],
+      "correct": 0,
+      "points": 1
+    },
+    {
+      "id": 7,
+      "question": "Planet terdekat dari Matahari dalam tata surya adalah?",
+      "choices": [
+        "A. Venus",
+        "B. Merkurius",
+        "C. Mars",
+        "D. Bumi"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 8,
+      "question": "Gas yang dihirup manusia saat bernapas untuk metabolisme tubuh adalah?",
+      "choices": [
+        "A. Karbondioksida",
+        "B. Nitrogen",
+        "C. Oksigen",
+        "D. Hidrogen"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 9,
+      "question": "Siapakah pencipta lagu kebangsaan Indonesia Raya?",
+      "choices": [
+        "A. Ismail Marzuki",
+        "B. W.R. Supratman",
+        "C. Kusbini",
+        "D. Ibu Sud"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 10,
+      "question": "Danau vulkanik terbesar di Indonesia dan Asia Tenggara adalah?",
+      "choices": [
+        "A. Danau Singkarak",
+        "B. Danau Toba",
+        "C. Danau Poso",
+        "D. Danau Matano"
+      ],
+      "correct": 1,
+      "points": 1
+    },
+    {
+      "id": 11,
+      "question": "Alat untuk mengukur kuat arus listrik dalam suatu rangkaian adalah?",
+      "choices": [
+        "A. Voltmeter",
+        "B. Barometer",
+        "C. Amperemeter",
+        "D. Termometer"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 12,
+      "question": "Lambang kimia untuk unsur Emas adalah?",
+      "choices": [
+        "A. Ag",
+        "B. Fe",
+        "C. Au",
+        "D. Cu"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 13,
+      "question": "Ibukota negara Australia adalah?",
+      "choices": [
+        "A. Sydney",
+        "B. Melbourne",
+        "C. Canberra",
+        "D. Brisbane"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 14,
+      "question": "Sumpah Pemuda diikrarkan pada tanggal?",
+      "choices": [
+        "A. 2 Mei 1928",
+        "B. 17 Agustus 1945",
+        "C. 28 Oktober 1928",
+        "D. 10 November 1945"
+      ],
+      "correct": 2,
+      "points": 1
+    },
+    {
+      "id": 15,
+      "question": "Sudut terkecil yang dibentuk oleh kedua jarum jam pada pukul 03.00 adalah?",
+      "choices": [
+        "A. 45 derajat",
+        "B. 60 derajat",
+        "C. 90 derajat",
+        "D. 120 derajat"
+      ],
+      "correct": 2,
+      "points": 1
+    }
+  ],
+  "X3": {
+    "questions": [
+      {
+        "id": 1,
+        "question": "Buah yang muncul pada tayangan Media 1 adalah buah Apel berwarna merah.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 2,
+        "question": "Bola basket pada video Media 2 memantul sebanyak 5 kali di lantai.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 3,
+        "question": "Mobil yang terparkir di depan gedung pada Media 3 adalah mobil sedan berwarna biru.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 4,
+        "question": "Kucing yang berjalan melewati pagar putih pada Media 4 berwarna putih polos.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 5,
+        "question": "Timer digital di laboratorium menunjukkan angka waktu tepat 01:30.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 6,
+        "question": "Robot Gamma membawa bendera Infinix dengan logo warna emas.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 7,
+        "question": "Bentuk geometri heksagon ungu pada latar belakang berputar searah jarum jam.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 8,
+        "question": "Total koin emas yang tampak di pojok layar berjumlah 9 koin.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 9,
+        "question": "Warna latar belakang dinding laboratorium adalah hitam pekat tanpa lampu neon.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 10,
+        "question": "Urutan penayangan media adalah Buah → Bola → Mobil → Kucing.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      }
+    ]
+  },
+  "X4": {
+    "terminalLogs": [
+      "[SYS_INIT] PROTOKOL: CLASH OF UNXPADTED DIJALANKAN",
+      "[WARN] AKSES XPAD TERKUNCI.",
+      "[INFO] BATAS WAKTU DEKRIPSI: 10 MENIT.",
+      "[HINT] GUNAKAN FOLAX AI UNTUK BANTUAN ANALISIS.",
+      "",
+      "[LOG_01] SINKRONISASI DATA >> MENCARI DIGIT PERTAMA",
+      "[TRACE] Mengunduh 5 paket data ke dalam sistem secara berurutan.",
+      "[TRACE] Data 3 masuk sebelum Data 2, tetapi setelah Data 1.",
+      "[TRACE] Data 4 masuk tepat sebelum Data 3.",
+      "[TRACE] Pengecualian: Data 5 masuk paling awal, mendahului Data 1.",
+      "[EXEC] Tetapkan nomor data yang berada tepat di urutan ketiga sebagai DIGIT PERTAMA.",
+      "",
+      "[LOG_02] IDENTIFIKASI ANOMALI >> MENCARI DIGIT KEDUA",
+      "[WARN] Folax AI mendeteksi 1 penyusup dari 3 program (AI_1, AI_2, AI_3).",
+      "[RULE] Filter validasi: HANYA SATU AI yang berbohong, sisanya berkata jujur.",
+      "[INPUT] AI_1: \"AI_2 berkata jujur.\"",
+      "[INPUT] AI_2: \"AI_3 adalah satu-satunya yang berbohong.\"",
+      "[INPUT] AI_3: \"AI_1 sedang berbohong.\"",
+      "[EXEC] Identifikasi nomor AI yang berbohong tersebut sebagai DIGIT KEDUA.",
+      "",
+      "[LOG_03] PARAMETER AKHIR >> MENCARI DIGIT KETIGA",
+      "[INFO] Memindai angka tunggal (1-9) berdasarkan algoritma berikut.",
+      "[TRACE] Parameter 1: Merupakan angka genap dan bernilai lebih besar dari 4.",
+      "[TRACE] Parameter 2: Jika dibagi dengan angka 3, akan selalu menyisakan angka 2.",
+      "[EXEC] Deduksikan angka tersebut sebagai DIGIT KETIGA.",
+      "",
+      "[SYS_REQ] Rangkai 3 digit angka untuk memulihkan akses."
+    ],
+    "solutionCode": [
+      4,
+      3,
+      8
+    ]
+  }
+}

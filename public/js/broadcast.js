@@ -18,7 +18,8 @@ class BroadcastDisplayApp {
   }
 
   connectSocket() {
-    this.socket = io();
+    const targetUrl = (typeof window.getSocketServerUrl === 'function') ? window.getSocketServerUrl() : window.location.origin;
+    this.socket = (targetUrl === window.location.origin) ? io() : io(targetUrl);
 
     this.socket.on('connect', () => {
       console.log('Connected to server as Broadcast Display');

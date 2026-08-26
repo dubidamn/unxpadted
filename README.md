@@ -1,6 +1,28 @@
-# 🔮 CLASH OF UNXPADTED — REALTIME GAME SYSTEM (PRODUCTION FINAL)
+# 🔮 CLASH OF UNXPADTED — REALTIME GAME SYSTEM (PWA FULLSCREEN FINAL)
 
-Sistem game interaktif realtime berbasis **Node.js, Express & Socket.IO** untuk turnamen **Clash of UNXPADTED: Infinix XPAD 30 Pro**.
+Sistem game interaktif realtime berbasis **Node.js, Express & Socket.IO** untuk turnamen **Clash of UNXPADTED: Infinix XPAD 30 Pro**. Dilengkapi dengan dukungan penuh **Progressive Web App (PWA) Chrome App Fullscreen**, **Service Worker Caching**, **Wake Lock**, dan deployment otomatis ke **GitHub Pages & Render.com**.
+
+---
+
+## 📲 Panduan Memasang Sebagai Chrome App (Fullscreen)
+
+Aplikasi ini sudah berstandar PWA (*Progressive Web App*) resmi dengan konfigurasi `"display": "fullscreen"` & `"display_override": ["fullscreen", "standalone"]`.
+
+### A. Memasang di Google Chrome (Desktop macOS / Windows / Linux):
+1. Buka aplikasi di Chrome (misal `http://localhost:3000/`, `https://event.unxpadted.web.id/`, atau `https://dubidamn.github.io/unxpadted/`).
+2. Klik tombol **"📥 PASANG APLIKASI CHROME (PWA)"** di halaman portal, ATAU klik ikon **Install / Pasang (📥)** di ujung kanan bilah alamat (URL bar) browser Chrome.
+3. Klik **"Install / Pasang"** pada pop-up konfirmasi.
+4. Aplikasi akan otomatis terpasang sebagai aplikasi mandiri di Desktop / Launchpad / Start Menu Anda dan berjalan **borderless & 100% fullscreen**.
+
+### B. Memasang di Tablet / Android / ChromeOS (Infinix XPAD):
+1. Buka URL tablet peserta (misal `.../player?team=X`) di browser Chrome.
+2. Tap tombol **"📥 INSTALL APP"** di pojok kiri bawah, ATAU buka menu titik tiga (⋮) Chrome ➔ pilih **"Tambahkan ke Layar Utama" / "Pasang Aplikasi"**.
+3. Buka ikon aplikasi dari homescreen tablet untuk pengalaman gameplay layar penuh tanpa address bar browser.
+
+### ⌨️ Shortcut Layar Penuh (Fullscreen):
+* **Tekan tombol `F`** pada keyboard kapan saja untuk masuk / keluar mode Fullscreen.
+* **Klik tombol `FULLSCREEN`** pada HUD kontrol mengambang di pojok kiri bawah layar.
+* Sistem otomatis mengaktifkan **Screen Wake Lock** agar layar tablet/monitor tidak pernah redup atau mati selama turnamen.
 
 ---
 
@@ -17,20 +39,39 @@ Server akan otomatis mendeteksi IP lokal Anda (misal `http://192.168.1.10:3000`)
 
 ## 🌐 Alamat URL & Antarmuka
 
-| Antarmuka | URL Akses Lokal | URL Publik Domain Resmi | Fungsi & Penggunaan |
-| :--- | :--- | :--- | :--- |
-| **📺 Layar Broadcast (16:9)** | `http://localhost:3000/` | `https://event.unxpadted.web.id/` | Layar panggung utama / OBS projector (*Clean HUD, non-shifting digital clocks, target headline & dual telemetry*) |
-| **⚙️ Gamemaster Panel** | `http://localhost:3000/gm` | `https://event.unxpadted.web.id/gm` | Panel kendali juri & operator (*Scoreboard, Match Clock, Station Timer, JSON Match Set Importer, Telemetri Live*) |
-| **📱 Tablet Peserta Team X** | `http://localhost:3000/player?team=X` | `https://event.unxpadted.web.id/player?team=X` | Tampilan tablet tim X (*Locked PWA layout, tactile keypad, responsive buzzer, terminal logs*) |
-| **📱 Tablet Peserta Team Y** | `http://localhost:3000/player?team=Y` | `https://event.unxpadted.web.id/player?team=Y` | Tampilan tablet tim Y |
+| Antarmuka | URL Akses Lokal | URL Publik Cloud | GitHub Pages Static | Fungsi & Penggunaan |
+| :--- | :--- | :--- | :--- | :--- |
+| **🌌 Tournament Portal Hub** | `http://localhost:3000/` | `https://event.unxpadted.web.id/` | `https://dubidamn.github.io/unxpadted/` | Hub utama untuk memilih mode, install PWA, dan mengatur server target |
+| **📺 Layar Broadcast (16:9)** | `http://localhost:3000/broadcast` | `https://event.unxpadted.web.id/broadcast` | `https://dubidamn.github.io/unxpadted/broadcast.html` | Layar panggung utama / OBS projector (*Clean HUD, duel progress bar, scoreboard*) |
+| **⚙️ Gamemaster Panel** | `http://localhost:3000/gm` | `https://event.unxpadted.web.id/gm` | `https://dubidamn.github.io/unxpadted/gm.html` | Panel kendali juri & operator (*Scoreboard, Match Clock, JSON Match Set Importer*) |
+| **📱 Tablet Peserta Team X** | `http://localhost:3000/player?team=X` | `https://event.unxpadted.web.id/player?team=X` | `https://dubidamn.github.io/unxpadted/player.html?team=X` | Tampilan tablet tim X (*Locked layout, tactile keypad, buzzer, terminal logs*) |
+| **📱 Tablet Peserta Team Y** | `http://localhost:3000/player?team=Y` | `https://event.unxpadted.web.id/player?team=Y` | `https://dubidamn.github.io/unxpadted/player.html?team=Y` | Tampilan tablet tim Y |
 
 ---
 
-## ☁️ Panduan Deploy & Custom Domain di Render.com (`event.unxpadted.web.id`)
+## 🐙 Panduan Deploy ke GitHub Pages (Otomatis via GitHub Actions)
 
-Aplikasi ini sudah dilengkapi dengan blueprint **`render.yaml`** yang otomatis mengikat domain **`event.unxpadted.web.id`**:
+Repositori ini sudah dilengkapi alur kerja otomatis **`.github/workflows/deploy-pages.yml`**:
 
-### 1. Langkah Deploy ke Render:
+1. **Push ke GitHub**:
+   ```bash
+   git add .
+   git commit -m "feat: enable Chrome PWA fullscreen app and GitHub Pages deployment"
+   git push origin main
+   ```
+2. **Aktifkan GitHub Pages**:
+   - Masuk ke repositori GitHub: **`https://github.com/dubidamn/unxpadted`**.
+   - Buka menu **Settings** ➔ pilih tab **Pages** di menu kiri.
+   - Pada bagian **Build and deployment** ➔ **Source**, pilih **`GitHub Actions`**.
+   - GitHub Actions akan otomatis menjalankan build dan menerbitkan website ke:
+     **`https://dubidamn.github.io/unxpadted/`**
+
+---
+
+## ☁️ Panduan Deploy Backend ke Render.com (`event.unxpadted.web.id`)
+
+Aplikasi ini dilengkapi blueprint **`render.yaml`** untuk menjalankan backend Node.js + Socket.IO:
+
 1. Repositori GitHub: **`https://github.com/dubidamn/unxpadted.git`**
 2. Masuk ke [Render.com Dashboard](https://dashboard.render.com/) ➔ Klik **New +** ➔ **Web Service**.
 3. Hubungkan repositori **`dubidamn/unxpadted`**.
@@ -38,15 +79,7 @@ Aplikasi ini sudah dilengkapi dengan blueprint **`render.yaml`** yang otomatis m
    - **Environment**: `Node`
    - **Build Command**: `npm install`
    - **Start Command**: `npm start`
-5. Klik **Deploy Web Service**.
-
-### 2. Konfigurasi DNS Custom Domain di Registrar / Cloudflare:
-Pada DNS Management domain `unxpadted.web.id` (misal di Cloudflare, Niagahoster, Domainesia, dsb.), tambahkan **CNAME Record**:
-* **Type**: `CNAME`
-* **Name / Host**: `event` *(atau `event.unxpadted.web.id`)*
-* **Target / Value**: `<service-name>.onrender.com` *(misal `unxpadted.onrender.com`)*
-* **Proxy Status (Cloudflare)**: *DNS Only / Bypass* saat verifikasi SSL pertama kali.
-* **SSL Certificate**: Diterbitkan dan diperbarui otomatis (HTTPS) secara gratis oleh Render (Let's Encrypt).
+5. DNS Custom Domain CNAME: arahkan `event` ke `<service-name>.onrender.com`.
 
 ---
 
@@ -61,7 +94,7 @@ Pada DNS Management domain `unxpadted.web.id` (misal di Cloudflare, Niagahoster,
 
 ### 1. **STANDBY (Opening & Persiapan Match)**
 - **Layar Siaran:** Background resolusi penuh `Main Screen.jpeg` dengan HUD skor dan logo turnamen.
-- **Gamemaster:** Panel Standby ringkas dengan tombol *Upload JSON Match Set* dan indikator jumlah soal tiap stasiun (`X1: nnn, X2: nnn, X3: nnn, X4: nnn`).
+- **Gamemaster:** Panel Standby ringkas dengan tombol *Upload JSON Match Set* dan indikator jumlah soal tiap stasiun.
 - **Tablet Peserta:** Background resolusi penuh tanpa scroll, header menunjukkan status `STANDBY`.
 
 ### 2. **STATION X1: Math Speedrun**
@@ -71,19 +104,19 @@ Pada DNS Management domain `unxpadted.web.id` (misal di Cloudflare, Niagahoster,
 
 ### 3. **STATION X2: Cerdas Cermat**
 - **Format:** Trivia berkecepatan tinggi dengan sistem buzzer lockout.
-- **Layar Siaran:** Menampilkan judul soal dan 4 pilihan ganda. Banner `"TEKAN TOMBOL SEKARANG UNTUK MENJAWAB"` hanya muncul saat buzzer dibuka oleh GM.
-- **Tablet Peserta:** Tombol sentuh buzzer besar (340px). Tim tercepat langsung mendapatkan tampilan 4 pilihan ganda.
-- **Gamemaster:** Saklar tunggal dinamis `BUKA BUZZER` / `TUTUP BUZZER` dan tombol navigasi soal.
+- **Layar Siaran:** Menampilkan judul soal dan 4 pilihan ganda. Banner `"TEKAN TOMBOL SEKARANG UNTUK MENJAWAB"` muncul saat buzzer dibuka GM.
+- **Tablet Peserta:** Tombol sentuh buzzer besar (340px). Tim tercepat langsung mendapatkan pilihan ganda.
+- **Gamemaster:** Saklar tunggal dinamis `BUKA BUZZER` / `TUTUP BUZZER` dan navigasi soal.
 
 ### 4. **STATION X3: Flash Memory**
 - **Format:** Observasi memori visual diikuti fase *recall* pertanyaan pilihan ganda.
-- **Gamemaster:** Kartu progres tim real-time menampilkan jumlah jawaban benar aktual (`n / 10 BENAR`), status penguncian, dan rincian per soal (`[Q1:A✓] [Q2:C✗] ...`).
+- **Gamemaster:** Kartu progres tim real-time menampilkan jumlah jawaban benar aktual (`n / 10 BENAR`), status penguncian, dan rincian per soal.
 - **Tablet Peserta:** Pertanyaan *recall* 1 per 1 (`SOAL 1`, `SOAL 2`, dst.).
 
 ### 5. **STATION X4: AI Unsolved Case**
 - **Format:** Pemecahan kasus enkripsi 3 digit angka AI.
 - **Layar Siaran:** Dual konsol futuristik berbentuk rounded rectangle untuk Team X dan Team Y secara berdampingan.
-- **Tablet Peserta:** Jendela Command Prompt futuristik (`C:\XPAD\SYSTEM\AI_UNSOLVED_CASE.LOG`) dengan animasi *typewriter streaming*, kursor berkedip `█`, dan tab JAWAB dengan tinggi trapezoid yang identik.
+- **Tablet Peserta:** Command Prompt futuristik (`C:\XPAD\SYSTEM\AI_UNSOLVED_CASE.LOG`) dengan animasi *typewriter streaming*, kursor berkedip `█`, dan digit locks.
 - **Gamemaster:** Kode rahasia terupdate otomatis berdasarkan file JSON yang diunggah.
 
 ---
@@ -95,34 +128,3 @@ Sistem dilengkapi sound effect berbasis Web Audio API bawaan (`/js/audio.js`) ta
 - Suara Jawaban Benar
 - Suara Jawaban Salah / Timeout
 - Suara Kemenangan / Victory Fanfare
-
----
-
-## 📁 Struktur Direktori Bersih (`Unxpadted-Final`)
-```
-Unxpadted-Final/
-├── server.js               # Express + Socket.IO Server Engine
-├── package.json            # Dependencies & start scripts
-├── render.yaml             # Render.com Deployment Blueprint
-├── match_sets/             # Paket Soal JSON (Match 1, Match 2, Template)
-├── public/                 # Static web assets
-│   ├── broadcast.html      # 16:9 Stage Screen
-│   ├── gm.html             # Gamemaster Dashboard
-│   ├── player.html         # Tablet Interface (Team X & Y)
-│   ├── css/
-│   │   ├── design-system.css # Cyber design tokens & fonts
-│   │   ├── components.css    # Cards, steppers & badges
-│   │   ├── broadcast.css     # Stage 16:9 responsive CSS
-│   │   ├── gm.css            # Gamemaster dashboard CSS
-│   │   └── player.css        # Tablet numpad & touch CSS
-│   ├── js/
-│   │   ├── audio.js          # Procedural Web Audio SFX
-│   │   ├── broadcast.js      # Broadcast realtime client
-│   │   ├── gm.js             # Gamemaster realtime controller
-│   │   └── player.js         # Tablet realtime client
-│   ├── manifest.json       # PWA Manifest
-│   └── sw.js               # Service Worker
-├── Skinned-Asset/          # Asset grafis, logo & background
-├── Asset-XPAD30Pro/        # Asset branding & visual Infinix XPAD
-└── PNG ASSET/              # Typography & HUD elements
-```
