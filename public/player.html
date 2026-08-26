@@ -76,6 +76,11 @@
         <span id="soal-badge" class="soal-badge-pill">SOAL 1</span>
       </div>
 
+      <!-- X1 Completed Disabled Banner -->
+      <div id="x1-completed-banner" class="x1-completed-banner" style="display: none;">
+        <span id="x1-completed-text" class="font-display">TARGET 30 TERCAPAI — INPUT DIKUNCI</span>
+      </div>
+
       <!-- Math Equation Formula -->
       <div id="question-formula" class="question-formula-display">
         47 + 58 = ?
@@ -87,7 +92,7 @@
       </div>
 
       <!-- 4x4 Virtual On-Screen Rounded Rectangle Numpad -->
-      <div class="tablet-numpad-grid">
+      <div id="x1-numpad-grid" class="tablet-numpad-grid">
         <!-- Row 1 -->
         <button type="button" class="numpad-key-rounded" data-key="7">7</button>
         <button type="button" class="numpad-key-rounded" data-key="8">8</button>
@@ -177,7 +182,7 @@
     </div>
 
     <!-- ==========================================
-         STATION X3: FLASH MEMORY (DEAD-CENTERED RECALL QUESTION)
+         STATION X3: FLASH MEMORY (TRUE / FALSE BENAR/SALAH RECALL)
          ========================================== -->
     <div id="station-view-x3" class="player-station-view player-q-card" style="display: none;">
       
@@ -186,28 +191,20 @@
         <span id="x3-soal-badge" class="soal-badge-pill">SOAL 1</span>
       </div>
 
-      <!-- Dead-Centered Question & Options Container -->
+      <!-- Dead-Centered Question & True/False Options Container -->
       <div id="x3-recall-wrapper" style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; margin: auto 0;">
-        <div id="x3-q-text" class="font-display" style="font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 28px; line-height: 1.4; max-width: 780px;">
-          Buah apa yang muncul di Media 1 dan warnanya apa?
+        <div id="x3-q-text" class="font-display" style="font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 32px; line-height: 1.4; max-width: 780px;">
+          Buah yang muncul pada tayangan Media 1 adalah buah Apel berwarna merah.
         </div>
 
-        <div id="x3-options-container" class="trivia-options-grid">
-          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(0)">
-            <span class="opt-badge">A</span>
-            <span id="x3-opt-0">Apel Merah</span>
+        <div id="x3-options-container" class="tf-options-grid">
+          <button type="button" class="tf-btn tf-btn-true" onclick="window.playerApp.selectX3Option(0)">
+            <span class="tf-btn-icon">✓</span>
+            <span class="tf-btn-text">BENAR</span>
           </button>
-          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(1)">
-            <span class="opt-badge">B</span>
-            <span id="x3-opt-1">Jeruk Oranye</span>
-          </button>
-          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(2)">
-            <span class="opt-badge">C</span>
-            <span id="x3-opt-2">Pisang Kuning</span>
-          </button>
-          <button type="button" class="trivia-btn" onclick="window.playerApp.selectX3Option(3)">
-            <span class="opt-badge">D</span>
-            <span id="x3-opt-3">Mangga Hijau</span>
+          <button type="button" class="tf-btn tf-btn-false" onclick="window.playerApp.selectX3Option(1)">
+            <span class="tf-btn-icon">✗</span>
+            <span class="tf-btn-text">SALAH</span>
           </button>
         </div>
       </div>

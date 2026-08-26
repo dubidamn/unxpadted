@@ -30,19 +30,17 @@
         "D. Pilihan 4"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     }
   ],
   "X3": {
     "questions": [
       {
         "id": 1,
-        "question": "Pertanyaan observasi memori visual di sini?",
+        "question": "Tuliskan pernyataan observasi visual (Benar / Salah) di sini?",
         "choices": [
-          "A. Pilihan A",
-          "B. Pilihan B",
-          "C. Pilihan C",
-          "D. Pilihan D"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 0
       }

@@ -24,11 +24,16 @@ class PlayerTabletApp {
     ];
 
     this.questionsX3 = [
-      { q: 'Buah apa yang muncul di Media 1 dan warnanya apa?', opts: ['Apel Merah', 'Jeruk Oranye', 'Pisang Kuning', 'Mangga Hijau'], correct: 0 },
-      { q: 'Berapa jumlah koin emas yang tampak di pojok kanan atas layar?', opts: ['3 Koin', '5 Koin', '7 Koin', '9 Koin'], correct: 1 },
-      { q: 'Bentuk geometri apa yang berputar di latar belakang Media 3?', opts: ['Heksagon Ungu', 'Segitiga Biru', 'Oktagon Merah', 'Bintang Emas'], correct: 0 },
-      { q: 'Karakter robot mana yang membawa bendera Infinix?', opts: ['Robot Alpha', 'Robot Beta', 'Robot Gamma', 'Robot Delta'], correct: 2 },
-      { q: 'Angka digital berapa yang berkedip pada timer lab?', opts: ['00:45', '01:30', '02:15', '03:00'], correct: 1 }
+      { q: 'Pemberitahuan darurat pertama kali muncul pada pukul 14:00.', correct: 0 },
+      { q: 'Sistem mengalami kegagalan daya pada Sub-Sektor B.', correct: 0 },
+      { q: 'Protokol isolasi keamanan yang aktif berkode OMEGA-9.', correct: 1 },
+      { q: 'Terdapat 5 teknisi yang berada di ruang server utama.', correct: 1 },
+      { q: 'Sensor suhu ruangan pendingin menunjukkan angka minus 4 derajat.', correct: 0 },
+      { q: 'Pintu gerbang akses utama terkunci secara otomatis.', correct: 0 },
+      { q: 'Lampu indikator cadangan darurat menyala dengan warna biru.', correct: 1 },
+      { q: 'Durasi waktu evakuasi tersisa adalah 15 menit.', correct: 0 },
+      { q: 'Koneksi uplink satelit cadangan terputus total.', correct: 1 },
+      { q: 'Data log pemulihan berhasil dicadangkan ke server pusat.', correct: 0 }
     ];
 
     this.localX3Idx = 0;
@@ -58,7 +63,7 @@ class PlayerTabletApp {
     }
 
     this.renderHeader();
-    this.switchStation('x1');
+    this.switchStation('standby');
     this.connectSocket();
     this.setupListeners();
   }
@@ -79,7 +84,10 @@ class PlayerTabletApp {
     this.socket.on('state_update', (newState) => {
       this.state = newState;
       if (newState.currentStation) {
-        this.currentStation = newState.currentStation.toLowerCase();
+        const targetSt = newState.currentStation.toLowerCase();
+        if (targetSt !== this.currentStation) {
+          this.switchStation(targetSt);
+        }
       }
       this.render();
     });
@@ -120,41 +128,33 @@ class PlayerTabletApp {
     this.render();
   }
 
-  switchStation(stationId) {
-    this.currentStation = stationId.toLowerCase();
-
-    const isStandby = (this.currentStation === 'standby');
-    document.body.classList.toggle('standby-active', isStandby);
-    const ws = document.querySelector('.player-workspace');
-    if (ws) ws.classList.toggle('standby-active', isStandby);
-
-    // Toggle Station Views
-    ['standby', 'x1', 'x2', 'x3', 'x4'].forEach(name => {
-      const el = document.getElementById(`station-view-${name}`);
-      if (el) {
-        el.style.display = (this.currentStation === name) ? 'flex' : 'none';
-      }
-    });
-
-    // Update Drawer Active Buttons
-    document.querySelectorAll('.sidebar-btn-grid .sidebar-action-btn[data-station]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.station.toLowerCase() === this.currentStation);
-    });
-
-    this.render();
-  }
-
-  render() {
-    this.renderHeader();
-    this.renderStationView();
-  }
-
-  // --- 1. Header Overlay (Team Pill, Title, Timer, Score) ---
   renderHeader() {
     const s = this.state;
     const teamKey = this.currentTeam;
     const teamName = (s && s.teams && s.teams[teamKey]) ? s.teams[teamKey].name : `TEAM ${teamKey}`;
-    const scoreVal = (s && s.teams && s.teams[teamKey]) ? s.teams[teamKey].score : 0;
+
+    // Station points: 1 point per correct answer in active station
+    let stationPoints = 0;
+    const curSt = (this.currentStation || '').toLowerCase();
+    if (s) {
+      if (curSt === 'x1') {
+        stationPoints = (s.x1 && s.x1.progress && s.x1.progress[teamKey]) ? s.x1.progress[teamKey].score : 0;
+      } else if (curSt === 'x2') {
+        stationPoints = (s.x2 && s.x2.scores && s.x2.scores[teamKey] !== undefined)
+          ? s.x2.scores[teamKey]
+          : ((s.teams && s.teams[teamKey] && s.teams[teamKey].legScores && s.teams[teamKey].legScores.X2) || 0);
+      } else if (curSt === 'x3') {
+        stationPoints = (s.x3 && s.x3.progress && s.x3.progress[teamKey]) ? s.x3.progress[teamKey].correctCount : 0;
+      } else if (curSt === 'x4') {
+        stationPoints = (s.x4 && s.x4.teams && s.x4.teams[teamKey]) ? s.x4.teams[teamKey].totalCorrect : 0;
+      } else {
+        stationPoints = 0;
+      }
+    } else {
+      // Local fallback preview
+      if (curSt === 'x3') stationPoints = this.localX3Correct || 0;
+      else if (curSt === 'x4') stationPoints = (this.localX4Locks || []).filter(Boolean).length;
+    }
 
     // Team Pill
     const pill = document.getElementById('player-team-pill');
@@ -163,10 +163,10 @@ class PlayerTabletApp {
       pill.className = `player-team-pill team-${teamKey.toLowerCase()}`;
     }
 
-    // Team Score Pill
+    // Team Score Pill (Station Score)
     const scoreBadge = document.getElementById('team-score-pts');
     if (scoreBadge) {
-      scoreBadge.textContent = `${scoreVal} PTS`;
+      scoreBadge.textContent = `${stationPoints} PTS`;
     }
 
     // Station Timer
@@ -193,8 +193,15 @@ class PlayerTabletApp {
     }
   }
 
-  // --- 2. Station Viewport Switcher ---
-  renderStationView() {
+  switchStation(stationId) {
+    this.currentStation = stationId.toLowerCase();
+
+    const isStandby = (this.currentStation === 'standby');
+    document.body.classList.toggle('standby-active', isStandby);
+    const ws = document.querySelector('.player-workspace');
+    if (ws) ws.classList.toggle('standby-active', isStandby);
+
+    // Toggle Station Views
     ['standby', 'x1', 'x2', 'x3', 'x4'].forEach(name => {
       const el = document.getElementById(`station-view-${name}`);
       if (el) {
@@ -202,11 +209,46 @@ class PlayerTabletApp {
       }
     });
 
+    // Reset typewriter trigger if leaving X4
+    if (this.currentStation !== 'x4') {
+      this.hasAnimatedTerminal = false;
+    }
+
+    this.render();
+  }
+
+  render() {
+    this.renderHeader();
+
+    const isStandby = (this.currentStation === 'standby');
+    document.body.classList.toggle('standby-active', isStandby);
+    const ws = document.querySelector('.player-workspace');
+    if (ws) ws.classList.toggle('standby-active', isStandby);
+
+    ['standby', 'x1', 'x2', 'x3', 'x4'].forEach(name => {
+      const el = document.getElementById(`station-view-${name}`);
+      if (el) {
+        el.style.display = (this.currentStation === name) ? 'flex' : 'none';
+      }
+    });
+
+    if (this.currentStation === 'standby') {
+      return;
+    }
+
     switch (this.currentStation) {
-      case 'x1': this.renderX1(); break;
-      case 'x2': this.renderX2(); break;
-      case 'x3': this.renderX3(); break;
-      case 'x4': this.renderX4(); break;
+      case 'x1':
+        this.renderX1();
+        break;
+      case 'x2':
+        this.renderX2();
+        break;
+      case 'x3':
+        this.renderX3();
+        break;
+      case 'x4':
+        this.renderX4();
+        break;
     }
   }
 
@@ -219,6 +261,31 @@ class PlayerTabletApp {
 
     const formulaEl = document.getElementById('question-formula');
     const badgeEl = document.getElementById('soal-badge');
+    const numpadGrid = document.getElementById('x1-numpad-grid');
+    const completedBanner = document.getElementById('x1-completed-banner');
+    const completedText = document.getElementById('x1-completed-text');
+
+    const isLocked = Boolean(s && s.x1 && (s.x1.winner || s.x1.completed || (p && p.finished)));
+
+    if (numpadGrid) {
+      numpadGrid.classList.toggle('disabled-numpad', isLocked);
+    }
+
+    if (completedBanner) {
+      if (isLocked) {
+        completedBanner.style.display = 'block';
+        if (completedText) {
+          const target = (s && s.x1 && s.x1.targetScore) || 30;
+          if (s && s.x1 && s.x1.winner) {
+            completedText.textContent = `TARGET ${target} TERCAPAI OLEH ${s.teams[s.x1.winner].name} — INPUT DIKUNCI`;
+          } else {
+            completedText.textContent = `TARGET ${target} TERCAPAI — INPUT DIKUNCI`;
+          }
+        }
+      } else {
+        completedBanner.style.display = 'none';
+      }
+    }
 
     if (p) {
       if (formulaEl) formulaEl.textContent = p.formula || "47 + 58 = ?";
@@ -246,6 +313,9 @@ class PlayerTabletApp {
   }
 
   inputKey(key) {
+    const isLocked = Boolean(this.state && this.state.x1 && (this.state.x1.winner || this.state.x1.completed));
+    if (isLocked) return;
+
     if (window.cyberSound) window.cyberSound.playKeyClick();
 
     if (key === 'clear') {
@@ -372,7 +442,7 @@ class PlayerTabletApp {
   }
 
   // ==========================================
-  // STATION X3: FLASH MEMORY (SEQUENTIAL RECALL)
+  // STATION X3: FLASH MEMORY (10 QUESTIONS TRUE/FALSE)
   // ==========================================
   renderX3() {
     const s = this.state;
@@ -383,8 +453,12 @@ class PlayerTabletApp {
     const badge = document.getElementById('x3-soal-badge');
 
     const p = (x3 && x3.progress) ? x3.progress[this.currentTeam] : null;
+    const questions = (x3 && x3.questions && x3.questions.length) ? x3.questions : this.questionsX3;
+    const totalQ = questions.length;
 
-    if (p && p.allLocked) {
+    const curIdx = p ? p.currentIdx : this.localX3Idx;
+
+    if (p && (p.allLocked || curIdx >= totalQ)) {
       if (recallWrapper) recallWrapper.style.display = 'none';
       if (lockedWrapper) lockedWrapper.style.display = 'flex';
       return;
@@ -393,16 +467,12 @@ class PlayerTabletApp {
     if (lockedWrapper) lockedWrapper.style.display = 'none';
     if (recallWrapper) recallWrapper.style.display = 'flex';
 
-    const curIdx = p ? p.currentIdx : this.localX3Idx;
-    const curQ = this.questionsX3[curIdx % this.questionsX3.length];
+    const curQ = questions[curIdx % totalQ];
 
-    if (badge) badge.textContent = `SOAL ${curIdx + 1}`;
+    if (badge) badge.textContent = `SOAL ${curIdx + 1} / ${totalQ}`;
     const qText = document.getElementById('x3-q-text');
-    if (qText) qText.textContent = curQ.q;
-
-    for (let i = 0; i < 4; i++) {
-      const optEl = document.getElementById(`x3-opt-${i}`);
-      if (optEl) optEl.textContent = curQ.opts[i];
+    if (qText) {
+      qText.textContent = (curQ && curQ.statement) || (curQ && curQ.q) || (curQ && curQ.question) || "";
     }
   }
 
@@ -410,6 +480,7 @@ class PlayerTabletApp {
     if (window.cyberSound) window.cyberSound.playKeyClick();
 
     const p = (this.state && this.state.x3 && this.state.x3.progress) ? this.state.x3.progress[this.currentTeam] : null;
+    const questions = (this.state && this.state.x3 && this.state.x3.questions && this.state.x3.questions.length) ? this.state.x3.questions : this.questionsX3;
 
     if (this.socket && this.socket.connected && p) {
       this.socket.emit('team:x3_answer', {
@@ -418,10 +489,15 @@ class PlayerTabletApp {
         choiceIdx
       });
     } else {
-      const curQ = this.questionsX3[this.localX3Idx % this.questionsX3.length];
-      const isCorrect = (choiceIdx === curQ.correct);
+      const curQ = questions[this.localX3Idx % questions.length];
+      let isCorrect = false;
+      if (typeof curQ.correct === 'boolean') {
+        isCorrect = (choiceIdx === 0 && curQ.correct === true) || (choiceIdx === 1 && curQ.correct === false);
+      } else {
+        isCorrect = (choiceIdx === curQ.correct);
+      }
       this.showReaction(isCorrect);
-      this.localX3Idx = (this.localX3Idx + 1) % this.questionsX3.length;
+      this.localX3Idx = (this.localX3Idx + 1);
       this.renderX3();
     }
   }

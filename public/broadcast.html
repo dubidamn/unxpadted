@@ -73,25 +73,163 @@
       box-shadow: 0 0 20px rgba(52, 211, 153, 0.6);
     }
 
-    /* X3 Recall Elements */
+    /* X2 Flanked Layout & Station Score Cards */
+    .x2-layout-flanked {
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+    }
+    .x2-station-score-card {
+      background: linear-gradient(180deg, #1f2333 0%, #121520 100%);
+      border: 2px solid var(--border-metallic);
+      border-radius: 12px;
+      padding: 20px 18px;
+      min-width: 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+    .x2-station-score-card.team-x {
+      border-color: var(--team-x-accent);
+      box-shadow: 0 0 25px var(--team-x-glow);
+    }
+    .x2-station-score-card.team-y {
+      border-color: var(--team-y-accent);
+      box-shadow: 0 0 25px var(--team-y-glow);
+    }
+    .x2-flank-score-body {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .x2-flank-score-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--text-slate);
+    }
+    .x2-flank-score-val {
+      font-family: var(--font-orbitron);
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #ffffff;
+      margin: 4px 0;
+    }
+    .x2-station-score-card.team-x .x2-flank-score-val {
+      color: var(--team-x-accent);
+    }
+    .x2-station-score-card.team-y .x2-flank-score-val {
+      color: var(--team-y-accent);
+    }
+    .x2-flank-unit {
+      font-family: var(--font-orbitron);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-slate);
+      letter-spacing: 1px;
+    }
+
+    /* X3 Recall 10 Questions Deck & Indicators */
+    .x3-team-row {
+      background: rgba(14, 16, 24, 0.95);
+      border: 2px solid var(--border-metallic);
+      border-radius: 14px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s ease;
+    }
+    .x3-team-row.team-x {
+      border-color: var(--team-x-accent);
+      box-shadow: 0 0 25px var(--team-x-glow);
+    }
+    .x3-team-row.team-y {
+      border-color: var(--team-y-accent);
+      box-shadow: 0 0 25px var(--team-y-glow);
+    }
+    .x3-team-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      min-width: 130px;
+    }
+    .x3-nodes-track {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      flex: 1;
+    }
     .x3-q-node {
       background: #141724;
       border: 1.5px solid #2e3448;
       border-radius: 8px;
-      padding: 10px 20px;
+      padding: 8px 10px;
       font-family: var(--font-orbitron);
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 900;
       color: var(--text-slate);
-      transition: all 0.2s ease;
-      min-width: 60px;
+      min-width: 44px;
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.25s ease;
+    }
+    .x3-q-node.correct {
+      background: rgba(16, 185, 129, 0.25) !important;
+      border-color: #34d399 !important;
+      color: #34d399 !important;
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.6);
+    }
+    .x3-q-node.wrong {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #ef4444 !important;
+      color: #f87171 !important;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
     }
     .x3-q-node.locked {
-      background: var(--grad-purple-luminous);
-      color: #000000;
-      border-color: #ffffff;
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.9);
+      background: rgba(168, 85, 247, 0.25) !important;
+      border-color: var(--purple-neon-bright) !important;
+      color: #ffffff !important;
+    }
+    .x3-score-badge-wrap {
+      min-width: 80px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .x3-total-correct-badge {
+      font-size: 26px;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: #0d0f17;
+      border: 1.5px solid var(--border-metallic);
+      color: #ffffff;
+      text-align: center;
+      min-width: 60px;
+    }
+    .x3-total-correct-badge.team-x {
+      border-color: var(--team-x-accent);
+      color: #ff6b81;
+    }
+    .x3-total-correct-badge.team-y {
+      border-color: var(--team-y-accent);
+      color: #2ed573;
     }
 
     /* X4 Digit Display Consoles (Matching Player Tablet Rounded Style) */
@@ -99,13 +237,13 @@
       background: #141724;
       border: 1.5px solid #2e3448;
       border-radius: 14px;
-      padding: 18px 16px;
+      padding: 16px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-width: 105px;
+      min-width: 95px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
       transition: all 0.25s ease;
     }
@@ -136,6 +274,18 @@
       box-shadow: 0 0 14px rgba(168, 85, 247, 0.6);
       background: rgba(168, 85, 247, 0.15);
     }
+    .x4-digit-box.revealed-correct {
+      color: #34d399 !important;
+      border-color: #34d399 !important;
+      box-shadow: 0 0 16px rgba(52, 211, 153, 0.6) !important;
+      background: rgba(16, 185, 129, 0.2) !important;
+    }
+    .x4-digit-box.revealed-wrong {
+      color: #f87171 !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.6) !important;
+      background: rgba(239, 68, 68, 0.2) !important;
+    }
     .x4-digit-time {
       font-family: var(--font-mono);
       font-size: 13px;
@@ -146,26 +296,34 @@
       color: #34d399;
     }
 
-    /* X4 Large Submitted Card */
-    .x4-submitted-hero-card {
-      display: none;
+    /* X4 Total Time Headline */
+    .x4-total-time-headline {
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.15) 0%, rgba(20, 10, 32, 0.75) 100%);
+      border: 1.5px solid var(--purple-neon-bright);
+      border-radius: 10px;
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 32px 20px;
-      background: linear-gradient(180deg, rgba(168, 85, 247, 0.2) 0%, rgba(20, 10, 32, 0.85) 100%);
-      border: 2px solid var(--purple-neon-bright);
-      border-radius: 14px;
-      box-shadow: 0 0 35px rgba(168, 85, 247, 0.6);
-      animation: fadeInState 0.3s ease forwards;
+      gap: 4px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
     }
-    .x4-submitted-hero-time {
+    .x4-total-time-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--purple-glow-light);
+      text-transform: uppercase;
+    }
+    .x4-total-time-val {
       font-family: var(--font-orbitron);
-      font-size: 56px;
+      font-size: 28px;
       font-weight: 900;
       color: #ffffff;
-      letter-spacing: 2px;
-      margin: 10px 0;
+      letter-spacing: 1px;
     }
   </style>
 </head>
@@ -273,135 +431,168 @@
       </div>
 
       <!-- ==========================================
-           STATE 2: STATION X2 — CERDAS CERMAT (CLEAN INSTRUCTION & CORRECT ANSWER ONLY)
+           STATE 2: STATION X2 — CERDAS CERMAT (FLANKED STATION SCORES)
            ========================================== -->
       <div id="broadcast-state-x2" class="broadcast-state">
         
         <!-- Buzzer Status Instruction Banner (Placed at Top of Section X2) -->
-        <div id="x2-buzzer-banner" class="x2-buzzer-banner open" style="display: none; max-width: min(1080px, 94vw); width: 94%;">
+        <div id="x2-buzzer-banner" class="x2-buzzer-banner open" style="display: none; max-width: min(1180px, 95vw); width: 95%;">
           <span id="x2-banner-text">TEKAN TOMBOL SEKARANG UNTUK MENJAWAB</span>
         </div>
 
-        <div class="bevel-card" style="max-width: min(1080px, 94vw); width: 94%; padding: 32px 44px;">
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 8px;">
-            <span id="x2-q-num" class="font-display" style="font-size: 15px; color: var(--purple-glow-light); letter-spacing: 2px;">
-              SOAL 1
-            </span>
+        <div class="x2-layout-flanked" style="max-width: min(1180px, 95vw); width: 95%;">
+          <!-- Left Flank: Team X Station Score -->
+          <div class="x2-station-score-card team-x">
+            <div class="x2-flank-header">
+              <span id="x2-side-name-x" class="font-display" style="font-size: 18px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 1.5px;">TEAM X</span>
+            </div>
+            <div class="x2-flank-score-body">
+              <div class="x2-flank-score-label">STATION SCORE</div>
+              <div id="x2-station-score-x" class="x2-flank-score-val font-orbitron-tabular">0</div>
+              <div class="x2-flank-unit">PTS</div>
+            </div>
           </div>
 
-          <!-- Question Prompt -->
-          <h2 id="x2-q-title" class="font-display" style="font-size: 28px; font-weight: 800; line-height: 1.35; margin-bottom: 24px; color: #ffffff;">
-            Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?
-          </h2>
+          <!-- Center: Question Card & 4 Choices -->
+          <div class="bevel-card x2-center-card" style="flex: 1; padding: 28px 36px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 8px;">
+              <span id="x2-q-num" class="font-display" style="font-size: 15px; color: var(--purple-glow-light); letter-spacing: 2px;">
+                SOAL 1
+              </span>
+            </div>
 
-          <!-- 4 Choices Grid (Only Highlights Correct Choice Upon Submission) -->
-          <div class="x2-choice-grid">
-            <div id="x2-choice-0" class="x2-choice-card">A. 16 Agustus 1945</div>
-            <div id="x2-choice-1" class="x2-choice-card">B. 17 Agustus 1945</div>
-            <div id="x2-choice-2" class="x2-choice-card">C. 18 Agustus 1945</div>
-            <div id="x2-choice-3" class="x2-choice-card">D. 19 Agustus 1945</div>
+            <!-- Question Prompt -->
+            <h2 id="x2-q-title" class="font-display" style="font-size: 24px; font-weight: 800; line-height: 1.35; margin-bottom: 20px; color: #ffffff;">
+              Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?
+            </h2>
+
+            <!-- 4 Choices Grid (Only Highlights Correct Choice Upon Submission) -->
+            <div class="x2-choice-grid">
+              <div id="x2-choice-0" class="x2-choice-card">A. 16 Agustus 1945</div>
+              <div id="x2-choice-1" class="x2-choice-card">B. 17 Agustus 1945</div>
+              <div id="x2-choice-2" class="x2-choice-card">C. 18 Agustus 1945</div>
+              <div id="x2-choice-3" class="x2-choice-card">D. 19 Agustus 1945</div>
+            </div>
           </div>
 
+          <!-- Right Flank: Team Y Station Score -->
+          <div class="x2-station-score-card team-y">
+            <div class="x2-flank-header">
+              <span id="x2-side-name-y" class="font-display" style="font-size: 18px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 1.5px;">TEAM Y</span>
+            </div>
+            <div class="x2-flank-score-body">
+              <div class="x2-flank-score-label">STATION SCORE</div>
+              <div id="x2-station-score-y" class="x2-flank-score-val font-orbitron-tabular">0</div>
+              <div class="x2-flank-unit">PTS</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- ==========================================
-           STATE 3: STATION X3 — FLASH MEMORY (CLEAN Q1-Q5 NODES)
+           STATE 3: STATION X3 — FLASH MEMORY (10 QUESTIONS & BENAR/SALAH INDICATORS)
            ========================================== -->
       <div id="broadcast-state-x3" class="broadcast-state">
-        <div style="max-width: min(1040px, 94vw); width: 94%; display: flex; flex-direction: column; gap: 20px;">
+        <div style="max-width: min(1180px, 95vw); width: 95%; display: flex; flex-direction: column; gap: 20px;">
           
           <!-- Team X Tracking Deck -->
-          <div style="background: rgba(14, 16, 24, 0.95); border: 2px solid var(--team-x-accent); border-radius: 14px; padding: 24px 32px; box-shadow: 0 0 25px var(--team-x-glow); display: flex; justify-content: space-between; align-items: center;">
-            <span class="font-display" style="font-size: 26px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 2px;">TEAM X</span>
-            <div id="x3-tracker-row-x" style="display: flex; gap: 14px;"></div>
+          <div class="x3-team-row team-x">
+            <div class="x3-team-info">
+              <span id="x3-name-x" class="font-display x3-team-title" style="color: var(--team-x-accent);">TEAM X</span>
+            </div>
+            <div id="x3-tracker-row-x" class="x3-nodes-track">
+              <!-- Q1 - Q10 Nodes rendered dynamically -->
+            </div>
+            <div class="x3-score-badge-wrap">
+              <div id="x3-total-correct-x" class="x3-total-correct-badge team-x font-orbitron" style="opacity: 0.5;">--</div>
+            </div>
           </div>
 
           <!-- Team Y Tracking Deck -->
-          <div style="background: rgba(14, 16, 24, 0.95); border: 2px solid var(--team-y-accent); border-radius: 14px; padding: 24px 32px; box-shadow: 0 0 25px var(--team-y-glow); display: flex; justify-content: space-between; align-items: center;">
-            <span class="font-display" style="font-size: 26px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 2px;">TEAM Y</span>
-            <div id="x3-tracker-row-y" style="display: flex; gap: 14px;"></div>
+          <div class="x3-team-row team-y">
+            <div class="x3-team-info">
+              <span id="x3-name-y" class="font-display x3-team-title" style="color: var(--team-y-accent);">TEAM Y</span>
+            </div>
+            <div id="x3-tracker-row-y" class="x3-nodes-track">
+              <!-- Q1 - Q10 Nodes rendered dynamically -->
+            </div>
+            <div class="x3-score-badge-wrap">
+              <div id="x3-total-correct-y" class="x3-total-correct-badge team-y font-orbitron" style="opacity: 0.5;">--</div>
+            </div>
           </div>
 
           <!-- Winner Outcome Card -->
-          <div id="x3-phase-result" style="display: none; text-align: center; padding: 20px 0; margin-top: 10px;">
-            <h2 id="x3-winner-name" class="font-display" style="font-size: 32px; font-weight: 900; color: #ffffff;"></h2>
+          <div id="x3-phase-result" style="display: none; text-align: center; padding: 16px 0; margin-top: 6px;">
+            <h2 id="x3-winner-name" class="font-display" style="font-size: 30px; font-weight: 900; color: #ffffff;"></h2>
           </div>
 
         </div>
       </div>
 
       <!-- ==========================================
-           STATE 4: STATION X4 — AI UNSOLVED CASE (ROUNDED CONSOLES)
+           STATE 4: STATION X4 — AI UNSOLVED CASE (3 DIGITS, TIMES & TOTAL TIME)
            ========================================== -->
       <div id="broadcast-state-x4" class="broadcast-state">
         <div style="max-width: min(1180px, 95vw); width: 95%;">
           
-          <!-- Dual Telemetry: Team X & Team Y Sections (Rounded Rectangles, Centered Duration) -->
+          <!-- Dual Telemetry: Team X & Team Y Sections -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
             
             <!-- Team X Section -->
-            <div style="background: rgba(12, 14, 22, 0.95); border: 2px solid var(--team-x-accent); border-radius: 16px; padding: 28px; box-shadow: 0 0 30px var(--team-x-glow);">
-              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
-                <span class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 2px;">TEAM X</span>
+            <div class="x4-team-console team-x" style="background: rgba(12, 14, 22, 0.95); border: 2px solid var(--team-x-accent); border-radius: 16px; padding: 26px; box-shadow: 0 0 30px var(--team-x-glow);">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                <span id="x4-disp-name-x" class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-x-accent); letter-spacing: 2px;">TEAM X</span>
               </div>
 
-              <!-- Unsubmitted View: 3 Big Digit Units -->
-              <div id="x4-unsubmitted-x" style="display: flex; gap: 16px; justify-content: center;">
+              <!-- 3 Digit Units & Lock Times -->
+              <div style="display: flex; gap: 16px; justify-content: center;">
                 <div id="x4-unit-x-1" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 1</span>
                   <div id="x4-disp-box-x-1" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-x-1" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-x-1" class="x4-digit-time font-mono">--</span>
                 </div>
                 <div id="x4-unit-x-2" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 2</span>
                   <div id="x4-disp-box-x-2" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-x-2" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-x-2" class="x4-digit-time font-mono">--</span>
                 </div>
                 <div id="x4-unit-x-3" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 3</span>
                   <div id="x4-disp-box-x-3" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-x-3" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-x-3" class="x4-digit-time font-mono">--</span>
                 </div>
               </div>
 
-              <!-- Submitted Hero Card: Large Centered Time Display -->
-              <div id="x4-submitted-hero-x" class="x4-submitted-hero-card">
-                <span class="font-display" style="font-size: 15px; font-weight: 800; color: var(--purple-glow-light); letter-spacing: 3px;">WAKTU MENJAWAB</span>
-                <div id="x4-submitted-time-x" class="x4-submitted-hero-time">--</div>
+              <!-- Total Answering Duration Headline -->
+              <div class="x4-total-time-headline">
+                <span class="x4-total-time-label">TOTAL WAKTU MENJAWAB</span>
+                <span id="x4-total-time-val-x" class="x4-total-time-val font-orbitron">--</span>
               </div>
             </div>
 
             <!-- Team Y Section -->
-            <div style="background: rgba(12, 14, 22, 0.95); border: 2.5px solid var(--team-y-accent); border-radius: 16px; padding: 28px; box-shadow: 0 0 30px var(--team-y-glow);">
-              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
-                <span class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 2px;">TEAM Y</span>
+            <div class="x4-team-console team-y" style="background: rgba(12, 14, 22, 0.95); border: 2.5px solid var(--team-y-accent); border-radius: 16px; padding: 26px; box-shadow: 0 0 30px var(--team-y-glow);">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                <span id="x4-disp-name-y" class="font-display" style="font-size: 24px; font-weight: 900; color: var(--team-y-accent); letter-spacing: 2px;">TEAM Y</span>
               </div>
 
-              <!-- Unsubmitted View: 3 Big Digit Units -->
-              <div id="x4-unsubmitted-y" style="display: flex; gap: 16px; justify-content: center;">
+              <!-- 3 Digit Units & Lock Times -->
+              <div style="display: flex; gap: 16px; justify-content: center;">
                 <div id="x4-unit-y-1" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 1</span>
                   <div id="x4-disp-box-y-1" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-y-1" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-y-1" class="x4-digit-time font-mono">--</span>
                 </div>
                 <div id="x4-unit-y-2" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 2</span>
                   <div id="x4-disp-box-y-2" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-y-2" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-y-2" class="x4-digit-time font-mono">--</span>
                 </div>
                 <div id="x4-unit-y-3" class="x4-digit-unit">
-                  <span class="font-mono" style="font-size: 11px; color: var(--text-slate); font-weight: 800;">DIGIT 3</span>
                   <div id="x4-disp-box-y-3" class="x4-digit-box">?</div>
-                  <span id="x4-disp-time-y-3" class="x4-digit-time">--</span>
+                  <span id="x4-disp-time-y-3" class="x4-digit-time font-mono">--</span>
                 </div>
               </div>
 
-              <!-- Submitted Hero Card: Large Centered Time Display -->
-              <div id="x4-submitted-hero-y" class="x4-submitted-hero-card">
-                <span class="font-display" style="font-size: 15px; font-weight: 800; color: var(--purple-glow-light); letter-spacing: 3px;">WAKTU MENJAWAB</span>
-                <div id="x4-submitted-time-y" class="x4-submitted-hero-time">--</div>
+              <!-- Total Answering Duration Headline -->
+              <div class="x4-total-time-headline">
+                <span class="x4-total-time-label">TOTAL WAKTU MENJAWAB</span>
+                <span id="x4-total-time-val-y" class="x4-total-time-val font-orbitron">--</span>
               </div>
             </div>
 

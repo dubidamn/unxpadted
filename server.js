@@ -110,56 +110,56 @@ const defaultQuestions = {
       question: "Proklamasi kemerdekaan Indonesia dibacakan pada tanggal?",
       choices: ["A. 16 Agustus 1945", "B. 17 Agustus 1945", "C. 18 Agustus 1945", "D. 19 Agustus 1945"],
       correct: 1,
-      points: 2
+      points: 1
     },
     {
       id: 2,
       question: "Presiden pertama Republik Indonesia adalah?",
       choices: ["A. Ir. Soekarno", "B. Moh. Hatta", "C. B.J. Habibie", "D. Soeharto"],
       correct: 0,
-      points: 2
+      points: 1
     },
     {
       id: 3,
       question: "Satuan Standar Internasional (SI) untuk besaran gaya adalah?",
       choices: ["A. Joule", "B. Watt", "C. Newton", "D. Pascal"],
       correct: 2,
-      points: 2
+      points: 1
     },
     {
       id: 4,
       question: "Organ tubuh manusia yang berfungsi utama memompa darah ke seluruh tubuh adalah?",
       choices: ["A. Paru-paru", "B. Jantung", "C. Hati", "D. Ginjal"],
       correct: 1,
-      points: 2
+      points: 1
     },
     {
       id: 5,
       question: "Proses tumbuhan mengubah energi cahaya matahari menjadi makanan disebut?",
       choices: ["A. Respirasi", "B. Transpirasi", "C. Fotosintesis", "D. Fermentasi"],
       correct: 2,
-      points: 2
+      points: 1
     },
     {
       id: 6,
       question: "Organisasi pergerakan nasional pertama di Indonesia yang didirikan tahun 1908 adalah?",
       choices: ["A. Budi Utomo", "B. Sarekat Islam", "C. Indische Partij", "D. PNI"],
       correct: 0,
-      points: 2
+      points: 1
     },
     {
       id: 7,
       question: "Planet terdekat dari Matahari dalam tata surya adalah?",
       choices: ["A. Venus", "B. Merkurius", "C. Mars", "D. Bumi"],
       correct: 1,
-      points: 2
+      points: 1
     },
     {
       id: 8,
       question: "Gas yang dihirup manusia saat bernapas untuk metabolisme tubuh adalah?",
       choices: ["A. Karbondioksida", "B. Nitrogen", "C. Oksigen", "D. Hidrogen"],
       correct: 2,
-      points: 2
+      points: 1
     }
   ],
 
@@ -168,33 +168,63 @@ const defaultQuestions = {
     questions: [
       {
         id: 1,
-        question: "Buah apa yang muncul di Media 1 dan warnanya apa?",
-        choices: ["A. Apel Merah", "B. Jeruk Oranye", "C. Pisang Kuning", "D. Mangga Hijau"],
+        question: "Buah yang muncul pada tayangan Media 1 adalah buah Apel berwarna merah.",
+        choices: ["BENAR", "SALAH"],
         correct: 0
       },
       {
         id: 2,
-        question: "Berapa jumlah koin emas yang tampak di pojok kanan atas layar?",
-        choices: ["A. 3 Koin", "B. 5 Koin", "C. 7 Koin", "D. 9 Koin"],
+        question: "Bola basket pada video Media 2 memantul sebanyak 5 kali di lantai.",
+        choices: ["BENAR", "SALAH"],
         correct: 1
       },
       {
         id: 3,
-        question: "Bentuk geometri apa yang berputar di latar belakang Media 3?",
-        choices: ["A. Heksagon Ungu", "B. Segitiga Biru", "C. Oktagon Merah", "D. Bintang Emas"],
+        question: "Mobil yang terparkir di depan gedung pada Media 3 adalah mobil sedan berwarna biru.",
+        choices: ["BENAR", "SALAH"],
         correct: 0
       },
       {
         id: 4,
-        question: "Karakter robot mana yang membawa bendera Infinix?",
-        choices: ["A. Robot Alpha", "B. Robot Beta", "C. Robot Gamma", "D. Robot Delta"],
-        correct: 2
+        question: "Kucing yang berjalan melewati pagar putih pada Media 4 berwarna putih polos.",
+        choices: ["BENAR", "SALAH"],
+        correct: 1
       },
       {
         id: 5,
-        question: "Angka digital berapa yang berkedip pada timer lab?",
-        choices: ["A. 00:45", "B. 01:30", "C. 02:15", "D. 03:00"],
+        question: "Timer digital di laboratorium menunjukkan angka waktu tepat 01:30.",
+        choices: ["BENAR", "SALAH"],
+        correct: 0
+      },
+      {
+        id: 6,
+        question: "Robot Gamma membawa bendera Infinix dengan logo warna emas.",
+        choices: ["BENAR", "SALAH"],
+        correct: 0
+      },
+      {
+        id: 7,
+        question: "Bentuk geometri heksagon ungu pada latar belakang berputar searah jarum jam.",
+        choices: ["BENAR", "SALAH"],
+        correct: 0
+      },
+      {
+        id: 8,
+        question: "Total koin emas yang tampak di pojok layar berjumlah 9 koin.",
+        choices: ["BENAR", "SALAH"],
         correct: 1
+      },
+      {
+        id: 9,
+        question: "Warna latar belakang dinding laboratorium adalah hitam pekat tanpa lampu neon.",
+        choices: ["BENAR", "SALAH"],
+        correct: 1
+      },
+      {
+        id: 10,
+        question: "Urutan penayangan media adalah Buah → Bola → Mobil → Kucing.",
+        choices: ["BENAR", "SALAH"],
+        correct: 0
       }
     ]
   },
@@ -260,7 +290,7 @@ let matchState = {
     description: "Default Match Set (100 Soal Math Speedrun, 15 Trivia Cerdas Cermat, 10 Flash Memory, Kasus AI)",
     totalX1: activeQuestions.X1.length,
     totalX2: activeQuestions.X2.length,
-    totalX3: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : 0
+    totalX3: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : 10
   },
   teams: {
     X: { name: "TEAM X", score: 0, legScores: { X1: 0, X2: 0, X3: 0, X4: 0 }, color: "#ff4757" },
@@ -282,7 +312,8 @@ let matchState = {
       Y: { currentIdx: 0, score: 0, formula: activeQuestions.X1[0].q, totalAnswered: 0, correctCount: 0, wrongCount: 0, finished: false }
     },
     latestCorrectTeam: null,
-    winner: null
+    winner: null,
+    completed: false
   },
 
   // X2: Cerdas Cermat
@@ -290,6 +321,7 @@ let matchState = {
     currentQIdx: 0,
     currentQuestion: activeQuestions.X2[0],
     totalQuestions: activeQuestions.X2.length,
+    scores: { X: 0, Y: 0 },
     buzzer: {
       open: false,
       buzzedTeam: null, // 'X' or 'Y'
@@ -304,11 +336,12 @@ let matchState = {
   x3: {
     phase: "IDLE", // 'IDLE', 'RECALL', 'RESULT'
     startedAt: null,
-    questions: activeQuestions.X3.questions || activeQuestions.X3,
-    totalQuestions: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : (Array.isArray(activeQuestions.X3) ? activeQuestions.X3.length : 0),
+    revealed: false,
+    questions: (activeQuestions.X3 && activeQuestions.X3.questions) || activeQuestions.X3,
+    totalQuestions: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : (Array.isArray(activeQuestions.X3) ? activeQuestions.X3.length : 10),
     progress: {
-      X: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
-      Y: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
+      X: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
+      Y: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
     },
     winner: null
   },
@@ -317,6 +350,7 @@ let matchState = {
   x4: {
     caseData: activeQuestions.X4.caseData || activeQuestions.X4,
     startedAt: null,
+    revealed: false,
     teams: {
       X: {
         digits: [0, 0, 0],
@@ -370,7 +404,7 @@ function applyMatchSet(matchSetData) {
     description: matchSetData.description || 'Custom Imported Match Set',
     totalX1: activeQuestions.X1.length,
     totalX2: activeQuestions.X2.length,
-    totalX3: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : 0
+    totalX3: (activeQuestions.X3 && activeQuestions.X3.questions) ? activeQuestions.X3.questions.length : 10
   };
 
   // Reset station trackers
@@ -381,13 +415,17 @@ function applyMatchSet(matchSetData) {
     matchState.x1.progress.Y.currentIdx = 0;
     matchState.x1.progress.X.score = 0;
     matchState.x1.progress.Y.score = 0;
+    matchState.x1.progress.X.finished = false;
+    matchState.x1.progress.Y.finished = false;
     matchState.x1.winner = null;
+    matchState.x1.completed = false;
   }
 
   if (activeQuestions.X2 && activeQuestions.X2.length > 0) {
     matchState.x2.currentQIdx = 0;
     matchState.x2.currentQuestion = activeQuestions.X2[0];
     matchState.x2.totalQuestions = activeQuestions.X2.length;
+    matchState.x2.scores = { X: 0, Y: 0 };
     matchState.x2.buzzer = { open: false, buzzedTeam: null, buzzedAt: null, lockout: { X: false, Y: false }, answerRemainingSec: 10 };
     matchState.x2.currentResult = null;
   }
@@ -395,9 +433,10 @@ function applyMatchSet(matchSetData) {
   if (activeQuestions.X3 && activeQuestions.X3.questions) {
     matchState.x3.questions = activeQuestions.X3.questions;
     matchState.x3.totalQuestions = activeQuestions.X3.questions.length;
+    matchState.x3.revealed = false;
     matchState.x3.progress = {
-      X: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
-      Y: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
+      X: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
+      Y: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
     };
     matchState.x3.winner = null;
   }
@@ -405,6 +444,7 @@ function applyMatchSet(matchSetData) {
   if (activeQuestions.X4) {
     matchState.x4.caseData = activeQuestions.X4;
     matchState.x4.startedAt = null;
+    matchState.x4.revealed = false;
     matchState.x4.teams = {
       X: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 },
       Y: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 }
@@ -560,6 +600,15 @@ io.on('connection', (socket) => {
     updateState();
   });
 
+  socket.on('admin:set_score', ({ team, score }) => {
+    if (matchState.teams[team]) {
+      matchState.teams[team].score = Math.max(0, parseInt(score, 10) || 0);
+      matchState.matchWinsX = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.X.score));
+      matchState.matchWinsY = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.Y.score));
+    }
+    updateState();
+  });
+
   socket.on('admin:update_teams', ({ nameX, nameY }) => {
     if (nameX) matchState.teams.X.name = nameX;
     if (nameY) matchState.teams.Y.name = nameY;
@@ -604,25 +653,27 @@ io.on('connection', (socket) => {
     };
     matchState.x1.latestCorrectTeam = null;
     matchState.x1.winner = null;
+    matchState.x1.completed = false;
 
     // Reset X2
     matchState.x2.currentQIdx = 0;
     matchState.x2.currentQuestion = activeQuestions.X2[0];
+    matchState.x2.scores = { X: 0, Y: 0 };
     matchState.x2.buzzer = { open: false, buzzedTeam: null, buzzedAt: null, lockout: { X: false, Y: false }, answerRemainingSec: 10 };
     matchState.x2.currentResult = null;
 
     // Reset X3
     matchState.x3.phase = 'IDLE';
-    matchState.x3.currentMediaIdx = 0;
-    matchState.x3.mediaRemainingSec = 0;
+    matchState.x3.revealed = false;
     matchState.x3.progress = {
-      X: { answers: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
-      Y: { answers: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
+      X: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
+      Y: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
     };
     matchState.x3.winner = null;
 
     // Reset X4
     matchState.x4.startedAt = null;
+    matchState.x4.revealed = false;
     matchState.x4.teams = {
       X: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 },
       Y: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 }
@@ -688,10 +739,12 @@ io.on('connection', (socket) => {
     };
     matchState.x1.latestCorrectTeam = null;
     matchState.x1.winner = null;
+    matchState.x1.completed = false;
     updateState();
   });
 
   socket.on('team:submit_x1', ({ team, answer }) => {
+    if (matchState.x1.winner || matchState.x1.completed) return;
     const p = matchState.x1.progress[team];
     if (!p || p.finished) return;
 
@@ -704,15 +757,15 @@ io.on('connection', (socket) => {
     if (isCorrect) {
       p.score++;
       p.correctCount++;
-      matchState.teams[team].score++;
       matchState.teams[team].legScores.X1++;
-      matchState.matchWinsX = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.X.score));
-      matchState.matchWinsY = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.Y.score));
       matchState.x1.latestCorrectTeam = team;
 
-      // Check for station win
+      // Check for station win / completion
       if (p.score >= matchState.x1.targetScore && !matchState.x1.winner) {
         matchState.x1.winner = team;
+        matchState.x1.completed = true;
+        matchState.x1.progress.X.finished = true;
+        matchState.x1.progress.Y.finished = true;
         io.emit('audio_trigger', { type: 'victory' });
       } else {
         io.emit('audio_trigger', { type: 'correct' });
@@ -734,6 +787,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('team:skip_x1', (team) => {
+    if (matchState.x1.winner || matchState.x1.completed) return;
     const p = matchState.x1.progress[team];
     if (!p || p.finished) return;
 
@@ -794,8 +848,17 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('admin:x2_adjust_score', ({ team, delta }) => {
+    if (matchState.x2.scores && matchState.x2.scores[team] !== undefined) {
+      const d = parseInt(delta, 10) || 0;
+      matchState.x2.scores[team] = Math.max(0, matchState.x2.scores[team] + d);
+      matchState.teams[team].legScores.X2 = matchState.x2.scores[team];
+      updateState();
+    }
+  });
+
   socket.on('team:buzz', (team) => {
-    if (matchState.currentStation !== 'X2') return;
+    if ((matchState.currentStation || '').toUpperCase() !== 'X2') return;
 
     if (matchState.x2.buzzer.open && !matchState.x2.buzzer.lockout[team]) {
       matchState.x2.buzzer.buzzedTeam = team;
@@ -810,18 +873,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('team:submit_x2', ({ team, choiceIdx }) => {
-    if (matchState.currentStation !== 'X2') return;
+    if ((matchState.currentStation || '').toUpperCase() !== 'X2') return;
 
     if (matchState.x2.buzzer.buzzedTeam === team) {
       const q = matchState.x2.currentQuestion;
       const isCorrect = (parseInt(choiceIdx, 10) === q.correct);
-      const points = q.points || 2;
+      const points = 1;
 
       if (isCorrect) {
-        matchState.teams[team].score += points;
+        if (!matchState.x2.scores) matchState.x2.scores = { X: 0, Y: 0 };
+        matchState.x2.scores[team] += points;
         matchState.teams[team].legScores.X2 += points;
-        matchState.matchWinsX = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.X.score));
-        matchState.matchWinsY = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.Y.score));
         matchState.x2.buzzer.open = false;
         matchState.x2.buzzer.buzzedTeam = null;
         matchState.x2.currentResult = { team, isCorrect: true, choice: choiceIdx, points, correctChoice: q.correct };
@@ -855,19 +917,20 @@ io.on('connection', (socket) => {
   });
 
   // ==========================================
-  // 4. STATION X3: FLASH MEMORY (OBSERVATION & RECALL)
+  // 4. STATION X3: FLASH MEMORY (TRUE/FALSE 10 QUESTIONS)
   // ==========================================
   const startX3Recall = () => {
     matchState.x3.phase = 'RECALL';
     matchState.x3.startedAt = Date.now();
+    matchState.x3.revealed = false;
     matchState.x3.progress = {
-      X: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
-      Y: { answers: [null, null, null, null, null], answerTimes: [null, null, null, null, null], currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
+      X: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 },
+      Y: { answers: Array(10).fill(null), answerTimes: Array(10).fill(null), currentIdx: 0, allLocked: false, lockedAt: null, correctCount: 0 }
     };
     matchState.x3.winner = null;
     updateState();
     io.emit('audio_trigger', { type: 'buzzer_open' });
-    io.emit('toast_event', { title: 'RECALL PHASE', message: 'Jawab soal di tablet peserta' });
+    io.emit('toast_event', { title: 'RECALL PHASE', message: 'Jawab 10 soal True/False di tablet' });
   };
 
   socket.on('admin:x3_start_flash', startX3Recall);
@@ -875,6 +938,7 @@ io.on('connection', (socket) => {
 
   socket.on('admin:x3_reveal_results', () => {
     matchState.x3.phase = 'RESULT';
+    matchState.x3.revealed = true;
 
     const countX = matchState.x3.progress.X.correctCount;
     const countY = matchState.x3.progress.Y.correctCount;
@@ -892,18 +956,25 @@ io.on('connection', (socket) => {
 
     matchState.x3.winner = winner;
     if (winner) {
-      matchState.teams[winner].score += 3;
       matchState.teams[winner].legScores.X3 += 3;
-      matchState.matchWinsX = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.X.score));
-      matchState.matchWinsY = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.Y.score));
     }
 
     updateState();
     io.emit('audio_trigger', { type: 'victory' });
   });
 
+  socket.on('admin:x3_toggle_reveal', () => {
+    matchState.x3.revealed = !matchState.x3.revealed;
+    updateState();
+  });
+
   socket.on('team:x3_answer', ({ team, qIdx, choiceIdx }) => {
-    if (matchState.currentStation !== 'X3' || matchState.x3.phase !== 'RECALL') return;
+    if ((matchState.currentStation || '').toUpperCase() !== 'X3') return;
+    if (matchState.x3.phase === 'IDLE') {
+      matchState.x3.phase = 'RECALL';
+      matchState.x3.startedAt = Date.now();
+    }
+    if (matchState.x3.phase !== 'RECALL') return;
 
     const p = matchState.x3.progress[team];
     if (!p || p.allLocked) return;
@@ -911,11 +982,22 @@ io.on('connection', (socket) => {
     const start = matchState.x3.startedAt || Date.now();
     const elapsed = Date.now() - start;
 
-    const q = activeQuestions.X3.questions[qIdx];
-    const isCorrect = (parseInt(choiceIdx, 10) === q.correct);
+    const questions = (activeQuestions.X3 && activeQuestions.X3.questions) || activeQuestions.X3 || [];
+    const q = questions[qIdx];
+    if (!q) return;
 
-    p.answers[qIdx] = parseInt(choiceIdx, 10);
-    if (!p.answerTimes) p.answerTimes = [null, null, null, null, null];
+    const chosen = parseInt(choiceIdx, 10);
+    let isCorrect = false;
+    if (typeof q.correct === 'boolean') {
+      isCorrect = (chosen === 0 && q.correct === true) || (chosen === 1 && q.correct === false);
+    } else {
+      isCorrect = (chosen === q.correct);
+    }
+
+    if (!p.answers) p.answers = Array(10).fill(null);
+    if (!p.answerTimes) p.answerTimes = Array(10).fill(null);
+
+    p.answers[qIdx] = chosen;
     p.answerTimes[qIdx] = elapsed;
 
     if (isCorrect) {
@@ -923,7 +1005,8 @@ io.on('connection', (socket) => {
     }
 
     p.currentIdx = qIdx + 1;
-    if (p.currentIdx >= activeQuestions.X3.questions.length) {
+    const totalQ = questions.length || 10;
+    if (p.currentIdx >= totalQ) {
       p.allLocked = true;
       p.lockedAt = elapsed;
       io.emit('toast_event', { title: `JAWABAN ${matchState.teams[team].name} TERKUNCI!`, message: `Waktu: ${(elapsed / 1000).toFixed(2)}s` });
@@ -938,6 +1021,7 @@ io.on('connection', (socket) => {
   // ==========================================
   socket.on('admin:x4_start_case', () => {
     matchState.x4.startedAt = Date.now();
+    matchState.x4.revealed = false;
     matchState.x4.teams = {
       X: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 },
       Y: { digits: [0, 0, 0], locks: [false, false, false], lockTimes: [null, null, null], submitted: false, submittedAt: null, totalCorrect: 0 }
@@ -947,6 +1031,23 @@ io.on('connection', (socket) => {
     updateState();
     io.emit('audio_trigger', { type: 'flash_start' });
     io.emit('toast_event', { title: 'KASUS AI DIMULAI', message: 'Analisis petunjuk dan kunci 3 digit' });
+  });
+
+  socket.on('admin:x4_reveal_digits', () => {
+    matchState.x4.revealed = true;
+    updateState();
+    io.emit('audio_trigger', { type: 'key_click' });
+  });
+
+  socket.on('admin:x4_hide_digits', () => {
+    matchState.x4.revealed = false;
+    updateState();
+  });
+
+  socket.on('admin:x4_toggle_reveal', () => {
+    matchState.x4.revealed = !matchState.x4.revealed;
+    updateState();
+    io.emit('audio_trigger', { type: 'key_click' });
   });
 
   socket.on('team:x4_change_digit', ({ team, digitIdx, value }) => {
@@ -961,8 +1062,10 @@ io.on('connection', (socket) => {
     const t = matchState.x4.teams[team];
     if (!t || t.submitted || t.locks[digitIdx]) return;
 
-    const start = matchState.x4.startedAt || Date.now();
-    const elapsed = Date.now() - start;
+    if (!matchState.x4.startedAt) {
+      matchState.x4.startedAt = Date.now();
+    }
+    const elapsed = Date.now() - matchState.x4.startedAt;
 
     t.locks[digitIdx] = true;
     t.lockTimes[digitIdx] = elapsed;
@@ -988,8 +1091,10 @@ io.on('connection', (socket) => {
     const t = matchState.x4.teams[team];
     if (!t || t.submitted) return;
 
-    const start = matchState.x4.startedAt || Date.now();
-    const elapsed = Date.now() - start;
+    if (!matchState.x4.startedAt) {
+      matchState.x4.startedAt = Date.now();
+    }
+    const elapsed = Date.now() - matchState.x4.startedAt;
 
     t.locks = [true, true, true];
     t.lockTimes = t.lockTimes.map(tVal => tVal !== null ? tVal : elapsed);
@@ -1004,6 +1109,7 @@ io.on('connection', (socket) => {
   });
 
   const evaluateX4Winner = () => {
+    matchState.x4.revealed = true; // Auto reveal when evaluating
     const sol = activeQuestions.X4.solutionCode || (activeQuestions.X4.caseData && activeQuestions.X4.caseData.solutionCode) || [4, 3, 8];
     const tX = matchState.x4.teams.X;
     const tY = matchState.x4.teams.Y;
@@ -1046,10 +1152,7 @@ io.on('connection', (socket) => {
     };
 
     if (winnerTeam) {
-      matchState.teams[winnerTeam].score += 3;
       matchState.teams[winnerTeam].legScores.X4 += 3;
-      matchState.matchWinsX = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.X.score));
-      matchState.matchWinsY = Math.max(0, Math.min(matchState.totalMatchDots, matchState.teams.Y.score));
     }
 
     updateState();

@@ -515,7 +515,7 @@
         "D. 19 Agustus 1945"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 2,
@@ -527,7 +527,7 @@
         "D. Soeharto"
       ],
       "correct": 0,
-      "points": 2
+      "points": 1
     },
     {
       "id": 3,
@@ -539,7 +539,7 @@
         "D. Pascal"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 4,
@@ -551,7 +551,7 @@
         "D. Ginjal"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 5,
@@ -563,7 +563,7 @@
         "D. Fermentasi"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 6,
@@ -575,7 +575,7 @@
         "D. PNI"
       ],
       "correct": 0,
-      "points": 2
+      "points": 1
     },
     {
       "id": 7,
@@ -587,7 +587,7 @@
         "D. Bumi"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 8,
@@ -599,7 +599,7 @@
         "D. Hidrogen"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 9,
@@ -611,7 +611,7 @@
         "D. Ibu Sud"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 10,
@@ -623,7 +623,7 @@
         "D. Danau Matano"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 11,
@@ -635,7 +635,7 @@
         "D. Termometer"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 12,
@@ -647,7 +647,7 @@
         "D. Cu"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 13,
@@ -659,7 +659,7 @@
         "D. Brisbane"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 14,
@@ -671,7 +671,7 @@
         "D. 10 November 1945"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 15,
@@ -683,120 +683,100 @@
         "D. 120 derajat"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     }
   ],
   "X3": {
     "questions": [
       {
         "id": 1,
-        "question": "Buah apa yang muncul di Media 1 dan warnanya apa?",
+        "question": "Buah yang muncul pada tayangan Media 1 adalah buah Apel berwarna merah.",
         "choices": [
-          "A. Apel Merah",
-          "B. Jeruk Oranye",
-          "C. Pisang Kuning",
-          "D. Mangga Hijau"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 0
       },
       {
         "id": 2,
-        "question": "Berapa jumlah koin emas yang tampak di pojok kanan atas layar?",
+        "question": "Bola basket pada video Media 2 memantul sebanyak 5 kali di lantai.",
         "choices": [
-          "A. 3 Koin",
-          "B. 5 Koin",
-          "C. 7 Koin",
-          "D. 9 Koin"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 1
       },
       {
         "id": 3,
-        "question": "Bentuk geometri apa yang berputar di latar belakang Media 3?",
+        "question": "Mobil yang terparkir di depan gedung pada Media 3 adalah mobil sedan berwarna biru.",
         "choices": [
-          "A. Heksagon Ungu",
-          "B. Segitiga Biru",
-          "C. Oktagon Merah",
-          "D. Bintang Emas"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 0
       },
       {
         "id": 4,
-        "question": "Karakter robot mana yang membawa bendera Infinix?",
+        "question": "Kucing yang berjalan melewati pagar putih pada Media 4 berwarna putih polos.",
         "choices": [
-          "A. Robot Alpha",
-          "B. Robot Beta",
-          "C. Robot Gamma",
-          "D. Robot Delta"
-        ],
-        "correct": 2
-      },
-      {
-        "id": 5,
-        "question": "Angka digital berapa yang berkedip pada timer lab?",
-        "choices": [
-          "A. 00:45",
-          "B. 01:30",
-          "C. 02:15",
-          "D. 03:00"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 1
       },
       {
-        "id": 6,
-        "question": "Warna latar belakang dinding laboratorium pada Media 1 adalah?",
+        "id": 5,
+        "question": "Timer digital di laboratorium menunjukkan angka waktu tepat 01:30.",
         "choices": [
-          "A. Abu-abu Metalik",
-          "B. Putih Bersih",
-          "C. Biru Neon",
-          "D. Hitam Karbon"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 2
+        "correct": 0
+      },
+      {
+        "id": 6,
+        "question": "Robot Gamma membawa bendera Infinix dengan logo warna emas.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
       },
       {
         "id": 7,
-        "question": "Berapa total objek berbentuk lingkaran yang terlihat di Media 2?",
+        "question": "Bentuk geometri heksagon ungu pada latar belakang berputar searah jarum jam.",
         "choices": [
-          "A. 4 Objek",
-          "B. 5 Objek",
-          "C. 6 Objek",
-          "D. 7 Objek"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 2
+        "correct": 0
       },
       {
         "id": 8,
-        "question": "Simbol logo apa yang tertera di dada Robot Gamma?",
+        "question": "Total koin emas yang tampak di pojok layar berjumlah 9 koin.",
         "choices": [
-          "A. Huruf X Neon",
-          "B. Bintang Emas",
-          "C. Lingkaran Biru",
-          "D. Segitiga Perak"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 0
+        "correct": 1
       },
       {
         "id": 9,
-        "question": "Arah putaran bentuk heksagon ungu pada Media 3 adalah?",
+        "question": "Warna latar belakang dinding laboratorium adalah hitam pekat tanpa lampu neon.",
         "choices": [
-          "A. Searah Jarum Jam",
-          "B. Berlawanan Jarum Jam",
-          "C. Diam Statis",
-          "D. Berkedip"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 0
+        "correct": 1
       },
       {
         "id": 10,
-        "question": "Warna tulisan angka timer digital 01:30 adalah?",
+        "question": "Urutan penayangan media adalah Buah → Bola → Mobil → Kucing.",
         "choices": [
-          "A. Hijau Emerald",
-          "B. Merah Crimson",
-          "C. Biru Cyan",
-          "D. Kuning Amber"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 3
+        "correct": 0
       }
     ]
   },

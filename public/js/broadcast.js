@@ -223,13 +223,28 @@ class BroadcastDisplayApp {
     }
   }
 
-  // --- VIEW X2: CERDAS CERMAT (CLEAN INSTRUCTION & CORRECT ANSWER ONLY) ---
+  // --- VIEW X2: CERDAS CERMAT (FLANKED STATION SCORES) ---
   renderX2View() {
     const s = this.state;
     const x2 = s.x2;
     if (!x2 || !x2.currentQuestion) return;
 
     const q = x2.currentQuestion;
+
+    // Team Names & Flanked Station Scores
+    const sideNameX = document.getElementById('x2-side-name-x');
+    const sideNameY = document.getElementById('x2-side-name-y');
+    const sideScoreX = document.getElementById('x2-station-score-x');
+    const sideScoreY = document.getElementById('x2-station-score-y');
+
+    if (sideNameX) sideNameX.textContent = s.teams.X.name;
+    if (sideNameY) sideNameY.textContent = s.teams.Y.name;
+
+    const scoreX = (x2.scores && x2.scores.X !== undefined) ? x2.scores.X : ((s.teams.X.legScores && s.teams.X.legScores.X2) || 0);
+    const scoreY = (x2.scores && x2.scores.Y !== undefined) ? x2.scores.Y : ((s.teams.Y.legScores && s.teams.Y.legScores.X2) || 0);
+
+    if (sideScoreX) sideScoreX.textContent = scoreX;
+    if (sideScoreY) sideScoreY.textContent = scoreY;
 
     // Question Title & Counter
     const qNum = document.getElementById('x2-q-num');
@@ -252,7 +267,7 @@ class BroadcastDisplayApp {
       }
     });
 
-    // Buzzer Status Instruction Banner (Only show when buzzer is open or buzzed)
+    // Buzzer Status Instruction Banner
     const banner = document.getElementById('x2-buzzer-banner');
     const bannerText = document.getElementById('x2-banner-text');
 
@@ -273,83 +288,148 @@ class BroadcastDisplayApp {
     }
   }
 
-  // --- VIEW X3: FLASH MEMORY (CLEAN Q1-Q5 NODES) ---
+  // --- VIEW X3: FLASH MEMORY (10 QUESTIONS & BENAR/SALAH INDICATORS) ---
   renderX3View() {
     const s = this.state;
     const x3 = s.x3;
     if (!x3) return;
 
+    const totalQ = (x3.questions && x3.questions.length) || 10;
+    const isRevealed = Boolean(x3.revealed || x3.phase === 'RESULT');
+
     ['X', 'Y'].forEach(team => {
       const p = x3.progress[team];
+      const nameEl = document.getElementById(`x3-name-${team.toLowerCase()}`);
       const dotsRow = document.getElementById(`x3-tracker-row-${team.toLowerCase()}`);
+      const correctBadge = document.getElementById(`x3-total-correct-${team.toLowerCase()}`);
+
+      if (nameEl) nameEl.textContent = s.teams[team].name;
+      if (correctBadge) {
+        if (isRevealed) {
+          correctBadge.textContent = p ? `${p.correctCount}` : '0';
+          correctBadge.style.opacity = '1';
+        } else {
+          correctBadge.textContent = '--';
+          correctBadge.style.opacity = '0.5';
+        }
+      }
 
       if (dotsRow) {
         dotsRow.innerHTML = '';
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < totalQ; i++) {
           const node = document.createElement('div');
           node.className = 'x3-q-node';
-          if (p.answers[i] !== null) {
-            node.classList.add('locked');
+
+          const hasAnswered = p && p.answers && (p.answers[i] !== null && p.answers[i] !== undefined);
+
+          if (hasAnswered) {
+            if (isRevealed && x3.questions && x3.questions[i]) {
+              const q = x3.questions[i];
+              const ans = p.answers[i];
+              let isCorrect = false;
+              if (typeof q.correct === 'boolean') {
+                isCorrect = (ans === 0 && q.correct === true) || (ans === 1 && q.correct === false);
+              } else {
+                isCorrect = (ans === q.correct);
+              }
+
+              if (isCorrect) {
+                node.classList.add('correct');
+                node.innerHTML = `Q${i + 1} ✓`;
+              } else {
+                node.classList.add('wrong');
+                node.innerHTML = `Q${i + 1} ✗`;
+              }
+            } else {
+              node.classList.add('locked');
+              node.innerHTML = `Q${i + 1}`;
+            }
+          } else {
+            node.innerHTML = `Q${i + 1}`;
           }
-          node.textContent = `Q${i + 1}`;
+
           dotsRow.appendChild(node);
         }
       }
     });
 
-    // Result Phase
-    const resultCard = document.getElementById('x3-phase-result');
-    if (resultCard) {
-      if (x3.phase === 'RESULT' && x3.winner) {
-        resultCard.style.display = 'block';
-        const winEl = document.getElementById('x3-winner-name');
-        if (winEl) {
-          winEl.textContent = `${s.teams[x3.winner].name} MEMENANGKAN FLASH MEMORY!`;
-          winEl.style.color = s.teams[x3.winner].color;
+    const resultBox = document.getElementById('x3-phase-result');
+    const winnerName = document.getElementById('x3-winner-name');
+    if (resultBox) {
+      if (isRevealed && x3.winner) {
+        resultBox.style.display = 'block';
+        if (winnerName) {
+          const wTeam = s.teams[x3.winner];
+          winnerName.textContent = `PEMENANG STATION X3: ${wTeam ? wTeam.name : 'TEAM ' + x3.winner}`;
+          winnerName.style.color = (x3.winner === 'X') ? 'var(--team-x-accent)' : 'var(--team-y-accent)';
         }
       } else {
-        resultCard.style.display = 'none';
+        resultBox.style.display = 'none';
       }
     }
   }
 
-  // --- VIEW X4: AI UNSOLVED CASE (ROUNDED CONSOLES & CENTERED TIME) ---
+  // --- VIEW X4: AI UNSOLVED CASE (3 DIGITS, TIMES & TOTAL TIME) ---
   renderX4View() {
     const s = this.state;
     const x4 = s.x4;
     if (!x4) return;
 
+    const isRevealed = Boolean(x4.revealed || x4.winnerResult);
+    const sol = (activeSol => activeSol || [4, 3, 8])(
+      x4.caseData && (x4.caseData.solutionCode || (x4.caseData.caseData && x4.caseData.caseData.solutionCode))
+    );
+
     ['X', 'Y'].forEach(team => {
       const t = x4.teams[team];
-      const unsubmittedBox = document.getElementById(`x4-unsubmitted-${team.toLowerCase()}`);
-      const heroCard = document.getElementById(`x4-submitted-hero-${team.toLowerCase()}`);
-      const heroTime = document.getElementById(`x4-submitted-time-${team.toLowerCase()}`);
+      const nameEl = document.getElementById(`x4-disp-name-${team.toLowerCase()}`);
+      if (nameEl) nameEl.textContent = s.teams[team].name;
 
-      if (t.submitted) {
-        // Show Large Hero Card without revealing digit answers
-        if (unsubmittedBox) unsubmittedBox.style.display = 'none';
-        if (heroCard) heroCard.style.display = 'flex';
-        if (heroTime) heroTime.textContent = t.submittedAt ? `${(t.submittedAt / 1000).toFixed(2)}s` : '--';
-      } else {
-        if (unsubmittedBox) unsubmittedBox.style.display = 'flex';
-        if (heroCard) heroCard.style.display = 'none';
+      for (let i = 0; i < 3; i++) {
+        const unit = document.getElementById(`x4-unit-${team.toLowerCase()}-${i + 1}`);
+        const box = document.getElementById(`x4-disp-box-${team.toLowerCase()}-${i + 1}`);
+        const timeBadge = document.getElementById(`x4-disp-time-${team.toLowerCase()}-${i + 1}`);
 
-        for (let i = 0; i < 3; i++) {
-          const unit = document.getElementById(`x4-unit-${team.toLowerCase()}-${i + 1}`);
-          const box = document.getElementById(`x4-disp-box-${team.toLowerCase()}-${i + 1}`);
-          const timeBadge = document.getElementById(`x4-disp-time-${team.toLowerCase()}-${i + 1}`);
+        const isLocked = Boolean(t && t.locks[i]);
+        if (unit) unit.classList.toggle('locked', isLocked);
 
-          const isLocked = Boolean(t.locks[i]);
-          if (unit) unit.classList.toggle('locked', isLocked);
-          if (box) {
-            box.textContent = isLocked ? 'X' : '?';
-            box.classList.toggle('locked', isLocked);
-          }
-          if (timeBadge) {
-            timeBadge.textContent = isLocked && t.lockTimes[i] ? `${(t.lockTimes[i] / 1000).toFixed(1)}s` : '--';
-            timeBadge.classList.toggle('locked', isLocked);
+        if (box) {
+          box.classList.remove('locked', 'revealed-correct', 'revealed-wrong');
+
+          if (isLocked) {
+            box.classList.add('locked');
+            if (isRevealed) {
+              box.textContent = t.digits[i];
+              if (t.digits[i] === sol[i]) {
+                box.classList.add('revealed-correct');
+              } else {
+                box.classList.add('revealed-wrong');
+              }
+            } else {
+              box.textContent = t.submitted ? '█' : '🔒';
+            }
+          } else {
+            box.textContent = '?';
           }
         }
+
+        if (timeBadge) {
+          timeBadge.textContent = (isLocked && t && t.lockTimes[i]) ? `${(t.lockTimes[i] / 1000).toFixed(1)}s` : '--';
+          timeBadge.classList.toggle('locked', isLocked);
+        }
+      }
+
+      // Total Waktu Menjawab
+      const totalTimeEl = document.getElementById(`x4-total-time-val-${team.toLowerCase()}`);
+      if (totalTimeEl) {
+        let totalMs = null;
+        if (t && t.submittedAt) {
+          totalMs = t.submittedAt;
+        } else if (t && t.lockTimes && t.lockTimes.filter(Boolean).length === 3) {
+          totalMs = Math.max(...t.lockTimes.filter(Boolean));
+        }
+
+        totalTimeEl.textContent = totalMs ? `${(totalMs / 1000).toFixed(1)}s` : (t && t.submitted ? 'TERKIRIM' : '--');
       }
     });
 

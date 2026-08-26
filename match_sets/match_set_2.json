@@ -515,7 +515,7 @@
         "D. Jawa Barat"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 2,
@@ -527,7 +527,7 @@
         "D. Jerapah"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 3,
@@ -539,7 +539,7 @@
         "D. Albert Einstein"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 4,
@@ -551,7 +551,7 @@
         "D. NaCl"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 5,
@@ -563,7 +563,7 @@
         "D. Mahkamah Konstitusi"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 6,
@@ -575,7 +575,7 @@
         "D. Palangkaraya"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 7,
@@ -587,7 +587,7 @@
         "D. Ringgit"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 8,
@@ -599,7 +599,7 @@
         "D. Termosfer"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 9,
@@ -611,7 +611,7 @@
         "D. Kujang"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 10,
@@ -623,7 +623,7 @@
         "D. 245"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 11,
@@ -635,7 +635,7 @@
         "D. Positron"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     },
     {
       "id": 12,
@@ -647,7 +647,7 @@
         "D. Tuanku Imam Bonjol"
       ],
       "correct": 0,
-      "points": 2
+      "points": 1
     },
     {
       "id": 13,
@@ -659,7 +659,7 @@
         "D. Samudra Arktik"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 14,
@@ -671,7 +671,7 @@
         "D. 29"
       ],
       "correct": 1,
-      "points": 2
+      "points": 1
     },
     {
       "id": 15,
@@ -683,118 +683,98 @@
         "D. 20 Mei"
       ],
       "correct": 2,
-      "points": 2
+      "points": 1
     }
   ],
   "X3": {
     "questions": [
       {
         "id": 1,
-        "question": "Berapa jumlah node sirkuit yang bersinar aktif pada Media 1?",
+        "question": "Terdapat tepat 8 node sirkuit mikroprosesor yang menyala aktif pada Media 1.",
         "choices": [
-          "A. 4 Node",
-          "B. 6 Node",
-          "C. 8 Node",
-          "D. 10 Node"
-        ],
-        "correct": 2
-      },
-      {
-        "id": 2,
-        "question": "Warna edisi tablet XPAD yang tampak pada Media 2 adalah?",
-        "choices": [
-          "A. Stellar Gold",
-          "B. Shadow Black",
-          "C. Cyber Cyan",
-          "D. Titanium Grey"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 0
       },
       {
-        "id": 3,
-        "question": "Berapa jumlah unit drone yang terbang mengelilingi tablet di Media 2?",
+        "id": 2,
+        "question": "Tablet XPAD yang ditampilkan pada Media 2 adalah edisi Titanium Grey.",
         "choices": [
-          "A. 2 Drone",
-          "B. 3 Drone",
-          "C. 4 Drone",
-          "D. 5 Drone"
-        ],
-        "correct": 2
-      },
-      {
-        "id": 4,
-        "question": "Di pojok mana logo Xpad terletak pada Media 3?",
-        "choices": [
-          "A. Kanan Atas",
-          "B. Kiri Atas",
-          "C. Kiri Bawah",
-          "D. Kanan Bawah"
-        ],
-        "correct": 2
-      },
-      {
-        "id": 5,
-        "question": "Berapa nilai frekuensi audio yang berkedip pada Media 4?",
-        "choices": [
-          "A. 48 kHz",
-          "B. 96 kHz",
-          "C. 192 kHz",
-          "D. 44.1 kHz"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 1
       },
       {
-        "id": 6,
-        "question": "Warna pendaran cahaya microchip pada Media 1 adalah?",
+        "id": 3,
+        "question": "Jumlah unit drone pengintai yang mengelilingi tablet di Media 2 ada 4 drone.",
         "choices": [
-          "A. Hijau Matrix",
-          "B. Merah Crimson",
-          "C. Biru Neon",
-          "D. Ungu Cyber"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 2
+        "correct": 0
+      },
+      {
+        "id": 4,
+        "question": "Logo Xpad pada Media 3 terletak di pojok kanan atas layar.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 5,
+        "question": "Nilai frekuensi audio resolusi tinggi yang berkedip pada Media 4 adalah 96 kHz.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
+      },
+      {
+        "id": 6,
+        "question": "Pendaran cahaya sirkuit microchip pada Media 1 memancarkan warna Biru Neon.",
+        "choices": [
+          "BENAR",
+          "SALAH"
+        ],
+        "correct": 0
       },
       {
         "id": 7,
-        "question": "Berapa jumlah baling-baling pada setiap drone di Media 2?",
+        "question": "Setiap drone pada Media 2 memiliki 6 baling-baling aktif.",
         "choices": [
-          "A. 3 Baling-baling",
-          "B. 4 Baling-baling",
-          "C. 6 Baling-baling",
-          "D. 8 Baling-baling"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 1
       },
       {
         "id": 8,
-        "question": "Persentase spektrum warna yang tertera pada Media 3 adalah?",
+        "question": "Spektrum warna layar yang tertera pada spesifikasi Media 3 adalah 100% sRGB.",
         "choices": [
-          "A. 90% DCI-P3",
-          "B. 100% sRGB",
-          "C. 99% AdobeRGB",
-          "D. 120% NTSC"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 1
+        "correct": 0
       },
       {
         "id": 9,
-        "question": "Kedalaman bit audio yang tertulis pada indikator Media 4 adalah?",
+        "question": "Indikator kedalaman bit audio pada Media 4 menunjukkan angka 24-Bit.",
         "choices": [
-          "A. 16-Bit",
-          "B. 24-Bit",
-          "C. 32-Bit",
-          "D. 64-Bit"
+          "BENAR",
+          "SALAH"
         ],
-        "correct": 1
+        "correct": 0
       },
       {
         "id": 10,
-        "question": "Bentuk dasar microchip pada Media 1 adalah?",
+        "question": "Microchip prosesor utama pada Media 1 berbentuk lingkaran sempurna.",
         "choices": [
-          "A. Lingkaran",
-          "B. Persegi",
-          "C. Heksagon",
-          "D. Segitiga"
+          "BENAR",
+          "SALAH"
         ],
         "correct": 1
       }

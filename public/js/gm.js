@@ -190,7 +190,7 @@ class GMControlApp {
     }
 
     // Station X2
-    if (s.x2 && s.x2.currentQuestion) {
+    if (s.x2) {
       const buzzStatus = document.getElementById('gm-x2-buzz-status');
       const toggleBuzzerBtn = document.getElementById('btn-gm-toggle-buzzer');
 
@@ -217,26 +217,33 @@ class GMControlApp {
         }
       }
 
-      const qNum = document.getElementById('gm-x2-q-num');
-      const qTitle = document.getElementById('gm-x2-q-title');
-      const choicesContainer = document.getElementById('gm-x2-choices');
+      const scoreX2X = document.getElementById('gm-x2-score-x');
+      const scoreX2Y = document.getElementById('gm-x2-score-y');
+      if (scoreX2X) scoreX2X.textContent = (s.x2.scores && s.x2.scores.X !== undefined) ? s.x2.scores.X : ((s.teams.X.legScores && s.teams.X.legScores.X2) || 0);
+      if (scoreX2Y) scoreX2Y.textContent = (s.x2.scores && s.x2.scores.Y !== undefined) ? s.x2.scores.Y : ((s.teams.Y.legScores && s.teams.Y.legScores.X2) || 0);
 
-      if (qNum) qNum.textContent = `SOAL ${s.x2.currentQIdx + 1} / ${s.x2.totalQuestions}`;
-      if (qTitle) qTitle.textContent = s.x2.currentQuestion.question;
+      if (s.x2.currentQuestion) {
+        const qNum = document.getElementById('gm-x2-q-num');
+        const qTitle = document.getElementById('gm-x2-q-title');
+        const choicesContainer = document.getElementById('gm-x2-choices');
 
-      if (choicesContainer) {
-        choicesContainer.innerHTML = '';
-        s.x2.currentQuestion.choices.forEach((c, idx) => {
-          const div = document.createElement('div');
-          div.className = 'font-ui';
-          div.style.fontSize = '12px';
-          div.style.padding = '4px 8px';
-          div.style.borderRadius = '4px';
-          div.style.background = (idx === s.x2.currentQuestion.correct) ? 'rgba(52, 211, 153, 0.2)' : 'rgba(255, 255, 255, 0.05)';
-          div.style.color = (idx === s.x2.currentQuestion.correct) ? '#34d399' : '#e2e8f0';
-          div.textContent = c;
-          choicesContainer.appendChild(div);
-        });
+        if (qNum) qNum.textContent = `SOAL ${s.x2.currentQIdx + 1} / ${s.x2.totalQuestions || 15}`;
+        if (qTitle) qTitle.textContent = s.x2.currentQuestion.question;
+
+        if (choicesContainer && s.x2.currentQuestion.choices) {
+          choicesContainer.innerHTML = '';
+          s.x2.currentQuestion.choices.forEach((c, idx) => {
+            const div = document.createElement('div');
+            div.className = 'font-ui';
+            div.style.fontSize = '12px';
+            div.style.padding = '4px 8px';
+            div.style.borderRadius = '4px';
+            div.style.background = (idx === s.x2.currentQuestion.correct) ? 'rgba(52, 211, 153, 0.2)' : 'rgba(255, 255, 255, 0.05)';
+            div.style.color = (idx === s.x2.currentQuestion.correct) ? '#34d399' : '#e2e8f0';
+            div.textContent = c;
+            choicesContainer.appendChild(div);
+          });
+        }
       }
     }
 
@@ -244,31 +251,46 @@ class GMControlApp {
     if (s.x3) {
       const phaseBadge = document.getElementById('gm-x3-phase-badge');
       if (phaseBadge) {
-        phaseBadge.textContent = `PHASE: ${s.x3.phase}`;
+        phaseBadge.textContent = `PHASE: ${s.x3.phase} ${s.x3.revealed ? '(REVEALED)' : ''}`;
         phaseBadge.className = `badge-status ${s.x3.phase === 'RESULT' ? 'ready' : 'buzz'}`;
       }
 
-      // Populate Q1..Q5 correct answers list
+      const revealX3Btn = document.getElementById('btn-gm-x3-reveal');
+      if (revealX3Btn) {
+        if (s.x3.revealed) {
+          revealX3Btn.textContent = '🔒 SEMBUNYIKAN HASIL (BROADCAST)';
+          revealX3Btn.className = 'gm-btn gm-btn-danger';
+        } else {
+          revealX3Btn.textContent = '👁️ REVEAL HASIL JAWABAN (BROADCAST)';
+          revealX3Btn.className = 'gm-btn gm-btn-primary';
+        }
+      }
+
+      // Populate Q1..Q10 correct answers list
       const qListContainer = document.getElementById('gm-x3-q-list');
-      if (qListContainer && s.x3.questions) {
+      const questionsX3 = (s.x3.questions && s.x3.questions.length) ? s.x3.questions : [];
+      if (qListContainer && questionsX3.length) {
         qListContainer.innerHTML = '';
-        s.x3.questions.forEach((q, idx) => {
+        questionsX3.forEach((q, idx) => {
           const row = document.createElement('div');
           row.className = 'font-ui';
           row.style.fontSize = '12px';
           row.style.display = 'flex';
           row.style.justifyContent = 'space-between';
+          row.style.alignItems = 'center';
           row.style.background = 'rgba(255, 255, 255, 0.03)';
           row.style.padding = '4px 8px';
           row.style.borderRadius = '4px';
 
-          const correctChoice = q.choices[q.correct];
-          row.innerHTML = `<span style="color: #cbd5e1;">Q${idx + 1}: ${q.question}</span><strong style="color: #34d399; margin-left: 12px;">${correctChoice}</strong>`;
+          const isBenar = (q.correct === 0 || q.correct === true);
+          const correctBadge = isBenar ? '<span style="color: #34d399; font-weight: 800;">[BENAR]</span>' : '<span style="color: #f87171; font-weight: 800;">[SALAH]</span>';
+          const stmt = q.statement || q.q || q.question || '';
+          row.innerHTML = `<span style="color: #cbd5e1;">Q${idx + 1}: ${stmt}</span><strong style="margin-left: 12px;">${correctBadge}</strong>`;
           qListContainer.appendChild(row);
         });
       }
 
-      const totalQ = (s.x3.questions && s.x3.questions.length) || 10;
+      const totalQ = questionsX3.length || 10;
 
       // Telemetry Table & Live Cards for Team X & Team Y
       ['X', 'Y'].forEach(team => {
@@ -282,12 +304,20 @@ class GMControlApp {
         const cardBreakdownEl = document.getElementById(`gm-x3-card-breakdown-${team.toLowerCase()}`);
 
         let items = [];
-        if (s.x3.questions && p && p.answers) {
+        if (p && p.answers) {
           items = p.answers.map((ans, qIdx) => {
-            if (ans === null) return '-';
-            const isCorrect = (ans === s.x3.questions[qIdx].correct);
-            const letter = String.fromCharCode(65 + ans);
-            return isCorrect ? `[Q${qIdx + 1}:${letter}✓]` : `[Q${qIdx + 1}:${letter}✗]`;
+            if (ans === null || ans === undefined) return '-';
+            const q = questionsX3[qIdx];
+            let isCorrect = false;
+            if (q) {
+              if (typeof q.correct === 'boolean') {
+                isCorrect = (ans === 0 && q.correct === true) || (ans === 1 && q.correct === false);
+              } else {
+                isCorrect = (ans === q.correct);
+              }
+            }
+            const ansLetter = ans === 0 ? 'B' : 'S';
+            return isCorrect ? `[Q${qIdx + 1}:${ansLetter}✓]` : `[Q${qIdx + 1}:${ansLetter}✗]`;
           });
         }
 
@@ -295,7 +325,7 @@ class GMControlApp {
         if (answersEl) answersEl.textContent = breakdownText;
         if (correctEl) correctEl.textContent = `${p ? p.correctCount : 0} / ${totalQ}`;
         if (timeEl) {
-          timeEl.textContent = (p && p.lockedAt) ? `${(p.lockedAt / 1000).toFixed(2)}s` : (p && p.answers.filter(a => a !== null).length ? 'Menjawab...' : '--');
+          timeEl.textContent = (p && p.lockedAt) ? `${(p.lockedAt / 1000).toFixed(2)}s` : (p && p.answers && p.answers.filter(a => a !== null).length ? 'Menjawab...' : '--');
         }
 
         if (cardCorrectEl) cardCorrectEl.textContent = `${p ? p.correctCount : 0} / ${totalQ}`;
@@ -305,7 +335,7 @@ class GMControlApp {
             cardStatusEl.textContent = `TERKUNCI (${p.lockedAt ? (p.lockedAt / 1000).toFixed(2) + 's' : '--'})`;
             cardStatusEl.className = 'badge-status ready';
           } else {
-            const answered = p ? p.answers.filter(a => a !== null).length : 0;
+            const answered = p && p.answers ? p.answers.filter(a => a !== null).length : 0;
             cardStatusEl.textContent = `${answered}/${totalQ} DIJAWAB`;
             cardStatusEl.className = 'badge-status';
           }
@@ -316,8 +346,20 @@ class GMControlApp {
     // Station X4
     if (s.x4) {
       const secretEl = document.getElementById('gm-x4-secret-code');
-      if (secretEl && s.x4.caseData && s.x4.caseData.solutionCode) {
-        secretEl.textContent = `KODE RAHASIA: ${s.x4.caseData.solutionCode.join(' - ')}`;
+      const sol = (s.x4.caseData && (s.x4.caseData.solutionCode || (s.x4.caseData.caseData && s.x4.caseData.caseData.solutionCode))) || [4, 3, 8];
+      if (secretEl) {
+        secretEl.textContent = `KODE RAHASIA: ${sol.join(' - ')}`;
+      }
+
+      const revealX4Btn = document.getElementById('btn-gm-x4-reveal');
+      if (revealX4Btn) {
+        if (s.x4.revealed) {
+          revealX4Btn.textContent = '🔒 SEMBUNYIKAN JAWABAN (BROADCAST)';
+          revealX4Btn.className = 'gm-btn gm-btn-danger';
+        } else {
+          revealX4Btn.textContent = '🔓 REVEAL JAWABAN (BROADCAST)';
+          revealX4Btn.className = 'gm-btn gm-btn-warning';
+        }
       }
 
       const tX = s.x4.teams.X;
@@ -425,6 +467,9 @@ class GMControlApp {
   x2PrevQ() {
     if (this.socket) this.socket.emit('admin:x2_prev_q');
   }
+  adjustX2Score(team, delta) {
+    if (this.socket) this.socket.emit('admin:x2_adjust_score', { team, delta });
+  }
 
   // X3 Actions
   x3StartRecall() {
@@ -433,10 +478,19 @@ class GMControlApp {
   x3RevealResults() {
     if (this.socket) this.socket.emit('admin:x3_reveal_results');
   }
+  x3ToggleReveal() {
+    if (this.socket) this.socket.emit('admin:x3_toggle_reveal');
+  }
 
   // X4 Actions
   x4StartCase() {
     if (this.socket) this.socket.emit('admin:x4_start_case');
+  }
+  x4ToggleReveal() {
+    if (this.socket) this.socket.emit('admin:x4_toggle_reveal');
+  }
+  x4EvaluateWinner() {
+    if (this.socket) this.socket.emit('admin:x4_evaluate_winner');
   }
   // --- Match Sets & Importer Telemetry ---
   renderMatchSets() {
