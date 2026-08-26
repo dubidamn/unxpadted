@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Clash of Unxpadted — Interactive Tournament Portal</title>
+  <title>Clash of Unxpadted</title>
 
   <!-- PWA & Chrome App Fullscreen Meta -->
   <meta name="theme-color" content="#9333EA">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Clash of Unxpadted">
+  <meta name="apple-mobile-web-app-title" content="Unxpadted">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -28,410 +28,325 @@
   <script src="js/pwa-fullscreen.js"></script>
 
   <style>
-    body {
-      background-color: var(--bg-deep-space);
-      background-image:
-        radial-gradient(ellipse at 50% 15%, rgba(147, 51, 234, 0.18) 0%, transparent 60%),
-        linear-gradient(rgba(147, 51, 234, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(147, 51, 234, 0.05) 1px, transparent 1px);
-      background-size: 100% 100%, 36px 36px, 36px 36px;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 32px 20px 40px;
+    * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .portal-container {
-      max-width: 1100px;
-      width: 100%;
-      margin: 0 auto;
+    body {
+      background-color: #08090d;
+      background-image:
+        radial-gradient(ellipse at 50% 10%, rgba(147, 51, 234, 0.22) 0%, transparent 65%),
+        linear-gradient(rgba(147, 51, 234, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(147, 51, 234, 0.06) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+      color: #ffffff;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+      padding: clamp(16px, 3vh, 32px) clamp(20px, 4vw, 48px);
     }
 
+    /* Top Logo Header */
     .portal-header {
-      text-align: center;
-      margin-bottom: 32px;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .portal-logo {
-      height: 64px;
-      max-width: 90vw;
+      height: clamp(48px, 9vh, 76px);
+      max-width: 80vw;
       object-fit: contain;
-      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.6));
-      margin-bottom: 12px;
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.7));
     }
 
-    .portal-tagline {
-      font-family: var(--font-display);
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      color: var(--purple-glow-light);
-      text-transform: uppercase;
-    }
-
-    .portal-grid {
+    /* 3 Big Touch Action Buttons */
+    .touch-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2.5vw, 32px);
       width: 100%;
-      margin-bottom: 36px;
+      max-width: 1280px;
+      flex: 1;
+      max-height: 520px;
+      align-items: stretch;
+      margin: auto 0;
     }
 
-    .portal-card {
-      background: linear-gradient(135deg, rgba(26, 27, 46, 0.85) 0%, rgba(15, 16, 26, 0.95) 100%);
-      border: 1.5px solid rgba(168, 85, 247, 0.35);
-      border-radius: 12px;
-      padding: 24px;
+    .touch-card {
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.5vh, 24px);
+      padding: clamp(20px, 3vh, 40px) 20px;
       text-decoration: none;
-      color: inherit;
+      color: #ffffff;
+      background: linear-gradient(180deg, rgba(26, 28, 44, 0.9) 0%, rgba(13, 14, 24, 0.95) 100%);
+      border: 2px solid var(--card-border, rgba(168, 85, 247, 0.4));
+      border-radius: 20px;
+      cursor: pointer;
+      isolation: isolate;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
-    .portal-card::before {
+    /* Angular / Chamfer Accents */
+    .touch-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--card-accent, var(--purple-neon-bright)), transparent);
-      opacity: 0.7;
+      height: 4px;
+      background: var(--card-glow-color, #a855f7);
+      box-shadow: 0 0 16px var(--card-glow-color, #a855f7);
+      opacity: 0.8;
+      transition: opacity 0.2s ease, height 0.2s ease;
     }
 
-    .portal-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--card-accent, var(--purple-neon-bright));
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7), 0 0 20px var(--card-glow, rgba(168, 85, 247, 0.35));
+    .touch-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, var(--card-glow-soft, rgba(168, 85, 247, 0.15)) 0%, transparent 70%);
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+      z-index: -1;
     }
 
-    .portal-card.card-broadcast {
-      --card-accent: #a855f7;
-      --card-glow: rgba(168, 85, 247, 0.4);
-    }
-    .portal-card.card-team-x {
-      --card-accent: #ff4757;
-      --card-glow: rgba(255, 71, 87, 0.4);
-    }
-    .portal-card.card-team-y {
-      --card-accent: #00d2d3;
-      --card-glow: rgba(0, 210, 211, 0.4);
-    }
-    .portal-card.card-gm {
-      --card-accent: #fbbf24;
-      --card-glow: rgba(251, 191, 36, 0.4);
+    .touch-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--card-glow-color, #a855f7);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8), 0 0 32px var(--card-glow-soft, rgba(168, 85, 247, 0.35));
     }
 
-    .portal-card-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
+    .touch-card:hover::before {
+      opacity: 1;
+      height: 6px;
     }
 
-    .portal-card-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
+    .touch-card:hover::after {
+      opacity: 1;
+    }
+
+    .touch-card:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.9), 0 0 18px var(--card-glow-soft, rgba(168, 85, 247, 0.4));
+    }
+
+    /* Distinct Themes */
+    /* 1. Broadcast */
+    .touch-card.card-broadcast {
+      --card-border: rgba(168, 85, 247, 0.5);
+      --card-glow-color: #c084fc;
+      --card-glow-soft: rgba(168, 85, 247, 0.25);
+    }
+    .touch-card.card-broadcast .touch-icon-wrap {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(88, 28, 135, 0.3) 100%);
+      border-color: #a855f7;
+      color: #e9d5ff;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    }
+
+    /* 2. Team X */
+    .touch-card.card-team-x {
+      --card-border: rgba(255, 71, 87, 0.5);
+      --card-glow-color: #ff4757;
+      --card-glow-soft: rgba(255, 71, 87, 0.25);
+    }
+    .touch-card.card-team-x .touch-icon-wrap {
+      background: linear-gradient(135deg, rgba(255, 71, 87, 0.3) 0%, rgba(153, 27, 27, 0.3) 100%);
+      border-color: #ff4757;
       color: #ffffff;
+      box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+    }
+    .touch-card.card-team-x .touch-card-title {
+      color: #ff4757;
+      text-shadow: 0 0 16px rgba(255, 71, 87, 0.6);
     }
 
-    .portal-card-desc {
-      font-family: var(--font-ui);
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-slate);
-      margin-bottom: 20px;
-      flex-grow: 1;
+    /* 3. Team Y */
+    .touch-card.card-team-y {
+      --card-border: rgba(0, 210, 211, 0.5);
+      --card-glow-color: #00d2d3;
+      --card-glow-soft: rgba(0, 210, 211, 0.25);
+    }
+    .touch-card.card-team-y .touch-icon-wrap {
+      background: linear-gradient(135deg, rgba(0, 210, 211, 0.3) 0%, rgba(15, 118, 110, 0.3) 100%);
+      border-color: #00d2d3;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(0, 210, 211, 0.4);
+    }
+    .touch-card.card-team-y .touch-card-title {
+      color: #00d2d3;
+      text-shadow: 0 0 16px rgba(0, 210, 211, 0.6);
     }
 
-    .portal-card-btn {
-      display: inline-flex;
+    /* Card Elements */
+    .touch-icon-wrap {
+      width: clamp(72px, 12vh, 108px);
+      height: clamp(72px, 12vh, 108px);
+      border-radius: 24px;
+      border: 2px solid;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-accent, rgba(168, 85, 247, 0.5));
-      color: #ffffff;
-      transition: all 0.2s ease;
-    }
-
-    .portal-card:hover .portal-card-btn {
-      background: var(--card-accent, var(--purple-neon-bright));
-      color: #000000;
-      box-shadow: 0 0 14px var(--card-accent, var(--purple-neon-bright));
-    }
-
-    /* Actions Bar */
-    .portal-actions-bar {
-      width: 100%;
-      background: rgba(19, 20, 31, 0.85);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 12px;
-      padding: 18px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      margin-bottom: 28px;
-    }
-
-    .portal-action-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn-action-glow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      cursor: pointer;
-      border: none;
       transition: all 0.25s ease;
     }
 
-    .btn-install-app {
-      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
-    }
-    .btn-install-app:hover {
-      background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
-      box-shadow: 0 0 24px rgba(168, 85, 247, 0.8);
-      transform: translateY(-1px);
+    .touch-icon-svg {
+      width: clamp(36px, 6vh, 54px);
+      height: clamp(36px, 6vh, 54px);
     }
 
-    .btn-fullscreen-app {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(168, 85, 247, 0.5);
-      color: #e9d5ff;
-    }
-    .btn-fullscreen-app:hover {
-      background: rgba(168, 85, 247, 0.25);
-      border-color: #c084fc;
-      color: #ffffff;
-      transform: translateY(-1px);
+    .touch-card:hover .touch-icon-wrap {
+      transform: scale(1.08);
     }
 
-    .server-config-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .server-input {
-      background: transparent;
-      border: none;
-      color: #c084fc;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      outline: none;
-      width: 220px;
-    }
-
-    .server-save-btn {
-      background: rgba(168, 85, 247, 0.2);
-      border: 1px solid rgba(168, 85, 247, 0.5);
-      color: #ffffff;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .server-save-btn:hover {
-      background: var(--purple-neon-bright);
-    }
-
-    .footer-note {
-      font-family: var(--font-ui);
-      font-size: 12px;
-      color: var(--text-slate);
+    .touch-card-title {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3.2vh, 32px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       text-align: center;
-      margin-top: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .touch-card.card-broadcast .touch-card-title {
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(168, 85, 247, 0.6);
+    }
+
+    .touch-card-badge {
+      font-family: var(--font-orbitron);
+      font-size: clamp(11px, 1.6vh, 14px);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.85);
+      text-transform: uppercase;
+    }
+
+    /* Responsive for Tablets & Mobile */
+    @media (max-width: 768px) {
+      body {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+        padding: 24px 16px;
+        gap: 20px;
+      }
+      .touch-grid {
+        grid-template-columns: 1fr;
+        max-height: none;
+      }
+      .touch-card {
+        padding: 28px 20px;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Persistent Connection Dot -->
+  <!-- Persistent Connection Status Dot (Bottom Right) -->
   <div id="connection-dot" class="connection-status-dot"></div>
 
-  <div class="portal-container">
+  <!-- Top Logo -->
+  <header class="portal-header">
+    <img src="assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="portal-logo">
+  </header>
 
-    <!-- Header & Logo -->
-    <header class="portal-header">
-      <img src="assets/Global Assets/Logotype_Overlay@2x.png" alt="Clash of Unxpadted" class="portal-logo">
-      <div class="portal-tagline">Tournament Control & Live Display System — Infinix XPAD 30 Pro</div>
-    </header>
+  <!-- 3 Big Touch Shortcuts -->
+  <main class="touch-grid">
 
-    <!-- Main Navigation Cards -->
-    <div class="portal-grid">
-      
-      <!-- 1. Layar Broadcast -->
-      <a href="broadcast.html" class="portal-card card-broadcast" id="link-broadcast">
-        <div>
-          <div class="portal-card-icon">📺</div>
-          <div class="portal-card-title">Layar Broadcast</div>
-          <div class="portal-card-desc">Layar siaran panggung 16:9, duel progress bar, scoreboard otomatis & OBS projector display.</div>
-        </div>
-        <div class="portal-card-btn">Buka Siaran ➔</div>
-      </a>
-
-      <!-- 2. Tablet Team X -->
-      <a href="player.html?team=X" class="portal-card card-team-x" id="link-team-x">
-        <div>
-          <div class="portal-card-icon">🔴</div>
-          <div class="portal-card-title">Tablet Team X</div>
-          <div class="portal-card-desc">Antarmuka tablet peserta Team X: keypad kalkulasi X1, buzzer sentuh X2, flash memory X3 & konsol dekripsi X4.</div>
-        </div>
-        <div class="portal-card-btn">Buka Team X ➔</div>
-      </a>
-
-      <!-- 3. Tablet Team Y -->
-      <a href="player.html?team=Y" class="portal-card card-team-y" id="link-team-y">
-        <div>
-          <div class="portal-card-icon">🔵</div>
-          <div class="portal-card-title">Tablet Team Y</div>
-          <div class="portal-card-desc">Antarmuka tablet peserta Team Y: keypad kalkulasi X1, buzzer sentuh X2, flash memory X3 & konsol dekripsi X4.</div>
-        </div>
-        <div class="portal-card-btn">Buka Team Y ➔</div>
-      </a>
-
-      <!-- 4. Gamemaster Panel -->
-      <a href="gm.html" class="portal-card card-gm" id="link-gm">
-        <div>
-          <div class="portal-card-icon">⚙️</div>
-          <div class="portal-card-title">Gamemaster Panel</div>
-          <div class="portal-card-desc">Panel kendali juri & operator: upload paket soal JSON, match clocks, saklar buzzer & switcher stasiun.</div>
-        </div>
-        <div class="portal-card-btn">Buka Panel GM ➔</div>
-      </a>
-
-    </div>
-
-    <!-- Actions & Config Bar -->
-    <div class="portal-actions-bar">
-      <div class="portal-action-group">
-        <button type="button" class="btn-action-glow btn-install-app" id="portal-install-btn" onclick="window.promptPwaInstall()">
-          <span>📥 Pasang Aplikasi Chrome (PWA)</span>
-        </button>
-        <button type="button" class="btn-action-glow btn-fullscreen-app" onclick="window.toggleFullscreen()">
-          <span>⛶ Layar Penuh Fullscreen (F)</span>
-        </button>
+    <!-- 1. BROADCAST -->
+    <a href="broadcast.html" class="touch-card card-broadcast" id="link-broadcast">
+      <div class="touch-icon-wrap">
+        <svg class="touch-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
       </div>
+      <div class="touch-card-title">BROADCAST</div>
+      <div class="touch-card-badge">STAGE SCREEN 16:9</div>
+    </a>
 
-      <!-- Live WebSocket Server Selector -->
-      <div class="server-config-group">
-        <span style="font-size: 11px; color: var(--text-slate); font-weight: 700;">SERVER:</span>
-        <input type="text" id="target-server-input" class="server-input" placeholder="Origin / URL Server..." />
-        <button type="button" class="server-save-btn" onclick="saveTargetServer()">SET</button>
+    <!-- 2. PLAYER TEAM X -->
+    <a href="player.html?team=X" class="touch-card card-team-x" id="link-team-x">
+      <div class="touch-icon-wrap">
+        <svg class="touch-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="3" ry="3"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
       </div>
-    </div>
+      <div class="touch-card-title">PLAYER X</div>
+      <div class="touch-card-badge" style="border-color: rgba(255, 71, 87, 0.4); color: #ff8b94;">TEAM RED</div>
+    </a>
 
-    <div class="footer-note">
-      💡 <b>Tip Fullscreen:</b> Tekan tombol <b>F</b> pada keyboard untuk mengaktifkan / keluar mode Fullscreen kapan saja.<br>
-      Setelah dipasang sebagai Chrome App, aplikasi akan otomatis berjalan borderless & fullscreen.
-    </div>
+    <!-- 3. PLAYER TEAM Y -->
+    <a href="player.html?team=Y" class="touch-card card-team-y" id="link-team-y">
+      <div class="touch-icon-wrap">
+        <svg class="touch-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="3" ry="3"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
+      </div>
+      <div class="touch-card-title">PLAYER Y</div>
+      <div class="touch-card-badge" style="border-color: rgba(0, 210, 211, 0.4); color: #81ecec;">TEAM CYAN</div>
+    </a>
 
+  </main>
+
+  <!-- Floating HUD Controls for PWA Install & Fullscreen Toggle -->
+  <div class="pwa-hud-controls">
+    <button type="button" class="fullscreen-toggle-btn" onclick="window.toggleFullscreen()" title="Layar Penuh (F)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+      </svg>
+      <span>FULLSCREEN</span>
+    </button>
+    <button type="button" id="pwa-install-btn" class="pwa-install-trigger" onclick="window.promptPwaInstall()" style="display: none;" title="Pasang Aplikasi di Chrome">
+      <span>📥 INSTALL APP</span>
+    </button>
   </div>
 
   <script>
-    // Server Configuration Handler
-    function initServerConfig() {
-      const saved = localStorage.getItem('unxpadted_target_server');
-      const input = document.getElementById('target-server-input');
-      const defaultServer = (typeof window.getSocketServerUrl === 'function') ? window.getSocketServerUrl() : window.location.origin;
-      input.value = saved || defaultServer;
-
-      updateLinksWithServer(input.value);
-    }
-
-    function saveTargetServer() {
-      const input = document.getElementById('target-server-input');
-      const val = input.value.trim();
-      if (val) {
-        localStorage.setItem('unxpadted_target_server', val);
-        updateLinksWithServer(val);
-        alert('Target server diperbarui: ' + val);
-      } else {
-        localStorage.removeItem('unxpadted_target_server');
-        updateLinksWithServer('');
-        alert('Target server direset ke default.');
+    // Server query passthrough if specified
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const customServer = urlParams.get('server');
+      if (customServer) {
+        ['link-broadcast', 'link-team-x', 'link-team-y'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            const sep = el.href.includes('?') ? '&' : '?';
+            el.href = `${el.href}${sep}server=${encodeURIComponent(customServer)}`;
+          }
+        });
       }
-    }
-
-    function updateLinksWithServer(serverVal) {
-      const links = [
-        { id: 'link-broadcast', base: 'broadcast.html' },
-        { id: 'link-team-x', base: 'player.html?team=X' },
-        { id: 'link-team-y', base: 'player.html?team=Y' },
-        { id: 'link-gm', base: 'gm.html' }
-      ];
-
-      links.forEach(({ id, base }) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (serverVal && serverVal !== window.location.origin) {
-          const sep = base.includes('?') ? '&' : '?';
-          el.href = `${base}${sep}server=${encodeURIComponent(serverVal)}`;
-        } else {
-          el.href = base;
-        }
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', initServerConfig);
-
-    // Update connection status dot
-    try {
-      const targetUrl = (typeof window.getSocketServerUrl === 'function') ? window.getSocketServerUrl() : window.location.origin;
-      const sock = (targetUrl === window.location.origin) ? io() : io(targetUrl);
-      sock.on('connect', () => {
-        const dot = document.getElementById('connection-dot');
-        if (dot) dot.classList.remove('offline');
-      });
-      sock.on('disconnect', () => {
-        const dot = document.getElementById('connection-dot');
-        if (dot) dot.classList.add('offline');
-      });
-    } catch(e) {
-      console.warn('Socket check bypassed:', e);
-    }
+    })();
   </script>
 </body>
 </html>

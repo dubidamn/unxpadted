@@ -87,18 +87,6 @@
           "sizes": "192x192"
         }
       ]
-    },
-    {
-      "name": "Gamemaster Panel",
-      "short_name": "GM Panel",
-      "description": "Panel kendali juri & operator pertandingan",
-      "url": "./gm.html",
-      "icons": [
-        {
-          "src": "icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
     }
   ]
 }
